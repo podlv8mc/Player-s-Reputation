@@ -1,6 +1,6 @@
-# Player-s-Reputation
-Frontend part
+## Player-s-Reputation
+#Frontend part
 
-npm install
-npm run dev
+- npm install
+- npm run dev
 
