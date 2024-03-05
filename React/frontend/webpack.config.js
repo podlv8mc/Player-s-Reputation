@@ -36,7 +36,7 @@ module.exports = {
         open: true,
     },
     resolve: {
-        extensions: ['.js', '.json', '.scss'],
+        extensions: ['.js', '.json', '.jsx', '.scss'],
         alias: {
             '@styles': path.resolve(__dirname, 'src/style'),
             '@': path.resolve(__dirname, 'src'),
@@ -45,7 +45,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',

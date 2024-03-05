@@ -11,6 +11,7 @@
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
+  scroll-behavior: smooth;
 }
 
 /* Sections
@@ -22,6 +23,8 @@ html {
 
 body {
   margin: 0;
+  background: #101117;
+  height: 100%;
 }
 
 /**
@@ -75,6 +78,7 @@ pre {
 
 a {
   background-color: transparent;
+  text-decoration: none;
 }
 
 /**
@@ -156,6 +160,14 @@ img {
  * 1. Change the font styles in all browsers.
  * 2. Remove the margin in Firefox and Safari.
  */
+
+button {
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  border: none;
+  padding: 0;
+}
 
 button,
 input,
@@ -346,4 +358,13 @@ template {
 
 [hidden] {
   display: none;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
 }

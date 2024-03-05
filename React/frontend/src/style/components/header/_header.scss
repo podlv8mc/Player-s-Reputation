@@ -1,0 +1,38 @@
+/* === Include your styles here === */
+
+
+
+/* === / Include your styles here === */
+
+/* === Styles === */
+
+.header__wrap {
+  width: 90px;
+  height: 400px;
+  transition: all .4s ease;
+
+  .header {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: white;
+    position: relative;
+
+    .header__btn {
+      width: 24px;
+      height: 52px;
+      border-radius: 4px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.header__wrap-width {
+  width: 200px;
+}
+
+/* === / Styles === */

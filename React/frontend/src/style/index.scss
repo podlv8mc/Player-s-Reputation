@@ -1,0 +1,25 @@
+/* === Include your styles here === */
+
+@import "components/header/header";
+@import "components/main/main";
+
+/* === / Include your styles here === */
+
+/* === Styles === */
+
+#root {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+
+  .App {
+    width: 100%;
+    max-width: 1310px;
+    background: #f6c5c5;
+    display: flex;
+    gap: 20px;
+    padding: 8px 0px;
+  }
+}
+
+/* === / Styles === */
