@@ -8,31 +8,41 @@
 
 .header__wrap {
   width: 90px;
-  height: 400px;
+  height: 100%;
   transition: all .4s ease;
 
   .header {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 9px);
+    max-height: 780px;
     border-radius: 20px;
-    background: white;
+    background: #000000;
     position: relative;
+    transition: all .4s ease;
 
     .header__btn {
       width: 24px;
       height: 52px;
       border-radius: 4px;
-      background: black;
+      background: #23272C;
       position: absolute;
       top: 50%;
       left: 100%;
       transform: translate(-50%, -50%);
     }
   }
+
+  .header-width {
+    width: 200px;
+  }
 }
 
 .header__wrap-width {
   width: 200px;
+}
+
+@media (max-height: 600px) {
+
 }
 
 /* === / Styles === */
