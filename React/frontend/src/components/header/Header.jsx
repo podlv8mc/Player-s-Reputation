@@ -1,36 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ScrollMagic from 'scrollmagic';
+import Navigation from "@/components/header/Navigation";
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isToggled: false
+const Header = () => {
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+    useEffect(() => {
+        const controller = new ScrollMagic.Controller();
+
+        const scene = new ScrollMagic.Scene({ triggerElement: "#trigger2", triggerHook: 0 }) // Триггер сработает, когда верх триггера достигнет верха окна
+            .setPin("#pin2")
+            .addTo(controller);
+
+        return () => {
+            scene.destroy();
         };
-    }
+    }, []);
 
-    toggleClass = () => {
-        this.setState(prevState => ({
-            isToggled: !prevState.isToggled
-        }));
+    const handleButtonClick = () => {
+        setIsButtonClicked(prevState => !prevState);
     };
 
-    render() {
-        const headerWrapClasses = `header__wrap ${this.state.isToggled ? 'header__wrap-width' : ''}`;
-
-        return (
-            <div className={headerWrapClasses}>
-                <header className="header">
-                    <nav className="nav__wrap">
-                        <ul className="nav">
-                            <li></li>
-                        </ul>
-                    </nav>
-                    <button className="header__btn" onClick={this.toggleClass}>
-                    </button>
-                </header>
-            </div>
-        );
-    }
-}
+    return (
+        <div className={`header__wrap ${isButtonClicked ? 'header__wrap-width' : ''}`}>
+            <div id="trigger2" className=""></div>
+            <header id="pin2" className={`header ${isButtonClicked ? 'header-width' : ''}`}>
+                <Navigation onButtonClick={handleButtonClick} />
+            </header>
+        </div>
+    );
+};
 
 export default Header;

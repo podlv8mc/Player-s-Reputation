@@ -1,0 +1,111 @@
+/* === Include your styles here === */
+
+@import "../../../../helpers/mixin/mixin";
+
+/* === / Include your styles here === */
+
+/* === Styles === */
+
+.about__wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 10px;
+
+  .about {
+    width: 100%;
+    display: flex;
+    position: relative;
+
+    figure {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .about__text {
+      position: absolute;
+      width: 40%;
+      top: 50%;
+      left: 0%;
+      transform: translate(0%, -50%);
+      @include Montserrat-400;
+      font-size: 15px;
+      color: #dedede;
+    }
+  }
+
+  .about__dignity-wrap {
+    width: 100%;
+    padding: 15px 10px;
+    box-shadow: 2px 4px 16px 0 rgba(0, 0, 0, 0.5);
+    background: #000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .about__dignity-box {
+      width: 200px;
+
+      .about__dignity-title-wrap {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
+
+        .about__dignity-title {
+          @include Montserrat-600;
+          font-size: 20px;
+          background: linear-gradient(327deg, #f29000 0%, #f18f00 0.01%, #fccd55 61.26%, #f8b736 100%);
+          background-clip: text;
+          color: transparent;
+          padding-top: 2px;
+        }
+      }
+
+      p {
+        padding-top: 20px;
+        @include Montserrat-400;
+        font-size: 15px;
+        color: #dedede;
+      }
+    }
+
+    .about__dignity-box-sec {
+      position: relative;
+
+      &:after, &:before {
+        display: block;
+        content: "";
+        width: 2px;
+        height: 100px;
+        background: #f2970b;
+        position: absolute;
+        top: 50%;
+      }
+
+      &:after {
+        right: -20%;
+        transform: translate(-20%, -50%);
+      }
+
+      &:before {
+        left: -20%;
+        transform: translate(-20%, -50%);
+      }
+    }
+  }
+}
+
+/* === / Styles === */

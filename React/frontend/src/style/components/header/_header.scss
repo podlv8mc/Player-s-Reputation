@@ -1,6 +1,6 @@
 /* === Include your styles here === */
 
-
+@import "../../helpers/mixin/mixin";
 
 /* === / Include your styles here === */
 
@@ -9,16 +9,111 @@
 .header__wrap {
   width: 90px;
   height: 100%;
-  transition: all .4s ease;
+  transition: width .4s ease;
 
   .header {
-    width: 100%;
+    width: 90px;
     height: calc(100vh - 9px);
     max-height: 780px;
     border-radius: 20px;
     background: #000000;
     position: relative;
-    transition: all .4s ease;
+    transition: width .4s ease;
+    padding: 2.5em 0px;
+
+    .globalnav__wrap {
+      width: 100%;
+      height: 100%;
+
+      .globalnav__list {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .globalnav {
+          width: 100%;
+          height: fit-content;
+          list-style-type: none;
+
+          .globalnav__link {
+            width: 100%;
+            height: 46px;
+            padding: 0px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all .4s ease;
+
+            .globalnav__text {
+              @include Montserrat-500;
+              font-size: 16px;
+              color: #FFFFFF;
+              position: absolute;
+              right: -200px;
+              opacity: 0;
+              padding-top: 4px;
+              transition: all 1s ease;
+            }
+
+            img {
+              width: 24px;
+              height: 24px;
+              opacity: .7;
+              transition: all .4s ease;
+            }
+
+            &:hover {
+              background: #23272C;
+
+              img {
+                opacity: 1;
+              }
+            }
+          }
+
+          &:nth-child(2) {
+            margin-bottom: 14px;
+          }
+
+          &:last-child {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+          }
+        }
+
+        .globalnav-logo {
+          height: 40px;
+          margin-bottom: 34px;
+
+          .globalnav__link {
+            height: 40px;
+
+            .globalnav__text {
+              @include Montserrat-700;
+              background: linear-gradient(321deg, #f29000 0%, #f18f00 0.01%, #fccd55 61.26%, #f8b736 100%);
+              background-clip: text;
+              color: transparent;
+            }
+
+            img {
+              width: 40px;
+              height: 40px;
+              opacity: 1;
+            }
+
+            &:hover {
+              background: transparent;
+            }
+          }
+        }
+      }
+    }
 
     .header__btn {
       width: 24px;
@@ -34,6 +129,30 @@
 
   .header-width {
     width: 200px;
+
+    .globalnav__wrap {
+      .globalnav__list {
+        .globalnav {
+          .globalnav__link {
+            //justify-content: flex-start;
+            .globalnav__text {
+              position: relative;
+              right: auto;
+              opacity: .7;
+            }
+
+            img {
+            }
+
+            &:hover {
+              .globalnav__text {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -41,8 +160,10 @@
   width: 200px;
 }
 
-@media (max-height: 600px) {
-
+@media (max-width: 800px) {
+  .header__wrap {
+    display: none;
+  }
 }
 
 /* === / Styles === */

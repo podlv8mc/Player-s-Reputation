@@ -1,15 +1,21 @@
 import React from 'react';
+import Images from "@/image/image";
+import List from "@/components/header/List";
 
-const Navigation = ({ isToggled, toggleClass }) => {
+const Navigation = ({onButtonClick}) => {
     return (
         <>
-            <nav className="nav__wrap">
-                <ul className="nav">
-                    <li></li>
+            <nav className="globalnav__wrap">
+                <ul className="globalnav__list">
+                    <List class="globalnav globalnav-logo" name={Images.logo} alt="logo" spanClass="globalnav__text" text="Player’s Reputation"/>
+                    <List class="globalnav" name={Images.home} alt="home" spanClass="globalnav__text" text="Главная"/>
+                    <List class="globalnav" name={Images.about} alt="about" spanClass="globalnav__text" text="О нас"/>
+                    <List class="globalnav" name={Images.funds} alt="funds" spanClass="globalnav__text" text="Фонды"/>
+                    <List class="globalnav" name={Images.trainer} alt="trainer" spanClass="globalnav__text" text="Тренера"/>
+                    <List class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти"/>
                 </ul>
             </nav>
-            <button className="header__btn" onClick={toggleClass}>
-            </button>
+            <button className="header__btn" onClick={onButtonClick}></button>
         </>
     );
 }

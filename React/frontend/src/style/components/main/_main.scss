@@ -1,6 +1,7 @@
 /* === Include your styles here === */
 
-
+@import "sections/home/home";
+@import "sections/about/about";
 
 /* === / Include your styles here === */
 
@@ -10,8 +11,8 @@
   height: 2500px;
   display: flex;
   flex-direction: column;
+  gap: 60px;
   flex-grow: 1;
-  background: antiquewhite;
 }
 
 /* === / Styles === */
