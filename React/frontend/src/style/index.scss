@@ -3,6 +3,7 @@
 @import "components/header/header";
 @import "@styles/fonts/Montserrat/Montserrat.css";
 @import "components/main/main";
+@import "components/footer/footer";
 
 /* === / Include your styles here === */
 
@@ -20,6 +21,10 @@
     gap: 20px;
     padding: 8px 0px;
   }
+}
+
+.scrollmagic-pin-spacer {
+  padding: 0px !important;
 }
 
 h1 {
@@ -49,7 +54,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 0px 0px 40px 0px;
+  padding: 30px 0px 40px 0px;
 
   .subtitle__clarification {
     @include Montserrat-500;
@@ -66,6 +71,10 @@ h3 {
     font-size: 64px;
   }
 
+  h3 {
+    font-size: 19px;
+  }
+
   #root {
 
     .App {
@@ -77,6 +86,14 @@ h3 {
 @media (max-width: 600px) {
   h1 {
     font-size: 44px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 18px;
   }
 }
 

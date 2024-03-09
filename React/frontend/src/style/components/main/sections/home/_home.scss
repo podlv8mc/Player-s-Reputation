@@ -29,10 +29,6 @@
       height: 100%;
       border-radius: 20px;
     }
-
-    .secondIMage {
-      display: none;
-    }
   }
 
   .title__wrap {
@@ -90,17 +86,6 @@
 
 @media (max-width: 600px) {
   .home__wrap {
-
-    figure {
-
-      .firstImage {
-        display: none;
-      }
-
-      .secondIMage {
-        display: block;
-      }
-    }
 
     .title__wrap {
 
