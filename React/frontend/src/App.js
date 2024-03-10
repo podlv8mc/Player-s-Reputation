@@ -1,33 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import '@styles/index.scss';
 import Header from "@/components/header/Header";
 import Main from "@/components/main/Main";
-import MobHeader from "@/components/header/mobile-header/MobHeader";
+import {Route, Routes} from "react-router-dom";
 
 function App() {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     return (
-        <div className="App">
-            {windowWidth >= 801 ? (
-                <Header/>
-            ) : (
-                <MobHeader />
-            )}
-            <Main />
-        </div>
+      <Routes>
+          <Route exact path="/" element={<Main/>} />
+          <Route path="/header" element={<Header/>} />
+      </Routes>
     );
 }
 

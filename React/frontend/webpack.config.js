@@ -33,6 +33,7 @@ module.exports = {
             directory: path.join(__dirname, 'src'),
         },
         compress: true,
+        historyApiFallback: true,
         port: 9000,
         open: true,
     },
