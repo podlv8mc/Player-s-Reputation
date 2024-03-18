@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import users
 import requests
 import db
+from datetime import datetime
 from models import users_in_founds, User
 
 from crud import found_add_manager
@@ -17,14 +18,18 @@ async def fetch_user_data():
 
 async def create_user():
     try:
-        user_data = await fetch_user_data()
+        user_data = {}
 
         user_data["password"] = "agagagag"
         user_data["role"] = "admin"
-        user_data["username"] = "loh2222"
-        user_data["email"] = "loh222@mail.com"
+        user_data["username"] = "admin"
+        user_data["email"] = "admin@mail.com"
         user_data["contact_fields"] = {"adcd": "1234"}
-        user_data["founds_ids"] = [1,]
+        user_data["founds_ids"] = []
+        user_data["is_superuser"] = 1
+        user_data["is_active"] = 1
+        user_data["is_verified"] = 1
+        user_data["created_at"] = datetime.now()
         user_scheme_data = users.schemas.UserCreate(**user_data)
         print(user_scheme_data)
         async for session in db.engine.get_async_session():
@@ -34,23 +39,25 @@ async def create_user():
     except Exception as e:
             print(f"An error occurred: {e}")
 
-async def add_user_to_found(user_id: int,  found_id: int) -> None:
-    try:
-        async for session in db.engine.get_async_session():     
-            with session as db:
-                ...
-                # db.
-    except Exception as e:
-        ...
+# async def add_user_to_found(user_id: int,  found_id: int) -> None:
+#     try:
+#         async for session in db.engine.get_async_session():     
+#             with session as db:
+#                 ...
+#                 # db.
+#     except Exception as e:
+#         ...
 
-async def add_manager(found_id: int, manager_id: int):
+# async def add_manager(found_id: int, manager_id: int):
     
-    async for session in db.engine.get_async_session():
-        print(await session.scalar(select(User.managed_founds.id).where(User.id == manager_id)))
-        await found_add_manager(found_id=found_id, user_id=manager_id, db=session)
-        print(await session.scalar(select(User.managed_founds.id).where(User.id == manager_id)))
+#     async for session in db.engine.get_async_session():
+#         print(await session.scalar(select(User.managed_founds.id).where(User.id == manager_id)))
+#         await found_add_manager(found_id=found_id, user_id=manager_id, db=session)
+#         print(await session.scalar(select(User.managed_founds.id).where(User.id == manager_id)))
 
 
-asyncio.run(add_manager(1, 6))            
+asyncio.run(create_user())
+# asyncio.run(add_manager(1, 6))            
 
 
+from users import get_user_manager
