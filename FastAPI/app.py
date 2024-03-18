@@ -39,7 +39,7 @@ app = FastAPI()
 )
 async def get_founds_list(db: AsyncSession = Depends(get_async_session)):
     founds_list = await crud.get_found_list(db=db)
-    return paginate(founds_list)
+    return paginate(list(founds_list))
 
 
 @app.get(
@@ -204,7 +204,7 @@ app.include_router(
     response_model=Page[schemas.UserRead],
 )
 async def get_users_list(user_manager: UserManager = Depends(get_user_manager)):
-    return paginate(user_manager.get_all_users())
+    return paginate(list(await user_manager.get_all_users()))
 
 
 @app.get(
@@ -221,7 +221,7 @@ async def get_records_list(
     records_list = await crud.get_records_list(
         search_query=search_query, found_id=found_id, db=db
     )
-    return paginate(records_list)
+    return paginate(list(records_list))
 
 
 @app.get(
