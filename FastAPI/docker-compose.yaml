@@ -13,7 +13,7 @@ services:
   
   api:
     build: .
-    container_name: startme-reputation
+    image: yarikkon/startme-reputation
     command: sh -c "python db/wait_for_db.py &&
                     uvicorn app:app --host 0.0.0.0 --port 8000"
     ports:
