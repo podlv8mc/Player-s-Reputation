@@ -4,7 +4,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-//const FileManagerPlugin = require('filemanager-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -104,22 +104,16 @@ module.exports = {
                 removeComments: true,
             } : false,
         }),
+        new CopyPlugin({
+            patterns: [
+                { from: "public/site.webmanifest", to: "" },
+            ],
+        }),
         new CleanWebpackPlugin(
         ),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
         }),
-        /*new FileManagerPlugin({
-            events: {
-                onEnd: {
-                    copy: [
-                        {source: path.join(__dirname, 'src/fonts'), destination: path.resolve(__dirname, 'dist/fonts')},
-                    ],
-                }
-            }
-        }),
-
-         */
         //new webpack.HotModuleReplacemenPlugin()
     ],
 };

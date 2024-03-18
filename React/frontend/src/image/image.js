@@ -21,6 +21,10 @@ const Images = {
     instagram: require('./footer/instagram.webp'),
     telegram: require('./footer/telegram.webp'),
     youtube: require('./footer/youtube.webp'),
+    applefavicon: require('./favicons/apple-touch-icon.png'),
+    applefavicon32: require('./favicons/favicon-32x32.png'),
+    applefavicon16: require('./favicons/favicon-16x16.png'),
+    applefaviconsaf: require('./favicons/safari-pinned-tab.svg'),
 }
 
 export default Images
