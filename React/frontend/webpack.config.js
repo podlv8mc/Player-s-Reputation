@@ -35,7 +35,6 @@ module.exports = {
         compress: true,
         historyApiFallback: true,
         port: 9000,
-        open: true,
     },
     resolve: {
         extensions: ['.js', '.json', '.jsx', '.scss'],
@@ -77,7 +76,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(webp|png|jpg|jpeg|svg|gif|ico)$/i,
+                test: /\.(png|webp|jpg|jpeg|svg|gif|ico)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'image/[name].[contenthash].[ext]'

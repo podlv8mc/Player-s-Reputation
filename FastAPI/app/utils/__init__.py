@@ -1,1 +1,0 @@
-from .send_mail import MailUtil

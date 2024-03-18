@@ -1,16 +1,15 @@
 import React from 'react';
-import '@styles/index.scss';
-import Header from "@/components/header/Header";
-import Main from "@/components/main/Main";
 import {Route, Routes} from "react-router-dom";
+import HomePage from "@/components/HomePage";
+import Table from "@/components/table/Table";
 
 function App() {
 
     return (
-      <Routes>
-          <Route exact path="/" element={<Main/>} />
-          <Route path="/header" element={<Header/>} />
-      </Routes>
+        <Routes>
+            <Route exact path="/" element={<HomePage/>}/>
+            <Route path="/table" element={<Table/>}/>
+        </Routes>
     );
 }
 
