@@ -1,14 +1,28 @@
-version: "3"
+version: '3'
 services:
-  db:
-    image: postgres:latest
+  reputationpg:
     restart: always
-    ports:
-      - "5433:5432"
+    image: 'postgres:latest'
     env_file:
       - .env
+    ports:
+      - '${POSTGRES_PORT}:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - 'postgres:/var/lib/postgresql/data'
+
+  
+  api:
+    build: .
+    container_name: startme-reputation
+    command: sh -c "python db/wait_for_db.py  &&
+                    uvicorn app:app --host 0.0.0.0 --port 8000"
+    ports:
+      - '8000:8000'
+    restart: always
+    env_file:
+      - .env
+
 
 volumes:
-  postgres_data:
+  postgres:
+    

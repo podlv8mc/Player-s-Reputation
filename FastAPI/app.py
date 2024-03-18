@@ -2,6 +2,8 @@ from typing import List
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import FastAPI, Depends, HTTPException, Response, status, Request
+from fastapi.middleware.cors import CORSMiddleware
+
 import permissions
 import crud
 import schemas
@@ -20,7 +22,14 @@ from utils.exceptions import ObjectNotFound
 disable_installed_extensions_check()
 
 app = FastAPI()
-
+# origins = ["http://localhost",]
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 @app.get(
     "/founds",
