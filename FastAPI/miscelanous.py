@@ -12,7 +12,7 @@ from models import users_in_founds, User
 from crud import found_add_manager
 
 async def fetch_user_data():
-    response = requests.get("http://91.239.233.45:8000/users/1")
+    response = requests.get("http://127.0.0.1:8000/users/1")
     response.raise_for_status()  # Ensure the request was successful
     return json.loads(response.content)
 

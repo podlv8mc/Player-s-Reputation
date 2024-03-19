@@ -40,7 +40,7 @@ app.add_middleware(
     "/founds",
     response_model=Page[schemas.FoundRead],
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def get_founds_list(db: AsyncSession = Depends(get_async_session)):
     founds_list = await crud.get_found_list(db=db)
@@ -51,7 +51,7 @@ async def get_founds_list(db: AsyncSession = Depends(get_async_session)):
     "/founds/{found_id}",
     response_model=schemas.FoundRead,
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def get_found_by_id(found_id: int, db: AsyncSession = Depends(get_async_session)):
     try:
@@ -65,7 +65,7 @@ async def get_found_by_id(found_id: int, db: AsyncSession = Depends(get_async_se
     "/founds",
     response_model=schemas.FoundRead,
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_found(
     found_data: schemas.FoundCreate, db: AsyncSession = Depends(get_async_session)
@@ -78,7 +78,7 @@ async def create_found(
     "/founds/{found_id}",
     response_model=schemas.FoundRead,
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def update_found_by_id(
     found_id: int,
@@ -97,7 +97,7 @@ async def update_found_by_id(
 @app.delete(
     "/founds/{found_id}",
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def delete_found_by_id(
     found_id: int, db: AsyncSession = Depends(get_async_session)
@@ -112,7 +112,7 @@ async def delete_found_by_id(
 @app.post(
     "/founds/add_manager",
     tags=["founds"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def add_manager(
     found_id: int, manager_id: int, db: AsyncSession = Depends(get_async_session)
@@ -205,7 +205,7 @@ app.include_router(
 @app.get(
     "/users",
     tags=["users"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
     response_model=Page[schemas.UserRead],
 )
 async def get_users_list(user_manager: UserManager = Depends(get_user_manager)):
@@ -246,7 +246,7 @@ async def get_record_by_id(
     "/records",
     response_model=schemas.RecordRead,
     tags=["records"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_record(
     record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
@@ -262,7 +262,7 @@ async def create_record(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def update_record_by_id(
     record_id: int,
@@ -278,7 +278,7 @@ async def update_record_by_id(
 @app.delete(
     "/records/{record_id}",
     tags=["records"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def delete_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
