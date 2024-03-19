@@ -22,14 +22,17 @@ from utils.exceptions import ObjectNotFound
 disable_installed_extensions_check()
 
 app = FastAPI()
-# origins = ["http://localhost",]
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+origins = [
+    "http://91.239.233.45",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get(
     "/founds",
