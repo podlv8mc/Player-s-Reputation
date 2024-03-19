@@ -216,7 +216,7 @@ async def get_users_list(user_manager: UserManager = Depends(get_user_manager)):
     "/records",
     response_model=Page[schemas.RecordRead],
     tags=["records"],
-    dependencies=[Depends(permissions.read_only_or_higher)],
+    # dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_records_list(
     search_query: str | None = None,
@@ -233,7 +233,7 @@ async def get_records_list(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    dependencies=[Depends(permissions.read_only_or_higher)],
+    # dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
