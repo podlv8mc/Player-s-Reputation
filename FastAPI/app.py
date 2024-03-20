@@ -24,15 +24,13 @@ disable_installed_extensions_check()
 app = FastAPI()
 origins = [
     "http://91.239.233.45",
-    "http://127.0.0.1",
-    "http://localhost",
     "https://91.239.233.45",
+    "http://127.0.0.1",
     "https://127.0.0.1",
+    "http://localhost",
     "https://localhost",
     "http://ecosort.com.ua",
     "https://ecosort.com.ua",
-    "https://ecosort.com.ua/",
-    "http://ecosort.com.ua/"
 ]
 app.add_middleware(
     CORSMiddleware,
