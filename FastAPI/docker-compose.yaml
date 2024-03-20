@@ -12,7 +12,7 @@ services:
 
   api:
     build: .
-    image: glitchcode/startme-repo
+    image: glitchcode/startme-repo:1.1
     command: [ "/app/app.sh" ]
     ports:
       - '8000:8000'
