@@ -28,7 +28,9 @@ origins = [
     "http://localhost",
     "https://91.239.233.45",
     "https://127.0.0.1",
-    "https://localhost"
+    "https://localhost",
+    "http://ecosort.com.ua",
+    "https://ecosort.com.ua"
 ]
 app.add_middleware(
     CORSMiddleware,
