@@ -11,26 +11,26 @@ from db.users_db import User
 from db.engine import get_async_session
 from users import auth_backend, fastapi_users, UserManager, get_user_manager
 from fastapi_users.router import common
-from fastapi_users import exceptions
+from fastapi_users import exceptions as users_exceptions
 from fastapi_users import models as fast_users_models
 
 from fastapi_pagination import Page, add_pagination, paginate
 from fastapi_pagination.utils import disable_installed_extensions_check
 
-from utils.exceptions import ObjectNotFound
+from utils.exceptions import ObjectNotFound, Forbidden
+
 
 disable_installed_extensions_check()
 
-app = FastAPI()
+app = FastAPI(root_path="/api/v1")
+
 origins = [
-    "http://91.239.233.45",
-    "https://91.239.233.45",
+    "http://16.16.142.115",
+    "https://16.16.142.115",
     "http://127.0.0.1",
     "https://127.0.0.1",
     "http://localhost",
     "https://localhost",
-    "http://ecosort.com.ua",
-    "https://ecosort.com.ua",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -58,11 +58,21 @@ async def get_founds_list(db: AsyncSession = Depends(get_async_session)):
     tags=["founds"],
     # dependencies=[Depends(permissions.manager_or_higher)],
 )
-async def get_found_by_id(found_id: int, db: AsyncSession = Depends(get_async_session)):
+async def get_found_by_id(
+    found_id: int,
+    db: AsyncSession = Depends(get_async_session),
+    # current_user: User = Depends(permissions.manager_or_higher)
+    ):
     try:
-        found = await crud.get_found_by_id(db=db, found_id=found_id)
+        found = await crud.get_found_by_id(
+            db=db, 
+            found_id=found_id, 
+            # current_user=current_user
+        )
     except ObjectNotFound:
         raise HTTPException(code=400, detail="No such found")
+    except Forbidden:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
     return found
 
 
@@ -82,17 +92,20 @@ async def create_found(
 @app.patch(
     "/founds/{found_id}",
     response_model=schemas.FoundRead,
-    tags=["founds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    tags=["founds"]
 )
 async def update_found_by_id(
     found_id: int,
     found_data: schemas.FoundUpdate,
     db: AsyncSession = Depends(get_async_session),
+    # current_user: User = Depends(permissions.manager_or_higher)
 ):
     try:
         updated_found = await crud.update_found_by_id(
-            db=db, found_id=found_id, found_new_data=found_data
+            db=db, 
+            found_id=found_id, 
+            found_new_data=found_data, 
+            # current_user=current_user
         )
     except ObjectNotFound:
         return HTTPException(status_code=400, detail="No such found")
@@ -111,7 +124,7 @@ async def delete_found_by_id(
         await crud.delete_found_by_id(db=db, found_id=found_id)
     except ObjectNotFound:
         return HTTPException(status_code=400, detail="No such found")
-    return Response(status_code=204)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @app.post(
@@ -174,12 +187,12 @@ async def register(
         created_user = await user_manager.create_with_founds(
             user_create, safe=True, request=request
         )
-    except exceptions.UserAlreadyExists:
+    except users_exceptions.UserAlreadyExists:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=common.ErrorCode.REGISTER_USER_ALREADY_EXISTS,
         )
-    except exceptions.InvalidPasswordException as e:
+    except users_exceptions.InvalidPasswordException as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={
@@ -243,7 +256,10 @@ async def get_records_list(
 async def get_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
 ):
-    record = await crud.get_record_by_id(db=db, record_id=record_id)
+    try:
+        record = await crud.get_record_by_id(db=db, record_id=record_id)
+    except ObjectNotFound:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return record
 
 
@@ -259,7 +275,7 @@ async def create_record(
     try:
         new_record = await crud.create_record(db=db, record_data=record_data)
     except ObjectNotFound:
-        raise HTTPException(status_code=404, detail="something went wrong")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return new_record
 
 
@@ -274,9 +290,12 @@ async def update_record_by_id(
     record_data: schemas.RecordUpdate,
     db: AsyncSession = Depends(get_async_session),
 ) -> schemas.RecordRead:
-    updated_record = await crud.update_record_by_id(
-        record_id=record_id, new_data=record_data, db=db
-    )
+    try:    
+        updated_record = await crud.update_record_by_id(
+            record_id=record_id, new_data=record_data, db=db
+        )
+    except ObjectNotFound:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return updated_record
 
 
@@ -291,7 +310,7 @@ async def delete_record_by_id(
     try:
         await crud.delete_record_by_id(db=db, record_id=record_id)
     except ObjectNotFound:
-        raise HTTPException(status_code=400, detail="No such found")
+        raise HTTPException(status_code=400, detail="No such record")
     return Response(status_code=204)
 
 

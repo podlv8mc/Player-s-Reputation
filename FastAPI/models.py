@@ -1,4 +1,3 @@
-import json
 from enum import Enum as PythonEnum
 from typing import List
 from datetime import datetime
@@ -71,7 +70,6 @@ class Found(Base):
     name: Mapped[str] = mapped_column(String(), nullable=False)
     discord: Mapped[str] = mapped_column(String(), nullable=True)
     link: Mapped[str] = mapped_column(String())
-
     users: Mapped[List["User"]] = relationship(
         secondary=users_in_founds, back_populates="founds"
     )

@@ -1,6 +1,6 @@
 from typing import Any, AsyncGenerator, Dict, List
 from fastapi import Depends
-from fastapi_users import IntegerIDMixin
+from fastapi_users import IntegerIDMixin, exceptions
 from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
@@ -41,7 +41,10 @@ class UsersDB(SQLAlchemyUserDatabase):
         statement = select(self.user_table).where(
             func.lower(self.user_table.username) == func.lower(username)
         )
-        return await self._get_user(statement)
+        user = await self._get_user(statement)
+        if user is None:
+            raise exceptions.UserNotExists
+        return user
 
     async def get_all_users(
         self,

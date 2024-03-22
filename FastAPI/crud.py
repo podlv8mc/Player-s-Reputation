@@ -9,7 +9,7 @@ from sqlalchemy import insert, select, update, or_, and_
 
 import schemas
 import models
-from utils.exceptions import ObjectNotFound
+from utils.exceptions import ObjectNotFound, Forbidden
 
 
 async def get_found_list(db: AsyncSession) -> List[models.Found]:
@@ -18,26 +18,30 @@ async def get_found_list(db: AsyncSession) -> List[models.Found]:
     return founds_list
 
 
-async def get_found_by_id(db: AsyncSession, found_id: int) -> models.Found:
-    found_query = select(models.Found).where(models.Found.id == found_id)
+async def get_found_by_id(db: AsyncSession, found_id: int, current_user: models.User = None) -> models.Found:
+    found_query = select(models.Found).where(models.Found.id == found_id).options(selectinload(models.Found.managers))
     found = await db.scalar(found_query)
     if not found:
         raise ObjectNotFound
+    # if current_user.role == models.Roles.MANAGER and current_user not in found.managers:
+    #     raise Forbidden
     return found
 
 
 async def update_found_by_id(
-    db: AsyncSession, found_id: int, found_new_data: schemas.FoundUpdate
+    db: AsyncSession,
+    found_id: int,
+    found_new_data: schemas.FoundUpdate,
+    current_user: models.User = None
 ) -> models.Found:
-    update_query = (
-        update(models.Found)
-        .where(models.Found.id == found_id)
-        .values(found_new_data.create_update_dict())
-    )
-    await db.execute(update_query)
+    found_to_update = await get_found_by_id(found_id=found_id, db=db, current_user=current_user)
+    update_data = found_new_data.create_update_dict()
+    for key, value in update_data.items():
+        setattr(found_to_update, key, value)
+    
     await db.commit()
-    updated_found = await get_found_by_id(db=db, found_id=found_id)
-    return updated_found
+    await db.refresh(found_to_update)
+    return found_to_update
 
 
 async def create_found(
@@ -71,6 +75,7 @@ async def found_add_manager(found_id: int, user_id: int, db: AsyncSession) -> No
             models.User.id == user_id,
         )
     )
+
     try:
         found.managers.append(new_manager)
         await db.commit()
@@ -142,6 +147,7 @@ async def create_record(db: AsyncSession, record_data: schemas.RecordCreate):
 
         await db.rollback()
         print(e)
+    
 
 
 async def update_record_by_id(

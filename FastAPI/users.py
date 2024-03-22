@@ -8,9 +8,9 @@ from fastapi_users.authentication import (
     JWTStrategy,
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
-from fastapi_users import models
+from fastapi_users import models, exceptions as users_exceptions
 import schemas
-from db.users_db import get_user_db, models as db_models, User
+from db.users_db import get_user_db, models as db_models, User, UsersDB
 
 SECRET = "SECRET"
 
@@ -24,12 +24,12 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
         
         try:
             user = await self.user_db.get_by_username(credentials.username)
-        except exceptions.UserNotExists:
+        except users_exceptions.UserNotExists:
             # Run the hasher to mitigate timing attack
             # Inspired from Django: https://code.djangoproject.com/ticket/20760
             self.password_helper.hash(credentials.password)
             return None
-
+        
         verified, updated_password_hash = self.password_helper.verify_and_update(
             credentials.password, user.hashed_password
         )
@@ -43,11 +43,11 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
     
     def parse_id(self, value: Any) -> int:
         if isinstance(value, float):
-            raise exceptions.InvalidID()
+            raise users_exceptions.InvalidID()
         try:
             return int(value)
         except ValueError as e:
-            raise exceptions.InvalidID() from e
+            raise users_exceptions.InvalidID() from e
 
     async def create_with_founds(
         self,
@@ -58,9 +58,9 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
 
         await self.validate_password(user_create.password, user_create)
 
-        existing_user = await self.user_db.get_by_username(user_create.email)
+        existing_user = await self.user_db.get_by_username(user_create.username)
         if existing_user is not None:
-            raise exceptions.UserAlreadyExists()
+            raise users_exceptions.UserAlreadyExists()
 
         user_dict = (
             user_create.create_update_dict()
@@ -96,7 +96,7 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
         print(f"Verification requested for user {user.id}. Verification token: {token}")
 
 
-async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db)):
+async def get_user_manager(user_db: UsersDB = Depends(get_user_db)):
     yield UserManager(user_db)
 
 
