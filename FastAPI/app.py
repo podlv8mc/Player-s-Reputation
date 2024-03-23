@@ -25,8 +25,6 @@ disable_installed_extensions_check()
 app = FastAPI(root_path="/api/v1")
 
 origins = [
-    "http://16.16.142.115",
-    "https://16.16.142.115",
     "http://127.0.0.1",
     "https://127.0.0.1",
     "http://localhost",
