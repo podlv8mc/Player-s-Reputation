@@ -12,35 +12,35 @@ services:
     networks:
       - my_network
   
-  # api:
-  #   build:
-  #     context: ./FastAPI
-  #     dockerfile: Dockerfile
-  #   command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - reputationpg
-  #   networks:
-  #     - my_network
+  api:
+    build:
+      context: ./FastAPI
+      dockerfile: Dockerfile
+    command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - reputationpg
+    networks:
+      - my_network
   
-  # nginx:
-  #   build:
-  #     context: ./nginx
-  #     dockerfile: Dockerfiile_nginx
-  #   ports:
-  #     - "80:80"
-  #     - "81:81"
-  #     - "443:443"
-  #   volumes:
-  #     - ./data:/data
-  #     - ./letsencrypt:/etc/letsencrypt
-  #     - ./nginx:/etc/nginx/conf.d/
-  #   depends_on:
-  #     - api
-  #   networks:
-  #     - my_network
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfiile_nginx
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+      - ./nginx:/etc/nginx/conf.d/
+    depends_on:
+      - api
+    networks:
+      - my_network
 volumes:
   postgres:
   # nginx:
