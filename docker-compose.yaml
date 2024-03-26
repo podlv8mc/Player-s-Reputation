@@ -15,7 +15,7 @@ services:
     build:
       context: ./FastAPI
       dockerfile: Dockerfile
-    command: sh -c "uvicorn app:app --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
+    command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
     restart: always
     env_file:
      -  .env
