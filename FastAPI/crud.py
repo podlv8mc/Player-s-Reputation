@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, lazyload
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import insert, select, update, or_, and_
 
@@ -9,66 +9,75 @@ from sqlalchemy import insert, select, update, or_, and_
 
 import schemas
 import models
-from utils.exceptions import ObjectNotFound, Forbidden
+from utils.exceptions import ObjectNotfund, Forbidden
+from users import UserManager
 
 
-async def get_found_list(db: AsyncSession) -> List[models.Found]:
-    list_query = select(models.Found).options(selectinload(models.Found.managers))
-    founds_list = await db.scalars(list_query)
-    return founds_list
-
-
-async def get_found_by_id(db: AsyncSession, found_id: int, current_user: models.User = None) -> models.Found:
-    found_query = select(models.Found).where(models.Found.id == found_id).options(selectinload(models.Found.managers))
-    found = await db.scalar(found_query)
-    if not found:
-        raise ObjectNotFound
-    # if current_user.role == models.Roles.MANAGER and current_user not in found.managers:
-    #     raise Forbidden
-    return found
-
-
-async def update_found_by_id(
-    db: AsyncSession,
-    found_id: int,
-    found_new_data: schemas.FoundUpdate,
-    current_user: models.User = None
-) -> models.Found:
-    found_to_update = await get_found_by_id(found_id=found_id, db=db, current_user=current_user)
-    update_data = found_new_data.create_update_dict()
-    for key, value in update_data.items():
-        setattr(found_to_update, key, value)
-    
-    await db.commit()
-    await db.refresh(found_to_update)
-    return found_to_update
-
-
-async def create_found(
-    db: AsyncSession, found_data: schemas.FoundCreate
-) -> models.Found:
-    creation_query = insert(models.Found).values(found_data.model_dump())
-    new_found_result = await db.execute(creation_query)
-    await db.commit()
-    new_found = await get_found_by_id(
-        db=db, found_id=new_found_result.inserted_primary_key[0]
+async def get_fund_list(db: AsyncSession) -> List[models.Fund]:
+    list_query = select(models.Fund).options(
+        selectinload(models.Fund.managers),
+        selectinload(models.Fund.owner)
     )
-    return new_found
+    funds_list = await db.scalars(list_query)
+    return funds_list
 
 
-async def delete_found_by_id(db: AsyncSession, found_id: int) -> None:
-    found_to_delete = await get_found_by_id(db=db, found_id=found_id)
-    await db.delete(found_to_delete)
+async def get_fund_by_id(db: AsyncSession, fund_id: int, current_user: models.User = None) -> models.Fund:
+    fund_query = select(models.Fund).where(models.Fund.id == fund_id).options(
+        selectinload(models.Fund.managers),
+        selectinload(models.Fund.owner)
+        )
+    fund = await db.scalar(fund_query)
+    if not fund:
+        raise ObjectNotfund
+    # if current_user.role == models.Roles.MANAGER and current_user not in fund.managers:
+    #     raise Forbidden
+    return fund
+
+
+async def update_fund_by_id(
+    db: AsyncSession,
+    fund_id: int,
+    fund_new_data: schemas.FundUpdate,
+    user_manager: UserManager,
+    current_user: models.User = None,
+) -> models.Fund:
+    fund_to_update = await get_fund_by_id(fund_id=fund_id, db=db, current_user=current_user)
+    update_data = fund_new_data.create_update_dict()
+    try:
+        owner_id = update_data.pop("owner_id")
+    except:
+        owner_id =  None
+    for key, value in update_data.items():
+        setattr(fund_to_update, key, value)
+    if owner_id:
+        fund_to_update.owner = await user_manager.get(owner_id)
+    await db.commit()
+    await db.refresh(fund_to_update)
+    return fund_to_update
+
+
+async def create_fund(
+    db: AsyncSession, fund_data: schemas.FundCreate
+) -> models.Fund:
+    creation_query = insert(models.Fund).values(fund_data.model_dump())
+    new_fund_result = await db.execute(creation_query)
+    await db.commit()
+    new_fund = await get_fund_by_id(
+        db=db, fund_id=new_fund_result.inserted_primary_key[0]
+    )
+    return new_fund
+
+
+async def delete_fund_by_id(db: AsyncSession, fund_id: int) -> None:
+    fund_to_delete = await get_fund_by_id(db=db, fund_id=fund_id)
+    await db.delete(fund_to_delete)
     await db.commit()
     return
 
 
-async def found_add_manager(found_id: int, user_id: int, db: AsyncSession) -> None:
-    found = await db.scalar(
-        select(models.Found)
-        .where(models.Found.id == found_id)
-        .options(selectinload(models.Found.managers))
-    )
+async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession) -> None:
+    fund = await get_fund_by_id(db=db, fund_id=fund_id)
     new_manager = await db.scalar(
         select(models.User).where(
             models.User.role.in_([models.Roles.ADMIN, models.Roles.MANAGER]),
@@ -76,8 +85,10 @@ async def found_add_manager(found_id: int, user_id: int, db: AsyncSession) -> No
         )
     )
 
+    if new_manager is None:
+        raise ObjectNotfund()
     try:
-        found.managers.append(new_manager)
+        fund.managers.append(new_manager)
         await db.commit()
     except Exception as e:
         await db.rollback()
@@ -85,30 +96,31 @@ async def found_add_manager(found_id: int, user_id: int, db: AsyncSession) -> No
 
 
 async def get_records_list(
-    db: AsyncSession, search_query: str, found_id: int
+    db: AsyncSession, search_query: str, fund_id: int
 ) -> List[models.Record]:
     records_query = (
         select(models.Record)
         .options(
-            selectinload(models.Record.previous_versions),
-            selectinload(models.Record.created_by),
             selectinload(models.Record.nicknames),
+            selectinload(models.Record.previous_versions).options(
+                selectinload(models.RecordHistory.nicknames)
+            ),
+            selectinload(models.Record.created_by),
+            selectinload(models.Record.fund),
         )
         .order_by(models.Record.created_at.desc())
     )
 
-    if found_id:
-        records_query = records_query.where(models.Record.found_id == found_id)
+    if fund_id:
+        records_query = records_query.where(models.Record.fund_id == fund_id)
 
     if search_query:
         records_query = records_query.where(
             or_(
-                models.Record.has(models.User.username.ilike(f"%{search_query}%")),
-                models.Record.has(models.User.email.ilike(f"%{search_query}%")),
-                models.Record.arbitrage.ilike(f"%{search_query}%"),
+                models.Record.description.ilike(f"%{search_query}%"),
                 models.Record.first_name.ilike(f"%{search_query}%"),
                 models.Record.last_name.ilike(f"%{search_query}%"),
-                models.Record.by_fathers_name.ilike(f"%{search_query}%"),
+                models.Record.middlename.ilike(f"%{search_query}%"),
                 models.Record.description.ilike(f"%{search_query}%"),
             )
         )
@@ -121,22 +133,26 @@ async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
         select(models.Record)
         .where(models.Record.id == record_id)
         .options(
-            selectinload(models.Record.previous_versions),
-            selectinload(models.Record.created_by),
             selectinload(models.Record.nicknames),
+            selectinload(models.Record.previous_versions).options(selectinload(models.RecordHistory.nicknames)),
+            selectinload(models.Record.created_by),
+            selectinload(models.Record.fund),
         )
     )
     record = await db.scalar(record_by_id_query)
 
     if record is None:
-        raise ObjectNotFound
+        raise ObjectNotfund
     return record
 
 
+
 async def create_record(db: AsyncSession, record_data: schemas.RecordCreate):
-    update_data = record_data.model_dump()
-    nicknames = update_data.pop("nicknames")
+    record_data = record_data.model_dump()
+    nicknames = record_data.pop("nicknames")
+    fund = await get_fund_by_id(db=db, fund_id=record_data.pop("fund_id"))
     create_record_query = insert(models.Record).values(
+        record_data
     )
 
     
@@ -146,8 +162,8 @@ async def create_record(db: AsyncSession, record_data: schemas.RecordCreate):
         new_record = await get_record_by_id(
             record_id=created_record_data.inserted_primary_key[0], db=db
         )
+        new_record.fund = fund
         if nicknames:
-            print(nicknames)
             nicknames_list = [
                 models.Nickname(
                     room_name=nickname_dict.get("room_name"),
@@ -172,24 +188,42 @@ async def update_record_by_id(
     record = await get_record_by_id(record_id=record_id, db=db)
 
     previous_version = models.RecordHistory()
-    previous_version.__dict__.update(record.__dict__)
+    for attr in ['first_name', 'last_name', 'middlename', 'gipsyteam', 'pokerstrategy', 'description', 'amount', 'google', 'mail', 'vk', 'facebook', 'blog', 'instagram', 'forum', 'neteller', 'skrill', 'ecopayz', 'old', 'fundName', 'nicknameOld', 'comments', 'country', 'town', 'address', 'created_by_id', 'created_at', 'webmoney_id', 'wallets', 'updated_at', 'old_id']:
+        setattr(previous_version, attr, getattr(record, attr))
 
-    previous_version.__dict__.update(record.__dict__)
-    previous_version.nicknames = record.nicknames
-    print(previous_version)
-    await db.add(previous_version)
+    # Create a copy of the list of nicknames
+    nicknames_copy = list(record.nicknames)
+    
+    for old_nickname in nicknames_copy:
+        previous_version.nicknames.append(old_nickname)
 
-    await db.commit()
-
-    update_data = new_data.dict(exclude_unset=True)
+    db.add(previous_version)
+    update_data = new_data.create_update_dict()
+    try:
+        updated_nicknames_dicts = update_data.pop("nicknames")
+    except:
+        updated_nicknames_dicts = None
     update_data["updated_at"] = datetime.now()
+    
     for key, value in update_data.items():
         setattr(record, key, value)
 
+    if updated_nicknames_dicts:
+        record.nicknames.clear()
+        updated_nicknames = [models.Nickname(**nickname_dict) for nickname_dict in updated_nicknames_dicts if nickname_dict]
+        record.nicknames.clear()
+        record.nicknames.extend(updated_nicknames)
+        
     record.previous_versions.append(previous_version)
+
     await db.commit()
 
     return record
 
+
 async def delete_record_by_id(db: AsyncSession, record_id: int) -> None:
     record_to_delete = await get_record_by_id(db=db, record_id=record_id)
+
+    db.delete(record_to_delete)
+
+    db.commit()

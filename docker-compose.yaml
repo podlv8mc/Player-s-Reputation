@@ -1,33 +1,31 @@
 version: '3'
 services:
-  
   reputationpg:
     restart: always
     image: 'postgres:latest'
     env_file:
-      - ./FastAPI/.env
-    ports:
-      - '5432:5432'
+      - .env
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     networks:
-      - my_network
-  
+      - startme_network
+
   api:
-    hostname: api
     build:
       context: ./FastAPI
       dockerfile: Dockerfile
-    command: sh -c "alembic upgrade head && uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
-    ports:
-      - '8080:8000'
+    links:
+      - "reputationpg:database"
+    command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
     restart: always
     env_file:
-      - ./FastAPI/.env
+      - .env
+    volumes:
+      - './FastAPI:/app'
     depends_on:
       - reputationpg
     networks:
-      - my_network
+      - startme_network
 
   nginx:
     build:
@@ -37,19 +35,19 @@ services:
       - "80:80"
       - "81:81"
       - "443:443"
-      - '8000:8080'
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
       - ./nginx:/etc/nginx/conf.d/
     depends_on:
-      - api      
+      - api
     networks:
-      - my_network
+      - startme_network
 
 volumes:
   postgres:
   nginx:
-    
+
+
 networks:
-  my_network:
+  startme_network:
