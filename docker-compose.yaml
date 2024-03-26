@@ -8,25 +8,21 @@ services:
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     networks:
-      - startme_network
-
+      - my_network
+  
   api:
     build:
       context: ./FastAPI
       dockerfile: Dockerfile
-    links:
-      - "reputationpg:database"
     command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
     restart: always
     env_file:
       - .env
-    volumes:
-      - './FastAPI:/app'
     depends_on:
       - reputationpg
     networks:
-      - startme_network
-
+      - my_network
+  
   nginx:
     build:
       context: ./nginx
@@ -42,12 +38,10 @@ services:
     depends_on:
       - api
     networks:
-      - startme_network
-
+      - my_network
 volumes:
   postgres:
   nginx:
 
-
 networks:
-  startme_network:
+  my_network:
