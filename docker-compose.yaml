@@ -5,10 +5,11 @@ services:
     image: 'postgres:latest'
     env_file:
      -  .env
-    ports:
-      - ':5479'
+    expose:
+      - "5479"
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+    command: -p 5479
 
   api:
     build:
