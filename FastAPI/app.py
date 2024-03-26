@@ -25,8 +25,8 @@ disable_installed_extensions_check()
 app = FastAPI(root_path="/api/v1")
 
 origins = [
-    "http://nginx",
-    "https://nginx"
+    "http://213-134-31-78.netherlands.vps.ac",
+    "https://213-134-31-78.netherlands.vps.ac"
     ]
 
 app.add_middleware(
