@@ -1,55 +1,35 @@
-version: '3'
+version: '3.9'
 services:
-  
   reputationpg:
     restart: always
     image: 'postgres:latest'
-    env_file:
-      - ./FastAPI/.env
+    environment:
+     -  POSTGRES_HOST:${POSTGRES_HOST}
+     -  POSTGRES_USER:${POSTGRES_USER}
+     -  POSTGRES_PASSWORD:${POSTGRES_PASSWORD}
+     -  POSTGRES_DB:${POSTGRES_DB}
     ports:
-      - '5432:5432'
+      - ':5479'
     volumes:
       - 'postgres:/var/lib/postgresql/data'
-    networks:
-      - my_network
-  
+
   api:
-    hostname: api
     build:
       context: ./FastAPI
       dockerfile: Dockerfile
-    command: sh -c "alembic upgrade head && uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
-    ports:
-      - '8080:8000'
+    command: sh -c "uvicorn app:app --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
     restart: always
-    env_file:
-      - ./FastAPI/.env
+    environment:
+     -  POSTGRES_HOST:${POSTGRES_HOST}
+     -  POSTGRES_USER:${POSTGRES_USER}
+     -  POSTGRES_PASSWORD:${POSTGRES_PASSWORD}
+     -  POSTGRES_DB:${POSTGRES_DB}
+     -  API_SECRET:${API_SECRET}
+    volumes:
+      - './FastAPI:/app'
     depends_on:
       - reputationpg
-    networks:
-      - my_network
-
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfiile_nginx
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
-      - '8000:8080'
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-      - ./nginx:/etc/nginx/conf.d/
-    depends_on:
-      - api      
-    networks:
-      - my_network
 
 volumes:
   postgres:
   nginx:
-    
-networks:
-  my_network:
