@@ -4,12 +4,14 @@ services:
     restart: always
     image: 'postgres:latest'
     env_file:
-     -  .env
+      - .env
     expose:
       - "5479"
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     command: -p 5479
+    networks:
+      - startme_network
 
   api:
     build:
@@ -18,11 +20,13 @@ services:
     command: sh -c "uvicorn app:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers --reload"
     restart: always
     env_file:
-     -  .env
+      - .env
     volumes:
       - './FastAPI:/app'
     depends_on:
       - reputationpg
+    networks:
+      - startme_network
 
   nginx:
     build:
@@ -38,7 +42,12 @@ services:
       - ./nginx:/etc/nginx/conf.d/
     depends_on:
       - api
+    networks:
+      - startme_network
 
 volumes:
   postgres:
   nginx:
+
+networks:
+  startme_network:
