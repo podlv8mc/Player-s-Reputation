@@ -3,12 +3,10 @@ import Footer from "@/components/footer/Footer";
 import Home from "@/components/main/sections/Home/Home";
 import About from "@/components/main/sections/About/About";
 import Contacts from "@/components/main/sections/Contacts/Contacts";
-import Funds from "@/components/main/sections/funds/Funds";
-import Images from "@/image/image";
 
 class Main extends React.Component {
     render() {
-        const items = [
+        /*const items = [
             { id: 1, title: "Item 1", image: Images.popup__background, param1: "MTT" },
             { id: 2, title: "Item 2", image: "image2.jpg", param1: "Двухуровневые игры" },
             { id: 5, title: "Item 2", image: "image2.jpg", param1: "Двухуровневые игры" },
@@ -23,12 +21,13 @@ class Main extends React.Component {
             { name: "param1", options: ["СНГ"] },
         ];
 
+         */
+
         return (
             <main id="main" className="main">
                 <Home />
                 <About />
                 <Contacts />
-                <Funds items={items} filterParams={filterParams}/>
                 <Footer />
             </main>
         )

@@ -1,29 +1,8 @@
 import React from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
 
-function TableBody({ columns, data }) {
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        prepareRow,
-        page, // Update to use 'page' instead of 'page'
-        previousPage,
-        nextPage,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        state: { pageIndex, globalFilter } = {}, // Destructure globalFilter with default value
-        setGlobalFilter, // Add setGlobalFilter
-    } = useTable(
-        {
-            columns,
-            data,
-            initialState: { pageIndex: 0, pageSize: 10 }, // Initial page index and size
-        },
-        useGlobalFilter, // Use the global filter hook
-        usePagination // Use the pagination hook
-    );
+function TableBody() {
+
 
     return (
         <>

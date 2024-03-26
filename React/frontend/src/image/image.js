@@ -25,6 +25,9 @@ const Images = {
     applefavicon32: require('./favicons/favicon-32x32.png'),
     applefavicon16: require('./favicons/favicon-16x16.png'),
     applefaviconsaf: require('./favicons/safari-pinned-tab.svg'),
+    add: require('./pictures/add.webp'),
+    search: require('./pictures/search.webp'),
+    arrow: require('./pictures/arrow.webp'),
 }
 
 export default Images
