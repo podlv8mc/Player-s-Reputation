@@ -35,6 +35,7 @@ module.exports = {
         compress: true,
         historyApiFallback: true,
         port: 9000,
+        allowedHosts: 'all',
     },
     resolve: {
         extensions: ['.js', '.json', '.jsx', '.scss'],

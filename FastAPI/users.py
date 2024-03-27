@@ -19,7 +19,7 @@ from utils import exceptions as custom_exceptions
 from db.users_db import get_user_db, models as db_models, User, UsersDB
 
 
-SECRET = os.getenv('API_SECRET')
+SECRET = os.getenv("API_SECRET")
 
 
 class PasswordHelperV2(PasswordHelper):
@@ -70,7 +70,7 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
     async def create_with_funds(
         self,
         user_create: schemas.UserCreate,
-        current_user: User,
+        # current_user: User,
         safe: bool = False,
         request: Optional[Request] = None,
     ) -> models.UP:
@@ -87,25 +87,25 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
             else user_create.create_update_dict_superuser()
         )
         new_user_role = user_dict.get("role")
-        if (
-            current_user.role == db_models.Roles.READ_ONLY 
-            and new_user_role != db_models.Roles.READ_ONLY
-        ):
-            raise custom_exceptions.NotEnoughPermissions()
+        # if (
+        #     current_user.role == db_models.Roles.READ_ONLY 
+        #     and new_user_role != db_models.Roles.READ_ONLY
+        # ):
+        #     raise custom_exceptions.NotEnoughPermissions()
 
-        if (
-            current_user.role == db_models.Roles.USER 
-            and new_user_role not in [
-                db_models.Roles.READ_ONLY, db_models.Roles.USER
-                ]
-        ):
-            raise custom_exceptions.NotEnoughPermissions()
+        # if (
+        #     current_user.role == db_models.Roles.USER 
+        #     and new_user_role not in [
+        #         db_models.Roles.READ_ONLY, db_models.Roles.USER
+        #         ]
+        # ):
+        #     raise custom_exceptions.NotEnoughPermissions()
         
-        if (
-            current_user.role == db_models.Roles.MANAGER 
-            and new_user_role == db_models.Roles.ADMIN
-        ):
-            raise custom_exceptions.NotEnoughPermissions() 
+        # if (
+        #     current_user.role == db_models.Roles.MANAGER 
+        #     and new_user_role == db_models.Roles.ADMIN
+        # ):
+        #     raise custom_exceptions.NotEnoughPermissions() 
         
         password = user_dict.pop("password")
         user_dict["hashed_password"] = self.password_helper.hash(password)
