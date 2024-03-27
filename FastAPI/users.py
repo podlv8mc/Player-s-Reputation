@@ -1,3 +1,4 @@
+import os
 from typing import Any, Optional, Dict
 
 from fastapi import Depends, Request, exceptions
@@ -17,7 +18,8 @@ import schemas
 from utils import exceptions as custom_exceptions 
 from db.users_db import get_user_db, models as db_models, User, UsersDB
 
-SECRET = "SECRET"
+
+SECRET = os.getenv('API_SECRET')
 
 
 class PasswordHelperV2(PasswordHelper):
