@@ -12,9 +12,21 @@
 
 .main {
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   gap: 60px;
   flex-grow: 1;
+}
+
+.modal-index {
+  #root {
+    .App {
+      .mob-header__btn {
+        z-index: 1;
+        transition: none;
+      }
+    }
+  }
 }
 
 .modal {

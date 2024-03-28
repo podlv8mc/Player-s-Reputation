@@ -1,34 +1,39 @@
 import React from 'react';
-import {Link} from "react-scroll"
+import { Link } from "react-scroll";
+import { useSpring, animated } from 'react-spring';
 
-class List extends React.Component {
+const List = ({ class: className, href, name, alt, spanClass, text, isOpen }) => {
+    const contentAnimation = useSpring({
+        left: isOpen ? '30' : '45px',
+        from: { left: '45px' },
+    });
 
+    const textAnimation = useSpring({
+        left: isOpen ? '40px' : '-200px',
+        from: { left: '-200px' },
+    });
 
-    render() {
+    const handleSetActive = (to) => {
+    };
 
-        const handleSetActive = (to) => {
-            console.log(to);
-        };
-
-        return (
-            <li className={this.props.class}>
-                <Link
-                    className="globalnav__link"
-                    to={this.props.href}
-                    spy={true}
-                    smooth={true}
-                    offset={0}
-                    duration={0}
-                    onSetActive={handleSetActive}
-                >
-                    <img src={this.props.name} alt={this.props.alt}/>
-                    <span className={this.props.spanClass}>
-                        {this.props.text}
-                    </span>
-                </Link>
-            </li>
-        )
-    }
+    return (
+        <li className={className}>
+            <Link
+                className="globalnav__link"
+                to={href}
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={0}
+                onSetActive={handleSetActive}
+            >
+                <animated.img src={name} alt={alt} style={contentAnimation} />
+                <animated.span className={spanClass} style={textAnimation}>
+                    {text}
+                </animated.span>
+            </Link>
+        </li>
+    )
 }
 
-export default List
+export default List;

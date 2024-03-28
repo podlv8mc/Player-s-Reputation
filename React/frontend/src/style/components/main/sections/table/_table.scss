@@ -6,6 +6,14 @@
 
 /* === Styles === */
 
+.app__table {
+
+  .main {
+    gap: 30px;
+    overflow: unset;
+  }
+}
+
 .table__top-wrap {
   display: flex;
   justify-content: space-between;
@@ -13,15 +21,16 @@
   .table__top {
     display: flex;
     gap: 8px;
+    padding-right: 200px;
 
     .input__search {
       padding: 0px 0px 0px 10px;
       width: 250px;
       @include Montserrat-500;
-      color: #FFFFFF;
+      color: #ffffff;
       border-radius: 10px;
       background: #000000;
-      transition: all .4s ease;
+      transition: all 0.4s ease;
     }
 
     .input__search-op {
@@ -40,12 +49,13 @@
       img {
         width: 24px;
         height: 24px;
-        transition: all .4s ease;
+        transition: all 0.4s ease;
       }
 
       &:hover {
         img {
-          filter: invert(66%) sepia(64%) saturate(517%) hue-rotate(352deg) brightness(105%) contrast(94%);
+          filter: invert(66%) sepia(64%) saturate(517%) hue-rotate(352deg)
+          brightness(105%) contrast(94%);
         }
       }
     }
@@ -62,12 +72,8 @@
   color: #ffffff;
 
   .table__header-wrap {
-
-
     .table__header {
-
       .table__headers {
-
         &:first-child {
           width: 134px;
           padding-right: 5px;
@@ -94,12 +100,12 @@
         }
 
         &:nth-child(6) {
-          width: 155px;
+          width: 150px;
           padding-right: 5px;
         }
 
         &:nth-child(7) {
-          width: 155px;
+          width: 150px;
           padding-right: 5px;
         }
 
@@ -109,7 +115,7 @@
         }
 
         &:last-child {
-          width: 155px;
+          width: 150px;
           padding-right: 5px;
         }
       }
@@ -205,7 +211,6 @@
 }
 
 .select {
-
   &__control {
     border-radius: 10px !important;
     width: 280px !important;
@@ -213,7 +218,7 @@
     background: #000000 !important;
     border: none !important;
     box-shadow: none !important;
-    transition: all .4s ease !important;
+    transition: all 0.4s ease !important;
 
     &-is-focused {
       box-shadow: none !important;
@@ -235,7 +240,7 @@
 
   &__single-value {
     @include Montserrat-500;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
   }
 
   &__indicator-separator {
@@ -243,11 +248,11 @@
   }
 
   &__indicator:hover {
-    color: #FFFFFF !important;
+    color: #ffffff !important;
   }
 
   &__indicator {
-    transition: all .4s ease !important;
+    transition: all 0.4s ease !important;
   }
 
   &__menu {
@@ -264,13 +269,13 @@
 
   &__option {
     @include Montserrat-500;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
     padding: 0px 0px 0px 15px !important;
     height: 48px !important;
     display: flex !important;
     align-items: center !important;
     background: transparent !important;
-    transition: all .4s ease !important;
+    transition: all 0.4s ease !important;
 
     &:last-child {
       border-radius: 0px 0px 10px 10px !important;
@@ -287,7 +292,7 @@
 
 .table__modal-title {
   @include Montserrat-500;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 20px;
   padding-bottom: 25px;
   text-align: center;
@@ -309,7 +314,7 @@
     .table__modal-cell-title {
       @include Montserrat-500;
       font-size: 16px;
-      color: #FFFFFF;
+      color: #ffffff;
     }
 
     .table__modal-cell {
@@ -322,7 +327,7 @@
       font-size: 15px;
       background: #101117;
       border-radius: 8px;
-      color: #FFFFFF;
+      color: #ffffff;
       padding: 5px 20px;
       text-align: center;
     }
@@ -341,7 +346,7 @@
     @include Montserrat-500;
     font-size: 20px;
     background: transparent;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   .active {
@@ -366,7 +371,13 @@
   }
 
   .disabled {
-    opacity: .3;
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 800px) {
+  .table {
+    padding: 0px 20px;
   }
 }
 

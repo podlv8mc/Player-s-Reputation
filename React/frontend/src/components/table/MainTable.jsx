@@ -93,7 +93,7 @@ function MainTable() {
         () => [
             {
                 Header: 'Фонд',
-                accessor: 'found.name',
+                accessor: row => row.found.name,
             },
             {
                 Header: 'Создано',
@@ -111,8 +111,7 @@ function MainTable() {
             },
             {
                 Header: 'Ники',
-                accessor: 'nicknameOld',
-                Cell: ({ value }) => <div className="truncate">{value}</div>,
+                accessor: row => row.nicknameOld,
             },
             {
                 Header: 'Дисциплина',
@@ -127,16 +126,15 @@ function MainTable() {
             },
             {
                 Header: 'Описание',
-                accessor: 'description',
-                Cell: ({ value }) => <div className="truncate">{value}</div>,
+                accessor: row => row.description,
             },
             {
                 Header: 'Ущерб',
-                accessor: 'amount',
+                accessor: row => row.amount,
             },
             {
                 Header: 'Gipsy team',
-                accessor: 'gipsyteam',
+                accessor: row => row.gipsyteam,
             },
         ],
         []
@@ -217,13 +215,13 @@ function MainTable() {
                 Информация о пользователе
             </div>
             <div className="table__modal-form-wrap">
-                {columns.slice(0, -1).map(column => (
+                {columns.map(column => (
                     <div className="table__modal-row" key={column.accessor}>
                         <div className="table__modal-cell-title">
                             {column.Header}
                         </div>
                         <div className="table__modal-cell">
-                            {selectedUser && column.accessor(selectedUser)}
+                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
                         </div>
                     </div>
                 ))}

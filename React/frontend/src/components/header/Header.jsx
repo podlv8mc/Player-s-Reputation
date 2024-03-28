@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sticky from 'react-sticky-el';
+import StickyBox from "react-sticky-box";
 import Navigation from "@/components/header/Navigation";
 
 const Header = () => {
@@ -11,11 +11,11 @@ const Header = () => {
 
     return (
         <div className={`header__wrap ${isButtonClicked ? 'header__wrap-width' : ''}`}>
-            <Sticky topOffset={0} boundaryElement=".header__wrap" stickyStyle={{ top: '8px' }}>
+            <StickyBox offsetTop={5} offsetBottom={0}>
                 <header className={`header ${isButtonClicked ? 'header-width' : ''}`}>
                     <Navigation onButtonClick={handleButtonClick} />
                 </header>
-            </Sticky>
+            </StickyBox>
         </div>
     );
 };

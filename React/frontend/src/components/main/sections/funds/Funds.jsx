@@ -1,88 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Sections from "@/components/headers/Sections";
 
-const Funds = ({ items, filterParams }) => {
-    const [filteredItems, setFilteredItems] = useState(items);
-    const [initialFilters, setInitialFilters] = useState({});
-
-    useEffect(() => {
-        applyFilters(initialFilters);
-    }, [items, initialFilters]);
-
-    const applyFilters = (filters) => {
-        let filtered = items;
-        for (const param in filters) {
-            if (filters[param]) {
-                filtered = filtered.filter(item => item[param] === filters[param]);
-            }
-        }
-        setFilteredItems(filtered);
+export default function Funds() {
+    const settings = {
+        className: "slider__wrap",
+        slidesToShow: 3,
+        lazyLoad: true,
+        rows: 2,
+        infinite: false,
+        dots: true,
+        speed: 500,
+        slidesToScroll: 2,
+        responsive: [
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    rows: 2,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    rows: 3,
+                }
+            },
+        ]
     };
 
-    const onFilterChange = (param, value) => {
-        const filters = { ...initialFilters, [param]: value };
-        setInitialFilters(filters);
-    };
+    const toggleClass = (event) => {
+        const parentElement = event.target.parentNode;
 
-    useEffect(() => {
-        if (filterParams.length > 0) {
-            const firstParam = filterParams[0].name;
-            const initialValue = filterParams[0].options[0];
-            const filters = { [firstParam]: initialValue };
-            setInitialFilters(filters);
-        }
-    }, [filterParams]);
-
-    return (
-        <section id="Funds" className="funds__wrap">
-            <Filter
-                filterParams={filterParams}
-                onChange={onFilterChange}
-                initialFilters={initialFilters}
-            />
-            <Swiper
-                pagination={{ clickable: true }}
-                spaceBetween={30}
-                slidesPerView={3}
-            >
-                {filteredItems.map(item => (
-                    <SwiperSlide key={item.id}>
-                        <div className="swiper-slide">
-                            <img src={item.image} alt={item.title} />
-                            <h3>{item.title}</h3>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </section>
-    );
-};
-
-const Filter = ({ filterParams, onChange, initialFilters }) => {
-    const handleFilterChange = (param, value) => {
-        onChange(param, value);
+        parentElement.classList.toggle("qwer");
     };
 
     return (
-        <div className="filter-container">
-            {filterParams.map(param => (
-                <div key={Math.random()}>
-                    <div className="filter-buttons">
-                        {param.options.map(option => (
-                            <button
-                                key={option}
-                                onClick={() => handleFilterChange(param.name, option)}
-                                className={initialFilters[param.name] === option ? "active" : ""}
-                            >
-                                {option}
-                            </button>
-                        ))}
+        <section id="funds" className="funds__wrap">
+            <Sections clarification="ТОП Бекинг Фондов" title="Бекинговые фонды"
+                      subtitle="Список всех бекинговых фондов СНГ."/>
+            <Slider {...settings}>
+                <div className="slide__wrap">
+                    <div className="slide">
+                        lol
+                        <button onClick={toggleClass}>
+                            ok
+                        </button>
                     </div>
                 </div>
-            ))}
-        </div>
+            </Slider>
+        </section>
     );
-};
-
-export default Funds;
+}

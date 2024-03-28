@@ -41,9 +41,7 @@
             height: 46px;
             padding: 0px 15px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 10px;
             position: relative;
             overflow: hidden;
             transition: all .4s ease;
@@ -53,17 +51,18 @@
               font-size: 16px;
               color: #FFFFFF;
               position: absolute;
-              right: -200px;
               opacity: 0;
               padding-top: 4px;
-              transition: all 1s ease;
+              transition: all .1s ease;
             }
 
             img {
               width: 24px;
               height: 24px;
               opacity: .7;
-              transition: all .4s ease;
+              position: absolute;
+              top: 50%;
+              transform: translate(-50%, -50%);
             }
 
             &:hover {
@@ -94,6 +93,7 @@
             height: 40px;
 
             .globalnav__text {
+              width: 100px;
               @include Montserrat-700;
               background: linear-gradient(321deg, #f29000 0%, #f18f00 0.01%, #fccd55 61.26%, #f8b736 100%);
               background-clip: text;
@@ -123,6 +123,28 @@
       top: 50%;
       left: 100%;
       transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all .3s ease;
+
+      svg {
+        transition: all .7s ease;
+
+        path {
+          transition: all .3s ease;
+        }
+      }
+
+      &:hover {
+        background: #ffffff;
+
+        svg {
+          path {
+            fill: #000000;
+          }
+        }
+      }
     }
   }
 
@@ -133,14 +155,9 @@
       .globalnav__list {
         .globalnav {
           .globalnav__link {
-            //justify-content: flex-start;
             .globalnav__text {
               position: relative;
-              right: auto;
               opacity: .7;
-            }
-
-            img {
             }
 
             &:hover {
@@ -157,6 +174,14 @@
 
 .header__wrap-width {
   width: 200px;
+
+  .header {
+    .header__btn {
+      svg {
+        transform: rotate(-180deg);
+      }
+    }
+  }
 }
 
 .mob-header__btn {

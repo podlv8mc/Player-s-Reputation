@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.2",
   "description": "Player's Reputation",
   "private": true,
   "dependencies": {
@@ -22,15 +22,18 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.22.3",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "react-scroll": "^1.9.0",
     "react-select": "^5.8.0",
+    "react-slick": "^0.30.2",
+    "react-spring": "^9.7.3",
+    "react-sticky-box": "^2.0.5",
     "react-sticky-el": "^2.1.0",
     "react-table": "^7.8.0",
     "sass": "^1.71.1",
     "sass-loader": "^14.1.1",
+    "slick-carousel": "^1.8.1",
     "style-loader": "^3.3.4",
-    "swiper": "^11.0.7",
     "terser-webpack-plugin": "^5.3.10",
     "web-vitals": "^3.5.2"
   },

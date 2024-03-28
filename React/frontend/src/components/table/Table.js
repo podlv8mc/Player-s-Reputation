@@ -20,7 +20,7 @@ function Table() {
     }, []);
 
     return (
-        <div className="App">
+        <div className="App app__table">
             {windowWidth >= 801 ? (
                 <Header/>
             ) : (
