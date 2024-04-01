@@ -290,6 +290,15 @@
   }
 }
 
+.modal__btn-new {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  color: #ffffff;
+  height: 20px;
+  background: red;
+}
+
 .table__modal-title {
   @include Montserrat-500;
   color: #ffffff;

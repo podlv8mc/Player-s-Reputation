@@ -9,8 +9,8 @@ const List = ({ class: className, href, name, alt, spanClass, text, isOpen }) =>
     });
 
     const textAnimation = useSpring({
-        left: isOpen ? '40px' : '-200px',
-        from: { left: '-200px' },
+        left: isOpen ? '40px' : '65px',
+        from: { left: '65px' },
     });
 
     const handleSetActive = (to) => {

@@ -4,16 +4,37 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Sections from "@/components/headers/Sections";
 
-export default function Funds() {
+function Funds() {
     const settings = {
         className: "slider__wrap",
         slidesToShow: 3,
         lazyLoad: true,
         rows: 2,
-        infinite: false,
         dots: true,
         speed: 500,
         slidesToScroll: 2,
+        appendDots: dots => (
+            <div
+                style={{
+                    backgroundColor: "#ddd",
+                    borderRadius: "10px",
+                    padding: "10px"
+                }}
+            >
+                <ul style={{ margin: "0px" }}> {dots} </ul>
+            </div>
+        ),
+        customPaging: i => (
+            <div
+                style={{
+                    width: "30px",
+                    color: "blue",
+                    border: "1px blue solid"
+                }}
+            >
+                {i + 1}
+            </div>
+        ),
         responsive: [
             {
                 breakpoint: 800,
@@ -30,6 +51,7 @@ export default function Funds() {
                 }
             },
         ]
+
     };
 
     const toggleClass = (event) => {
@@ -55,3 +77,5 @@ export default function Funds() {
         </section>
     );
 }
+
+export default Funds;

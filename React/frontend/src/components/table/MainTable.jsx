@@ -8,6 +8,8 @@ function MainTable() {
     const [filteredData, setFilteredData] = useState([]);
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
+    const [editingUserData, setEditingUserData] = useState(null);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [newUserData, setNewUserData] = useState({
@@ -58,6 +60,14 @@ function MainTable() {
         setSelectedUser(null);
     };
 
+    const openEditModal = (user) => {
+        setEditingUserData(user);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+    };
     const handleChange = e => {
         const { name, value } = e.target;
         setNewUserData(prevData => ({
@@ -86,6 +96,24 @@ function MainTable() {
             setIsModalOpen(false);
         } catch (error) {
             console.error('Error adding user: ', error);
+        }
+    };
+
+    const handleEditSubmit = async () => {
+        try {
+            const response = await fetch(`/api/v1/users/${editingUserData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editingUserData)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update user');
+            }
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error('Error updating user: ', error);
         }
     };
 
@@ -208,9 +236,46 @@ function MainTable() {
         </Modal>
     );
 
+    const EditModalContent = editingUserData && (
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal">
+            <div className="table__modal-title">
+                Редактировать пользователя
+            </div>
+            <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
+                {/* Определяем массив с информацией о полях */}
+                {Object.entries(newUserData).map(([key, value]) => (
+                    <div className="table__modal-row" key={key}>
+                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                        <input
+                            className="table__modal-cell"
+                            id={key}
+                            type="text"
+                            name={key}
+                            value={editingUserData[key]}
+                            onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                            autoComplete="off"
+                        />
+                    </div>
+                ))}
+                <div className="">
+                    <button className="btn-hover table__btn" type="submit">
+                        Сохранить
+                    </button>
+                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                        Отменить
+                    </button>
+                </div>
+            </form>
+        </Modal>
+    );
+
+
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser !== null} setActive={closeViewModal}>
-            <button className="modal__btn-close" onClick={closeViewModal} />
+            <button className="modal__btn-close" onClick={closeViewModal}/>
+            <button className="modal__btn-new" onClick={() => openEditModal(selectedUser)}>
+                редактировать
+            </button>
             <div className="table__modal-title">
                 Информация о пользователе
             </div>
@@ -302,6 +367,7 @@ function MainTable() {
                 </tbody>
             </table>
             {PageButtons}
+            {EditModalContent}
             {ModalContent}
             {ViewModalContent}
         </main>

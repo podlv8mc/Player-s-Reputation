@@ -1,13 +1,13 @@
 import React from "react";
 
-const Modal = ({active, setActive, children}) => {
+const Modal = ({ active, setActive, children, className }) => {
     return (
-        <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
-            <div className={active ? "modal__content active" : "modal__content"} onClick={e => e.stopPropagation()}>
+        <div className={`modal ${active ? 'active' : ''} ${className}`} onClick={() => setActive(false)}>
+            <div className={`modal__content ${active ? 'active' : ''}`} onClick={e => e.stopPropagation()}>
                 {children}
             </div>
         </div>
-    )
+    );
 }
 
-export default Modal
+export default Modal;
