@@ -28,6 +28,15 @@ module.exports = {
             new TerserPlugin()
         ]
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'src'),
+        },
+        compress: true,
+        historyApiFallback: true,
+        port: 9000,
+        allowedHosts: 'all',
+    },
     resolve: {
         extensions: ['.js', '.json', '.jsx', '.scss'],
         alias: {
