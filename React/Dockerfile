@@ -9,5 +9,4 @@ COPY frontend/ .
 
 RUN npm run build
 
-CMD ["npm", "run"]
-
+CMD ["npm", "run", "start" ]
