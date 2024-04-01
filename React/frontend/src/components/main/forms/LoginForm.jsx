@@ -52,6 +52,7 @@ const LoginForm = () => {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="off"
                     />
                     <label htmlFor="email">
                         Е-мейл
@@ -65,6 +66,7 @@ const LoginForm = () => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="off"
                     />
                     <label htmlFor="password">
                         Пароль
