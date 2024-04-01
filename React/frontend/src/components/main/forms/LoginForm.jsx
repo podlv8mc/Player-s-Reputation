@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Images from "@/image/image";
+import axios from 'axios'; // Импортируем axios
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showFigure, setShowFigure] = useState(window.innerWidth <= 650);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const handleResize = () => {
@@ -19,9 +21,16 @@ const LoginForm = () => {
         };
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitted!', email, password);
+        try {
+            const response = await axios.post('/api/v1/auth/jwt/login', { email, password });
+            console.log('Login successful!', response.data);
+
+        } catch (error) {
+            console.error('Login failed!', error.response.data);
+            setError('Ошибка входа. Пожалуйста, проверьте введенные данные.');
+        }
     };
 
     return (
@@ -61,6 +70,7 @@ const LoginForm = () => {
                         Пароль
                     </label>
                 </div>
+                {error && <div className="error-message">{error}</div>}
                 <button className="form__btn btn-hover" type="submit">
                     Войти
                 </button>

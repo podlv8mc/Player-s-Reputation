@@ -24,7 +24,7 @@ const ContactLink = (props) => {
                 <button className="modal__btn-close" onClick={() => setModalActive(false)}>
                 </button>
                 <Sections clarification="Вам есть что сказать?" title="Давайте пообщяемся" subtitle="Заполните форму и мы это обсудим"/>
-                <Form />
+                {/*<Form />*/}
             </Modal>
         </div>
     );
