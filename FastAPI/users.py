@@ -19,7 +19,6 @@ from utils import exceptions as custom_exceptions
 from auth import BearerTransportRefresh, AuthenticationBackendRefresh
 from db.users_db import get_user_db, models as db_models, User, UsersDB
 
-
 SECRET = "SECRET"
 REFRESH_SECRET = "REFRESH_SECRET"
 
@@ -89,7 +88,7 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
             if safe
             else user_create.create_update_dict_superuser()
         )
-        new_user_role = user_dict.get("role")
+        # new_user_role = user_dict.get("role")
         # if (
         #     current_user.role == db_models.Roles.READ_ONLY 
         #     and new_user_role != db_models.Roles.READ_ONLY
@@ -189,7 +188,7 @@ async def get_user_manager(user_db: UsersDB = Depends(get_user_db)):
 bearer_transport_refresh = BearerTransportRefresh(tokenUrl="auth/jwt/login")
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=SECRET, lifetime_seconds=3600)
+    return JWTStrategy(secret=SECRET, lifetime_seconds=300)
 
 def get_refresh_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=REFRESH_SECRET, lifetime_seconds=259200)
