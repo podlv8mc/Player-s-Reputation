@@ -189,7 +189,7 @@ async def get_user_manager(user_db: UsersDB = Depends(get_user_db)):
 bearer_transport_refresh = BearerTransportRefresh(tokenUrl="auth/jwt/login")
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=SECRET, lifetime_seconds=300)
+    return JWTStrategy(secret=SECRET, lifetime_seconds=3600)
 
 def get_refresh_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=REFRESH_SECRET, lifetime_seconds=259200)
