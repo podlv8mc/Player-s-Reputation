@@ -1,4 +1,4 @@
-from typing import List
+from typing import Tuple
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
@@ -7,9 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_users.router import common
 from fastapi_users import exceptions as users_exceptions
 from fastapi_users import models as fast_users_models
+from fastapi_users.authentication import Strategy
 from fastapi_pagination import Page, add_pagination, paginate
 from fastapi_pagination.utils import disable_installed_extensions_check
-
 import crud
 import schemas
 import routers
@@ -150,6 +150,20 @@ async def add_manager(
         )
     return Response(status_code=status.HTTP_200_OK)
 
+@app.post(
+        "/auth/jwt/refresh",
+        name=f"auth:{auth_backend.name}.refresh",
+        tags=["auth"]
+    )
+async def refresh(
+    refresh_token: str, # TODO: changer refresh token transport
+    refresh_strategy: Strategy[fast_users_models.UP, fast_users_models.ID] = Depends(auth_backend.get_refresh_strategy),
+    strategy: Strategy[fast_users_models.UP, fast_users_models.ID] = Depends(auth_backend.get_strategy),
+    user_manager: UserManager = Depends(get_user_manager)
+):
+    user = await refresh_strategy.read_token(refresh_token, user_manager)
+    response = await auth_backend.login(strategy, user)
+    return response
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
@@ -194,12 +208,12 @@ async def register(
     request: Request,
     user_create: schemas.UserCreate,  # type: ignore
     user_manager: UserManager = Depends(get_user_manager),
-    # current_user = Depends(permissions.read_only_or_higher)
+    current_user = Depends(permissions.read_only_or_higher)
 ):
     try:
         created_user = await user_manager.create_with_funds(
             user_create, safe=True, request=request, 
-            # current_user=current_user
+            current_user=current_user
         )
     except users_exceptions.UserAlreadyExists:
         raise HTTPException(
@@ -237,7 +251,7 @@ app.include_router(
     "/records",
     response_model=Page[schemas.RecordRead],
     tags=["records"],
-    dependencies=[Depends(permissions.read_only_or_higher)],
+    # dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_records_list(
     search_query: str | None = None,

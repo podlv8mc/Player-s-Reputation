@@ -1,4 +1,3 @@
-import os
 from typing import Any, Optional, Dict
 
 from fastapi import Depends, Request, exceptions
@@ -11,16 +10,18 @@ from fastapi_users.authentication import (
     BearerTransport,
     JWTStrategy,
 )
+
 from fastapi_users.db import SQLAlchemyUserDatabase
 from fastapi_users import models, exceptions as users_exceptions
 
 import schemas
 from utils import exceptions as custom_exceptions 
+from auth import BearerTransportRefresh, AuthenticationBackendRefresh
 from db.users_db import get_user_db, models as db_models, User, UsersDB
 
 
-SECRET = os.getenv("API_SECRET")
-
+SECRET = "SECRET"
+REFRESH_SECRET = "REFRESH_SECRET"
 
 class PasswordHelperV2(PasswordHelper):
     def __init__(self, password_hash: Optional[PasswordHash] = None) -> None:
@@ -36,6 +37,8 @@ password_helper = PasswordHelperV2()
 class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
+    
+    
     async def authenticate(
         self, credentials: dict
     ) -> Optional[models.UP]:
@@ -70,7 +73,7 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
     async def create_with_funds(
         self,
         user_create: schemas.UserCreate,
-        # current_user: User,
+        current_user: User,
         safe: bool = False,
         request: Optional[Request] = None,
     ) -> models.UP:
@@ -87,25 +90,25 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
             else user_create.create_update_dict_superuser()
         )
         new_user_role = user_dict.get("role")
-        # if (
-        #     current_user.role == db_models.Roles.READ_ONLY 
-        #     and new_user_role != db_models.Roles.READ_ONLY
-        # ):
-        #     raise custom_exceptions.NotEnoughPermissions()
+        if (
+            current_user.role == db_models.Roles.READ_ONLY 
+            and new_user_role != db_models.Roles.READ_ONLY
+        ):
+            raise custom_exceptions.NotEnoughPermissions()
 
-        # if (
-        #     current_user.role == db_models.Roles.USER 
-        #     and new_user_role not in [
-        #         db_models.Roles.READ_ONLY, db_models.Roles.USER
-        #         ]
-        # ):
-        #     raise custom_exceptions.NotEnoughPermissions()
+        if (
+            current_user.role == db_models.Roles.USER 
+            and new_user_role not in [
+                db_models.Roles.READ_ONLY, db_models.Roles.USER
+                ]
+        ):
+            raise custom_exceptions.NotEnoughPermissions()
         
-        # if (
-        #     current_user.role == db_models.Roles.MANAGER 
-        #     and new_user_role == db_models.Roles.ADMIN
-        # ):
-        #     raise custom_exceptions.NotEnoughPermissions() 
+        if (
+            current_user.role == db_models.Roles.MANAGER 
+            and new_user_role == db_models.Roles.ADMIN
+        ):
+            raise custom_exceptions.NotEnoughPermissions() 
         
         password = user_dict.pop("password")
         user_dict["hashed_password"] = self.password_helper.hash(password)
@@ -183,19 +186,20 @@ async def get_user_manager(user_db: UsersDB = Depends(get_user_db)):
     yield UserManager(user_db, password_helper)
 
 
-bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
-
+bearer_transport_refresh = BearerTransportRefresh(tokenUrl="auth/jwt/login")
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=SECRET, lifetime_seconds=3600)
+    return JWTStrategy(secret=SECRET, lifetime_seconds=300)
 
+def get_refresh_jwt_strategy() -> JWTStrategy:
+    return JWTStrategy(secret=REFRESH_SECRET, lifetime_seconds=259200)
 
-auth_backend = AuthenticationBackend(
+auth_backend = AuthenticationBackendRefresh(
     name="jwt",
-    transport=bearer_transport,
+    transport=bearer_transport_refresh,
     get_strategy=get_jwt_strategy,
+    get_refresh_strategy=get_refresh_jwt_strategy,
 )
 
-fastapi_users = FastAPIUsers[db_models.User, int](get_user_manager, [auth_backend])
+fastapi_users = FastAPIUsers[User, int](get_user_manager, [auth_backend])
 
-current_active_user = fastapi_users.current_user(active=True)
