@@ -108,7 +108,6 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: "public/site.webmanifest", to: "" },
-                { from: "src/components/table/records.json", to: "" },
             ],
         }),
         new CleanWebpackPlugin(

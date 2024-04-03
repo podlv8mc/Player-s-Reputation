@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useFilters } from 'react-table';
+import React, {useState, useEffect} from 'react';
+import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
+import axios from "axios";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -12,30 +13,59 @@ function MainTable() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
+
+
     const [newUserData, setNewUserData] = useState({
-        name: '',
         nicknameOld: '',
-        discipline: '',
-        fullName: '',
+        nicknames: [{
+            room_name: "",
+            nickname: ""
+        }, null],
+        first_name: '',
+        last_name: '',
+        middlename: '',
         description: '',
         amount: '',
-        gipsyteam: ''
+        gipsyteam: '',
+        neteller: '',
+        pokerstrategy: '',
+        mail: '',
+        vk: '',
+        facebook: '',
+        blog: '',
+        forum: '',
+        instagram: '',
+        ecopayz: '',
+        webmoney_id: '',
+        comments: '',
     });
 
+    const inputLabels = {
+        nicknameOld: "Ники",
+        last_name: "Фамилия",
+        first_name: "Имя",
+        middlename: "Отчество",
+        description: "Описание",
+        amount: "Ущерб",
+        gipsyteam: "Gipsy team",
+        neteller: "Neteller",
+        pokerstrategy: "Poker strategy",
+        mail: "E-mail",
+        vk: "Вконтекте",
+        facebook: "Facebook",
+        blog: "Блог",
+        forum: "Форум",
+        instagram: "Instagram",
+        ecopayz: "Ecopayz",
+        webmoney_id: "Webmoney",
+        comments: "Комментарии",
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/records.json');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const jsonData = await response.json();
-                setData(Array.isArray(jsonData.items) ? jsonData.items : []);
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-            }
-        };
-        fetchData();
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records').then((data) => {
+            console.log(data.data.items)
+            setData(Array.isArray(data.data.items) ? data.data.items : []);
+        })
     }, []);
 
     useEffect(() => {
@@ -69,34 +99,32 @@ function MainTable() {
         setIsEditModalOpen(false);
     };
     const handleChange = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewUserData(prevData => ({
             ...prevData,
             [name]: value
         }));
     };
 
-    const handleSubmit = async () => {
-        try {
-            const createdAt = new Date().toISOString()
-            const userDataWithTimestamp = {
-                ...newUserData,
-                createdAt: createdAt
-            }
-            const response = await fetch('/api/v1/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userDataWithTimestamp)
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add user');
-            }
-            setIsModalOpen(false);
-        } catch (error) {
-            console.error('Error adding user: ', error);
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const createdAt = new Date().toISOString()
+        const userDataWithTimestamp = {
+            ...newUserData,
+            createdAt: createdAt
         }
+
+        await axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error(1, error);
+            });
+
+        setIsModalOpen(false);
+
     };
 
     const handleEditSubmit = async () => {
@@ -121,7 +149,7 @@ function MainTable() {
         () => [
             {
                 Header: 'Фонд',
-                accessor: row => row.found.name,
+                accessor: row => row.fund.name,
             },
             {
                 Header: 'Создано',
@@ -148,7 +176,7 @@ function MainTable() {
             {
                 Header: 'ФИО',
                 accessor: row => {
-                    const { first_name = '', last_name = '', middlename = '' } = row;
+                    const {first_name = '', last_name = '', middlename = ''} = row;
                     return `${first_name}${last_name ? ' ' + last_name : ''}${middlename ? ' ' + middlename : ''}`;
                 },
             },
@@ -164,6 +192,50 @@ function MainTable() {
                 Header: 'Gipsy team',
                 accessor: row => row.gipsyteam,
             },
+            {
+                Header: 'Neteller',
+                accessor: row => row.neteller,
+            },
+            {
+                Header: 'Poker Strategy',
+                accessor: row => row.pokerstrategy,
+            },
+            {
+                Header: 'E-mail',
+                accessor: row => row.mail,
+            },
+            {
+                Header: 'Вконтакте',
+                accessor: row => row.vk,
+            },
+            {
+                Header: 'Facebook',
+                accessor: row => row.facebook,
+            },
+            {
+                Header: 'Блог',
+                accessor: row => row.blog,
+            },
+            {
+                Header: 'Форум',
+                accessor: row => row.forum,
+            },
+            {
+                Header: 'Instagram',
+                accessor: row => row.instagram,
+            },
+            {
+                Header: 'Ecopayz',
+                accessor: row => row.ecopayz,
+            },
+            {
+                Header: 'Webmoney',
+                accessor: row => row.webmoney_id,
+            },
+            {
+                Header: 'Комментарии',
+                accessor: row => row.comments,
+            },
         ],
         []
     );
@@ -176,7 +248,7 @@ function MainTable() {
         prepareRow,
         gotoPage,
         pageCount,
-        state: { pageIndex },
+        state: {pageIndex},
         canPreviousPage,
         canNextPage,
         previousPage,
@@ -185,23 +257,11 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: { pageIndex: 0 },
+            initialState: {pageIndex: 0},
         },
         useFilters,
         usePagination
     );
-
-    const inputLabels = {
-        name: "Фонд",
-        createdAt: "Создано",
-        updatedAt: "Обновлено",
-        nicknameOld: "Ники",
-        discipline: "Дисциплина",
-        fullName: "ФИО",
-        description: "Описание",
-        amount: "Ущерб",
-        gipsyteam: "Gipsy team"
-    };
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -209,8 +269,8 @@ function MainTable() {
     };
 
     const ModalContent = (
-        <Modal active={isModalOpen} setActive={setIsModalOpen}>
-            <button className="modal__btn-close" onClick={() => setIsModalOpen(false)} />
+        <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
+            <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
             <div className="table__modal-title">
                 Добавить пользователя
             </div>
@@ -237,7 +297,7 @@ function MainTable() {
     );
 
     const EditModalContent = editingUserData && (
-        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal">
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
             <div className="table__modal-title">
                 Редактировать пользователя
             </div>
@@ -257,12 +317,12 @@ function MainTable() {
                         />
                     </div>
                 ))}
-                <div className="">
-                    <button className="btn-hover table__btn" type="submit">
-                        Сохранить
-                    </button>
+                <div className="table__btn-row">
                     <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
                         Отменить
+                    </button>
+                    <button className="btn-hover table__btn" type="submit">
+                        Сохранить
                     </button>
                 </div>
             </form>
@@ -271,10 +331,10 @@ function MainTable() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser !== null} setActive={closeViewModal}>
+        <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-            <button className="modal__btn-new" onClick={() => openEditModal(selectedUser)}>
-                редактировать
+            <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
+                <img src={Images.edit} alt="edit"/>
             </button>
             <div className="table__modal-title">
                 Информация о пользователе
@@ -294,51 +354,55 @@ function MainTable() {
         </Modal>
     );
 
-    const PreviousPageButton = ({ onClick, disabled }) => (
+    const PreviousPageButton = ({onClick, disabled}) => (
         <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow" />
+            <img src={Images.arrow} alt="arrow"/>
         </button>
     );
 
-    const NextPageButton = ({ onClick, disabled }) => (
+    const NextPageButton = ({onClick, disabled}) => (
         <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow" />
+            <img src={Images.arrow} alt="arrow"/>
         </button>
     );
 
     const PageButtons = (
         <div className="pagination__wrap">
-            <PreviousPageButton onClick={previousPage} disabled={!canPreviousPage} />
-            {Array.from({ length: pageCount }, (_, i) => (
-                <button
-                    key={i}
-                    onClick={() => gotoPage(i)}
-                    className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
-                >
-                    {i + 1}
-                </button>
-            ))}
-            <NextPageButton onClick={nextPage} disabled={!canNextPage}/>
+            <div className="pagination__box">
+                <PreviousPageButton onClick={previousPage} disabled={!canPreviousPage}/>
+                {Array.from({length: pageCount}, (_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => gotoPage(i)}
+                        className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+                <NextPageButton onClick={nextPage} disabled={!canNextPage}/>
+            </div>
         </div>
     );
 
     return (
         <main id="main" className="main">
             <div className="table__top-wrap">
-                <div></div>
-                <div className="table__top">
-                    <input
-                        className={filterInputVisible ? "input__search" : "input__search input__search-op"}
-                        value={filterInput}
-                        onChange={e => setFilterInput(e.target.value)}
-                        placeholder="Поиск..."
-                    />
-                    <button className="table__top-btn" onClick={toggleFilterInput}>
-                        <img src={Images.search} alt="search"/>
-                    </button>
-                    <button className="table__top-btn" onClick={openModal}>
-                        <img src={Images.add} alt="add"/>
-                    </button>
+                <div className="lol">
+                    <div></div>
+                    <div className="table__top">
+                        <input
+                            className={filterInputVisible ? "input__search" : "input__search input__search-op"}
+                            value={filterInput}
+                            onChange={e => setFilterInput(e.target.value)}
+                            placeholder="Поиск..."
+                        />
+                        <button className="table__top-btn" onClick={toggleFilterInput}>
+                            <img src={Images.search} alt="search"/>
+                        </button>
+                        <button className="table__top-btn" onClick={openModal}>
+                            <img src={Images.add} alt="add"/>
+                        </button>
+                    </div>
                 </div>
             </div>
             <table className="table" {...getTableProps()}>

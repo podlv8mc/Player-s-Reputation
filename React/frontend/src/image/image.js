@@ -28,6 +28,7 @@ const Images = {
     add: require('./pictures/add.webp'),
     search: require('./pictures/search.webp'),
     arrow: require('./pictures/arrow.webp'),
+    edit: require('./pictures/edit.webp'),
 }
 
 export default Images

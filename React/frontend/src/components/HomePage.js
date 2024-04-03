@@ -3,14 +3,25 @@ import '@styles/index.scss';
 import Header from "@/components/header/Header";
 import Main from "@/components/main/Main";
 import MobHeader from "@/components/header/mobile-header/MobHeader";
+import axios from "axios";
 
 function HomePage() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const url1 = "http://213-134-31-78.netherlands.vps.ac/api/v1/records";
+    axios.get(url1, )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+
 
     useEffect(() => {
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
         };
+
 
         window.addEventListener('resize', handleResize);
 
