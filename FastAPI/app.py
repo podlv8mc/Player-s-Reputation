@@ -25,9 +25,11 @@ disable_installed_extensions_check()
 app = FastAPI(root_path="/api/v1")
 
 origins = [
-    "http://nginx",
-    "https://nginx"
-    ]
+    "http://nginx", 
+    "https://nginx", 
+    "http://client",
+    "https://client",
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -43,7 +45,7 @@ app.add_middleware(
     "/funds",
     response_model=Page[schemas.FundRead],
     tags=["funds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def get_funds_list(db: AsyncSession = Depends(get_async_session)):
     funds_list = await crud.get_fund_list(db=db)
@@ -54,12 +56,12 @@ async def get_funds_list(db: AsyncSession = Depends(get_async_session)):
     "/funds/{fund_id}",
     response_model=schemas.FundRead,
     tags=["funds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def get_fund_by_id(
     fund_id: int,
     db: AsyncSession = Depends(get_async_session),
-    # current_user: User = Depends(permissions.manager_or_higher)
+    current_user: User = Depends(permissions.manager_or_higher)
     ):
     try:
         fund = await crud.get_fund_by_id(
@@ -80,7 +82,7 @@ async def get_fund_by_id(
     "/funds",
     response_model=schemas.FundRead,
     tags=["funds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_fund(
     fund_data: schemas.FundCreate, db: AsyncSession = Depends(get_async_session)
@@ -251,7 +253,7 @@ app.include_router(
     "/records",
     response_model=Page[schemas.RecordRead],
     tags=["records"],
-    # dependencies=[Depends(permissions.read_only_or_higher)],
+    dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_records_list(
     search_query: str | None = None,
@@ -268,7 +270,7 @@ async def get_records_list(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.read_only_or_higher)],
+    dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
@@ -284,7 +286,7 @@ async def get_record_by_id(
     "/records",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_record(
     record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
@@ -300,7 +302,7 @@ async def create_record(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.user_or_higher)],
+    dependencies=[Depends(permissions.user_or_higher)],
 )
 async def update_record_by_id(
     record_id: int,
@@ -319,7 +321,7 @@ async def update_record_by_id(
 @app.delete(
     "/records/{record_id}",
     tags=["records"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def delete_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
