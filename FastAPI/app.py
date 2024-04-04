@@ -286,7 +286,7 @@ async def get_record_by_id(
     "/records",
     response_model=schemas.RecordRead,
     tags=["records"],
-    dependencies=[Depends(permissions.manager_or_higher)],
+    # dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_record(
     record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
