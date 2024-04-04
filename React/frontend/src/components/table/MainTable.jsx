@@ -16,28 +16,39 @@ function MainTable() {
 
 
     const [newUserData, setNewUserData] = useState({
-        nicknameOld: '',
-        nicknames: [{
-            room_name: "",
-            nickname: ""
-        }, null],
-        first_name: '',
-        last_name: '',
-        middlename: '',
-        description: '',
-        amount: '',
-        gipsyteam: '',
-        neteller: '',
-        pokerstrategy: '',
-        mail: '',
-        vk: '',
-        facebook: '',
-        blog: '',
-        forum: '',
-        instagram: '',
-        ecopayz: '',
-        webmoney_id: '',
-        comments: '',
+        first_name: "string",
+        last_name: "string",
+        middlename: "string",
+        nicknames: [
+            {
+                room_name: "string",
+                nickname: "string"
+            },
+            null
+        ],
+        gipsyteam: "string",
+        pokerstrategy: "string",
+        description: "string",
+        amount: "string",
+        google: "string",
+        mail: "string",
+        vk: "string",
+        facebook: "string",
+        blog: "string",
+        instagram: "string",
+        forum: "string",
+        neteller: "string",
+        skrill: "string",
+        ecopayz: "string",
+        webmoney_id: "string",
+        wallets: "string",
+        old: true,
+        nicknameOld: "string",
+        comments: "string",
+        country: "string",
+        town: "string",
+        address: "string",
+        fund_id: 0
     });
 
     const inputLabels = {
@@ -47,6 +58,14 @@ function MainTable() {
         middlename: "Отчество",
         description: "Описание",
         amount: "Ущерб",
+        google: "Google",
+        skrill: "Skrill",
+        wallets: "Wallets",
+        old: "Old",
+        country: "Страна",
+        town: "Город",
+        address: "Адрес",
+        fund_id: "Found Id",
         gipsyteam: "Gipsy team",
         neteller: "Neteller",
         pokerstrategy: "Poker strategy",
