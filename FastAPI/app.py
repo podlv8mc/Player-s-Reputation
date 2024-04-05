@@ -1,8 +1,8 @@
-from typing import Tuple
+from typing import Tuple, Annotated
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
-from fastapi import FastAPI, Depends, HTTPException, Response, status, Request
+from fastapi import FastAPI, Depends, HTTPException, Response, status, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_users.router import common
 from fastapi_users import exceptions as users_exceptions
@@ -158,7 +158,7 @@ async def add_manager(
         tags=["auth"]
     )
 async def refresh(
-    refresh_token: str, # TODO: changer refresh token transport
+    refresh_token: Annotated[str | None, Header()] = None,
     refresh_strategy: Strategy[fast_users_models.UP, fast_users_models.ID] = Depends(auth_backend.get_refresh_strategy),
     strategy: Strategy[fast_users_models.UP, fast_users_models.ID] = Depends(auth_backend.get_strategy),
     user_manager: UserManager = Depends(get_user_manager)
