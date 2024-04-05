@@ -119,7 +119,7 @@ async def update_fund_by_id(
 @app.delete(
     "/funds/{fund_id}",
     tags=["funds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def delete_fund_by_id(
     fund_id: int, db: AsyncSession = Depends(get_async_session)
@@ -136,7 +136,7 @@ async def delete_fund_by_id(
 @app.post(
     "/funds/add_manager",
     tags=["funds"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def add_manager(
     fund_id: int, manager_id: int, db: AsyncSession = Depends(get_async_session)
@@ -253,7 +253,7 @@ app.include_router(
     "/records",
     response_model=Page[schemas.RecordRead],
     tags=["records"],
-    # dependencies=[Depends(permissions.read_only_or_higher)],
+    dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_records_list(
     search_query: str | None = None,
@@ -270,7 +270,7 @@ async def get_records_list(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.read_only_or_higher)],
+    dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
@@ -286,7 +286,7 @@ async def get_record_by_id(
     "/records",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_record(
     record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
@@ -302,7 +302,7 @@ async def create_record(
     "/records/{record_id}",
     response_model=schemas.RecordRead,
     tags=["records"],
-    # dependencies=[Depends(permissions.user_or_higher)],
+    dependencies=[Depends(permissions.user_or_higher)],
 )
 async def update_record_by_id(
     record_id: int,
@@ -321,7 +321,7 @@ async def update_record_by_id(
 @app.delete(
     "/records/{record_id}",
     tags=["records"],
-    # dependencies=[Depends(permissions.manager_or_higher)],
+    dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def delete_record_by_id(
     record_id: int, db: AsyncSession = Depends(get_async_session)
