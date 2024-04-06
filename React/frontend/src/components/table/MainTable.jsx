@@ -81,7 +81,12 @@ function MainTable() {
     };
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records').then((data) => {
+        alert(localStorage.getItem("access_token"))
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+            headers:{
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
             console.log(data.data.items)
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         })
@@ -126,20 +131,20 @@ function MainTable() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+
 
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt
         }
-
-        await axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp)
+console.log(newUserData)
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  newUserData)
             .then((response) => {
-                console.log(response);
+                console.log(response.data);
             })
             .catch((error) => {
-                console.error(1, error);
+                console.error(error);
             });
 
         setIsModalOpen(false);
@@ -228,6 +233,38 @@ function MainTable() {
                 accessor: row => row.vk,
             },
             {
+                Header: 'Google',
+                accessor: row => row.google,
+            },
+            {
+                Header: 'Skrill',
+                accessor: row => row.skrill,
+            },
+            {
+                Header: 'Wallets',
+                accessor: row => row.wallets,
+            },
+            {
+                Header: 'Old',
+                accessor: row => row.old,
+            },
+            {
+                Header: 'Страна',
+                accessor: row => row.country,
+            },
+            {
+                Header: 'Город',
+                accessor: row => row.town,
+            },
+            {
+                Header: 'Адрес',
+                accessor: row => row.address,
+            },
+            {
+                Header: 'Found id',
+                accessor: row => row.fund_id,
+            },
+            {
                 Header: 'Facebook',
                 accessor: row => row.facebook,
             },
@@ -293,7 +330,7 @@ function MainTable() {
             <div className="table__modal-title">
                 Добавить пользователя
             </div>
-            <form className="table__modal-form-wrap" onSubmit={handleSubmit} method="POST">
+            <form className="table__modal-form-wrap">
                 {Object.keys(newUserData).map(key => (
                     <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
@@ -308,7 +345,15 @@ function MainTable() {
                         />
                     </div>
                 ))}
-                <button className="btn-hover table__btn" type="submit">
+                <button className="btn-hover table__btn" type="button" onClick={() => {
+                    axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  newUserData)
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }}>
                     Добавить
                 </button>
             </form>
