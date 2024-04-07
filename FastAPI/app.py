@@ -291,10 +291,12 @@ async def get_record_by_id(
 async def create_record(
     record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
 ):
-    try:
-        new_record = await crud.create_record(db=db, record_data=record_data)
-    except ObjectNotfund:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    new_record = await crud.create_record(db=db, record_data=record_data)
+    # try:
+    #     new_record = await crud.create_record(db=db, record_data=record_data)
+    # except ObjectNotfund:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
     return new_record
 
 
