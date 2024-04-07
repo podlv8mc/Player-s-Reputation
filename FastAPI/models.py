@@ -1,22 +1,22 @@
-from typing import List
 from enum import Enum as PythonEnum
+from typing import Any, List, Optional
 from datetime import datetime
-
 from sqlalchemy import (
     ForeignKey,
     String,
     Integer,
     Table,
     Column,
+    JSON,
     Enum,
     DateTime,
     Text,
     Boolean
 )
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-
-from db.engine import Base
 from fastapi_users.db import SQLAlchemyBaseUserTable
+import json
+from db.engine import Base
 
 
 class Roles(PythonEnum):
