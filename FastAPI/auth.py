@@ -5,7 +5,6 @@ from fastapi.responses import JSONResponse
 from fastapi_users.types import DependencyCallable
 from fastapi_users.authentication.strategy import Strategy
 from fastapi_users.authentication.transport import Transport
-from fastapi_users.authentication.strategy.base import Strategy
 from fastapi_users.authentication import BearerTransport, AuthenticationBackend
 
 
