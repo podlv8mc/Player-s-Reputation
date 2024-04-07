@@ -9,6 +9,7 @@ from fastapi_users.router.common import ErrorCode, ErrorModel
 from fastapi_pagination import Page, paginate
 import permissions
 
+
 def get_users_router(
     get_user_manager: UserManagerDependency[models.UP, models.ID],
     user_schema: Type[schemas.U],
@@ -175,7 +176,7 @@ def get_users_router(
         },
     )
     async def update_user(
-        user_update: user_update_schema,  # type: ignore
+        user_update: user_update_schema,
         request: Request,
         user=Depends(get_user_or_404),
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),

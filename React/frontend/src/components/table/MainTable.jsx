@@ -131,15 +131,18 @@ function MainTable() {
     };
 
     const handleSubmit = async (e) => {
-
-
+        e.preventDefault()
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt
         }
 console.log(newUserData)
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  newUserData)
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  userDataWithTimestamp, {
+            headers:{
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
             .then((response) => {
                 console.log(response.data);
             })
@@ -330,7 +333,7 @@ console.log(newUserData)
             <div className="table__modal-title">
                 Добавить пользователя
             </div>
-            <form className="table__modal-form-wrap">
+            <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
                 {Object.keys(newUserData).map(key => (
                     <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
@@ -345,15 +348,7 @@ console.log(newUserData)
                         />
                     </div>
                 ))}
-                <button className="btn-hover table__btn" type="button" onClick={() => {
-                    axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  newUserData)
-                        .then((response) => {
-                            console.log(response.data);
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
-                }}>
+                <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
             </form>
