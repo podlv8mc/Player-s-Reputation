@@ -7,6 +7,8 @@
 /* === Styles === */
 
 .app__table {
+  max-width: none !important;
+  padding: 8px 0px 8px 20px !important;
 
   .main {
     gap: 30px;
@@ -124,9 +126,9 @@
 .select {
   &__control {
     border-radius: 10px !important;
-    width: 280px !important;
+    width: 500px !important;
     height: 48px !important;
-    background: #000000 !important;
+    background: #101117 !important;
     border: none !important;
     box-shadow: none !important;
     transition: all 0.4s ease !important;
@@ -167,9 +169,9 @@
   }
 
   &__menu {
-    background: #000000 !important;
+    background: #101117 !important;
     margin: 0px !important;
-    width: 280px !important;
+    width: 500px !important;
     box-shadow: none !important;
     border-radius: 0px 0px 10px 10px !important;
   }

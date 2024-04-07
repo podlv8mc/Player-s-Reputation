@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Images from "@/image/image";
 import List from "@/components/header/List";
 
-const Navigation = ({ onButtonClick }) => {
+const Navigation = ({onButtonClick}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleButtonClick = () => {
@@ -24,8 +24,15 @@ const Navigation = ({ onButtonClick }) => {
                           text="Фонды" isOpen={isOpen}/>
                     <List href="contact" class="globalnav" name={Images.trainer} alt="trainer"
                           spanClass="globalnav__text" text="Тренера" isOpen={isOpen}/>
-                    <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text"
-                          text="Выйти" isOpen={isOpen}/>
+                    {
+                        localStorage.getItem("access_token")
+                            ?
+                            <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text"
+                                  text="Выйти" isOpen={isOpen}  onClick={() => {
+                                localStorage.removeItem("access_token")
+                            }}/>
+                    : ""}
+
                 </ul>
             </nav>
             <button className="header__btn" onClick={handleButtonClick}>
