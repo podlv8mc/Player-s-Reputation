@@ -28,14 +28,9 @@ const LoginForm = () => {
         formData.append('username', email)
         formData.append('password', password)
         axios.post('http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/login', formData).then(data => {
-            console.log(data.data)
             localStorage.setItem("access_token", data.data.access_token)
-            alert(localStorage.getItem("access_token"))
             window.location.href = '/table';
         })
-        console.log('Login successful!');
-
-
     };
 
     return (

@@ -22,10 +22,10 @@ const Form = () => {
         };
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Submitted!', recommendation, name, email, subject, message);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('Submitted!', recommendation, name, email, subject, message);
+    // };
 
     return (
         <>

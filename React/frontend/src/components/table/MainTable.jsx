@@ -81,13 +81,11 @@ function MainTable() {
     };
 
     useEffect(() => {
-        alert(localStorage.getItem("access_token"))
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
             headers:{
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data.data.items)
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         })
     }, []);
@@ -137,15 +135,12 @@ function MainTable() {
             ...newUserData,
             createdAt: createdAt
         }
-console.log(newUserData)
+
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  userDataWithTimestamp, {
             headers:{
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
-            .then((response) => {
-                console.log(response.data);
-            })
             .catch((error) => {
                 console.error(error);
             });
