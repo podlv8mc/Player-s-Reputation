@@ -3,6 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
+import Select from "react-select";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -10,6 +11,7 @@ function MainTable() {
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingUserData, setEditingUserData] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
@@ -149,22 +151,21 @@ function MainTable() {
 
     };
 
-    const handleEditSubmit = async () => {
-        try {
-            const response = await fetch(`/api/v1/users/${editingUserData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(editingUserData)
-            });
-            if (!response.ok) {
-                throw new Error('Failed to update user');
-            }
-            setIsModalOpen(false);
-        } catch (error) {
-            console.error('Error updating user: ', error);
-        }
+    const handleEditSubmit = async (e) => {
+        e.preventDefault()
+            axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/records/${editingUserData.id}`, editingUserData, {
+                headers:{
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    setIsModalOpen(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+
     };
 
     const columns = React.useMemo(
@@ -322,6 +323,12 @@ function MainTable() {
         setFilterInput('');
     };
 
+    const options = [
+        { value: 1, label: 'Фонд 1' },
+        { value: 2, label: 'Фонд 2' },
+        { value: 3, label: 'Фонд 3' },
+    ];
+
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -343,8 +350,20 @@ function MainTable() {
                         />
                     </div>
                 ))}
+                <div className="table__modal-row">
+                    <label className="table__modal-cell-title">
+                        Found ID
+                    </label>
+                    <Select
+                        classNamePrefix='select'
+                        value={selectedOption}
+                        defaultValue={options[1]}
+                        options={options}
+                        onChange={setSelectedOption}
+                    />
+                </div>
                 <button className="btn-hover table__btn" type="submit">
-                    Добавить
+                Добавить
                 </button>
             </form>
         </Modal>
