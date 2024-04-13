@@ -20,9 +20,9 @@ const Navigation = ({onButtonClick}) => {
                           text="Главная" isOpen={isOpen}/>
                     <List href="about" class="globalnav" name={Images.about} alt="about" spanClass="globalnav__text"
                           text="О нас" isOpen={isOpen}/>
-                    <List href="about" class="globalnav" name={Images.funds} alt="funds" spanClass="globalnav__text"
+                    <List href="funds" class="globalnav" name={Images.funds} alt="funds" spanClass="globalnav__text"
                           text="Фонды" isOpen={isOpen}/>
-                    <List href="contact" class="globalnav" name={Images.trainer} alt="trainer"
+                    <List href="trainers" class="globalnav" name={Images.trainer} alt="trainer"
                           spanClass="globalnav__text" text="Тренера" isOpen={isOpen}/>
                     {
                         localStorage.getItem("access_token")
@@ -30,9 +30,9 @@ const Navigation = ({onButtonClick}) => {
                             <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text"
                                   text="Выйти" isOpen={isOpen}  onClick={() => {
                                 localStorage.removeItem("access_token")
+                                window.location.href = "/"
                             }}/>
-                    : ""}
-
+                            : ""}
                 </ul>
             </nav>
             <button className="header__btn" onClick={handleButtonClick}>

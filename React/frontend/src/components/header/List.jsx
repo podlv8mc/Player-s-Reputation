@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-scroll";
 import { useSpring, animated } from 'react-spring';
 
-const List = ({ class: className, href, name, alt, spanClass, text, isOpen }) => {
+const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onClick }) => {
     const contentAnimation = useSpring({
         left: isOpen ? '30' : '45px',
         from: { left: '45px' },
@@ -26,6 +26,7 @@ const List = ({ class: className, href, name, alt, spanClass, text, isOpen }) =>
                 offset={0}
                 duration={0}
                 onSetActive={handleSetActive}
+                onClick={onClick}
             >
                 <animated.img src={name} alt={alt} style={contentAnimation} />
                 <animated.span className={spanClass} style={textAnimation}>
