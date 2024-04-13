@@ -13,11 +13,33 @@
   padding: 0 10px;
   width: 100%;
 
+  .funds__btn-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+
+    .funds__btn {
+      border-radius: 8px;
+      padding: 8px 16px;
+      box-shadow: 2px 4px 16px 0 rgba(0, 0, 0, 0.5);
+      background: #000;
+      @include Montserrat-600;
+      font-size: 20px;
+      color: #ffffff;
+      transition: all .5s ease;
+    }
+
+    .funds__btn-color {
+      color: #fee100;
+    }
+  }
+
   .slider__wrap {
     width: 100%;
 
     .slide__wrap {
-      padding: 17px;
+      padding: 9px;
 
       .slide {
         width: 100%;
@@ -26,10 +48,129 @@
         box-shadow: 2px 4px 16px 0 rgba(0, 0, 0, 0.5);
         background: #000;
         color: white;
+        padding: 0px 12px 24px 12px;
+
+        .slide__image {
+          width: 100%;
+          height: 150px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .slide__text-wrap {
+          width: 100%;
+
+          .slide__text-title {
+            @include Montserrat-600;
+            font-size: 20px;
+            color: #ffffff;
+            padding: 4px 0px 8px 0px;
+          }
+
+          .slide__text {
+            @include Montserrat-400;
+            font-size: 15px;
+            color: #dedede;
+            height: 35px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        }
+
+        .slide__btn {
+          display: flex;
+          align-items: baseline;
+          gap: 5px;
+          @include Montserrat-500;
+          font-size: 16px;
+          color: #ffffff;
+          background: transparent;
+          margin: 10px 0px 0px 0px;
+
+          svg {
+            transition: all .3s ease;
+          }
+        }
       }
 
-      .qwer {
-        height: 300px;
+      .slide__height {
+
+        .slide__text-wrap {
+          .slide__text {
+            display: flex;
+            height: fit-content;
+          }
+        }
+
+        .slide__btn {
+          svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .slick-arrow {
+      display: none !important;
+    }
+
+    .slick-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding-top: 20px;
+      bottom: 0px;
+
+      .slide__btn-nav {
+        background: transparent;
+        height: 27px;
+        width: 12px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        &:last-child {
+          transform: rotate(-180deg);
+        }
+      }
+
+      li {
+        width: fit-content;
+        height: fit-content;
+        margin: 0px 10px 0px 0px;
+
+        &:first-child {
+          margin: 0px 10px 0px 10px;
+        }
+
+      }
+
+      .slick-active {
+        .slide__pagination {
+          background: #000;
+          border-radius: 4px;
+          color: #fee100;
+        }
+      }
+
+      .slide__pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        color: #fff;
+        @include Montserrat-500;
+        font-size: 20px;
       }
     }
   }

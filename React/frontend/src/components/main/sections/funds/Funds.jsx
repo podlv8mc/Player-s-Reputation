@@ -1,79 +1,73 @@
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState } from "react";
 import Sections from "@/components/headers/Sections";
+import FundsSlide from "@/components/main/sections/funds/FundsSlide";
+import ImagesFunds from "@/image/funds/imageFunds";
 
 function Funds() {
-    const settings = {
-        className: "slider__wrap",
-        slidesToShow: 3,
-        lazyLoad: true,
-        rows: 2,
-        dots: true,
-        speed: 500,
-        slidesToScroll: 2,
-        appendDots: dots => (
-            <div
-                style={{
-                    backgroundColor: "#ddd",
-                    borderRadius: "10px",
-                    padding: "10px"
-                }}
-            >
-                <ul style={{ margin: "0px" }}> {dots} </ul>
-            </div>
-        ),
-        customPaging: i => (
-            <div
-                style={{
-                    width: "30px",
-                    color: "blue",
-                    border: "1px blue solid"
-                }}
-            >
-                {i + 1}
-            </div>
-        ),
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 2,
-                    rows: 2,
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    rows: 3,
-                }
-            },
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+    const slidesData = [
+        // Данные для первого слайда
+        [
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+        ],
+        // Данные для второго слайда
+        [
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+        ],
+        // Данные для третьего слайда
+        [
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+        ],
+        // Данные для четвертого слайда
+        [
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ]
+    ];
 
-    };
-
-    const toggleClass = (event) => {
-        const parentElement = event.target.parentNode;
-
-        parentElement.classList.toggle("qwer");
+    const handleButtonClick = (index) => {
+        setCurrentSlideIndex(index);
     };
 
     return (
         <section id="funds" className="funds__wrap">
             <Sections clarification="ТОП Бекинг Фондов" title="Бекинговые фонды"
                       subtitle="Список всех бекинговых фондов СНГ."/>
-            <Slider {...settings}>
-                <div className="slide__wrap">
-                    <div className="slide">
-                        lol
-                        <button onClick={toggleClass}>
-                            ok
-                        </button>
-                    </div>
-                </div>
-            </Slider>
+            <div className="funds__btn-wrap">
+                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(0)}>
+                    MTT
+                </button>
+                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(1)}>
+                    Кэш-игры
+                </button>
+                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(2)}>
+                    Двухуровневые игры
+                </button>
+                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(3)}>
+                    СНГ
+                </button>
+            </div>
+            <FundsSlide slides={slidesData[currentSlideIndex]} />
         </section>
     );
 }
