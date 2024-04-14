@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-scroll";
 import { useSpring, animated } from 'react-spring';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onClick, logoLink, tableLink }) => {
     const contentAnimation = useSpring({
