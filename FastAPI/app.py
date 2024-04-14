@@ -14,10 +14,13 @@ import crud
 import schemas
 import routers
 import permissions
+from utils import mail_module
 from db.users_db import User
 from db.engine import get_async_session
 from users import auth_backend, fastapi_users, UserManager, get_user_manager
 from utils.exceptions import ObjectNotfund, Forbidden, NotEnoughPermissions
+
+from test_data import email_to, text
 
 
 disable_installed_extensions_check()
@@ -333,23 +336,24 @@ async def delete_record_by_id(
 
 @app.post("/send_email")
 async def send_email(data: schemas.UserMail):
-    # mu = MailUtil()
+    mu = mail_module.MailUtil()
     u_data = data.dict()
-    text = ""
 
-    # mu.send_message(
-    #     "Test subject",
-    #     "",
-    #     text.format(
-    #         u_data.get("user_choice"),
-    #         u_data.get("name"),
-    #         u_data.get("email"),
-    #         u_data.get("user_choice"),
-    #         u_data.get("subject"),
-    #     ),
-    # )
+    mu.send_message(
+        u_data.get("subject"),
+        email_to,
+        text.format(
+            u_data.get("user_choice"),
+            u_data.get("name"),
+            u_data.get("email"),
+            u_data.get("message"),
+        ),
+    )
 
-    return data
+    return Response(
+        status_code=200,
+        content={"message": "Email has been sent"},
+    )
 
 
 add_pagination(app)
