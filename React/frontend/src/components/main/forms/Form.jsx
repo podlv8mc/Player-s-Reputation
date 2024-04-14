@@ -22,10 +22,10 @@ const Form = () => {
         };
     }, []);
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log('Submitted!', recommendation, name, email, subject, message);
-    // };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Submitted!', recommendation, name, email, subject, message);
+    };
 
     return (
         <>
@@ -43,6 +43,7 @@ const Form = () => {
                             value="trainer"
                             checked={recommendation === 'trainer'}
                             onChange={(e) => setRecommendation(e.target.value)}
+                            autoComplete="off"
                         />
                         <span>
                         </span>
@@ -74,6 +75,7 @@ const Form = () => {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            autoComplete="off"
                         />
                         <label htmlFor="name">
                             Имя
@@ -87,6 +89,7 @@ const Form = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="off"
                         />
                         <label htmlFor="email">
                             Е-мейл
@@ -101,6 +104,7 @@ const Form = () => {
                         id="subject"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
+                        autoComplete="off"
                     />
                     <label htmlFor="subject">
                         Тема
