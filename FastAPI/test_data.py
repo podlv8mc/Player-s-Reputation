@@ -1,6 +1,6 @@
 email_from = "startmedev1@gmail.com"
 email_to = "startmedev1@gmail.com"
-password = "stArt@29dKwh!8"
+password = "twqf cboj jgru sypt"
 email_host = "smtp.gmail.com"
 email_port = 587
 text = """New email!
