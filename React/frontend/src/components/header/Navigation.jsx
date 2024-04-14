@@ -25,14 +25,20 @@ const Navigation = ({onButtonClick}) => {
                     <List href="trainers" class="globalnav" name={Images.trainer} alt="trainer"
                           spanClass="globalnav__text" text="Тренера" isOpen={isOpen}/>
                     {
-                        localStorage.getItem("access_token")
-                            ?
-                            <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text"
-                                  text="Выйти" isOpen={isOpen}  onClick={() => {
-                                localStorage.removeItem("access_token")
-                                window.location.href = "/"
-                            }}/>
-                            : ""}
+                        localStorage.getItem("access_token") && (
+                            <>
+                                <List tableLink={true} href="#" class="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen}
+                                />
+                                <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen}
+                                    onClick={() => {
+                                        localStorage.removeItem("access_token");
+                                        window.location.href = "/";
+                                    }}
+                                />
+                            </>
+                        )
+                    }
+
                 </ul>
             </nav>
             <button className="header__btn" onClick={handleButtonClick}>

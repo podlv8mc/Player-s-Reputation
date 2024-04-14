@@ -4,6 +4,7 @@ const Images = {
     home: require('./navigation/home.webp'),
     funds: require('./navigation/funds.webp'),
     trainer: require('./navigation/trainer.webp'),
+    tableNav: require('./navigation/table.webp'),
     exit: require('./navigation/exit.webp'),
     homeBackground: require('./background/home__background.webp'),
     homeBackgroundMobile: require('./background/home__background-mobile.webp'),
