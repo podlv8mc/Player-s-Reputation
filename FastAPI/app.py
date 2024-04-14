@@ -350,10 +350,7 @@ async def send_email(data: schemas.UserMail):
         ),
     )
 
-    return Response(
-        status_code=200,
-        content={"message": "Email has been sent"},
-    )
+    return Response(status_code=200)
 
 
 add_pagination(app)
