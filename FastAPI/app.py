@@ -349,15 +349,7 @@ async def send_email(data: schemas.UserMail):
     #     ),
     # )
 
-    return {
-        "message": text.format(
-            u_data.get("user_choice"),
-            u_data.get("name"),
-            u_data.get("email"),
-            u_data.get("subject"),
-            u_data.get("message"),
-        )
-    }
+    return data
 
 
 add_pagination(app)
