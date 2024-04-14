@@ -12,7 +12,7 @@ class MailUtil:
         msg["From"] = email_from
         msg["To"] = email_to
 
-        with smtplib.SMTP(email_host, email_port) as server:
+        with smtplib.SMTP_SSL(email_host, email_port) as server:
             server.starttls()
             server.login(email_from, password)
             server.sendmail(email_from, email_to, msg.as_string())
