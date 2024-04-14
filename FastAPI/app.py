@@ -349,18 +349,15 @@ async def send_email(data: schemas.UserMail):
     #     ),
     # )
 
-    return Response(
-        status_code=200,
-        content={
-            "message": text.format(
-                u_data.get("user_choice"),
-                u_data.get("name"),
-                u_data.get("email"),
-                u_data.get("subject"),
-                u_data.get("message"),
-            )
-        },
-    )
+    return {
+        "message": text.format(
+            u_data.get("user_choice"),
+            u_data.get("name"),
+            u_data.get("email"),
+            u_data.get("subject"),
+            u_data.get("message"),
+        )
+    }
 
 
 add_pagination(app)
