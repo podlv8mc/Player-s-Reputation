@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Any, Dict, Optional, List
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 from fastapi_users import schemas as users_schemas
 
@@ -29,15 +29,18 @@ class CreateUpdateDictModel(BaseModel):
     def convert_fields_to_optional(self):
         return {k: Optional[v] for k, v in self.__annotations__.items()}
 
+
 class NicknameBase(CreateUpdateDictModel):
     room_name: Optional[str | None] = None
     nickname: Optional[str | None] = None
     model_config = ConfigDict(from_attributes=False)
-class NicknameCreate(NicknameBase):
-    ...
 
-class NicknameRead(NicknameBase):
-    ...
+
+class NicknameCreate(NicknameBase): ...
+
+
+class NicknameRead(NicknameBase): ...
+
 
 class UserRead(users_schemas.BaseUser):
     id: int
@@ -51,6 +54,7 @@ class UserReadfund(CreateUpdateDictModel):
     id: int
     username: str
     role: Roles
+
 
 class UserCreate(users_schemas.BaseUserCreate):
     username: str
@@ -71,7 +75,9 @@ class FundBase(CreateUpdateDictModel):
     link: Optional[str | None] = None
     email: Optional[str | None] = None
 
+
 class FundCreate(FundBase): ...
+
 
 class FundUpdate(FundBase):
     owner_id: Optional[int | None] = None
@@ -81,17 +87,15 @@ class FundRead(FundBase):
     id: int
     owner: Optional[UserReadfund | None] = None
 
-class FundReadRecord(FundBase):
-    ...
 
-
+class FundReadRecord(FundBase): ...
 
 
 class RecordBase(CreateUpdateDictModel):
     first_name: Optional[str | None] = None
     last_name: Optional[str | None] = None
     middlename: Optional[str | None] = None
-    nicknames: Optional[List[NicknameRead|None]] = None
+    nicknames: Optional[List[NicknameRead | None]] = None
     gipsyteam: Optional[str | None] = None
     pokerstrategy: Optional[str | None] = None
     description: Optional[str | None] = None
@@ -114,19 +118,20 @@ class RecordBase(CreateUpdateDictModel):
     country: Optional[str | None] = None
     town: Optional[str | None] = None
     address: Optional[str | None] = None
-    
+
     model_config = ConfigDict(from_attributes=False)
 
 
 class RecordCreate(RecordBase):
     fund_id: int
 
+
 class RecordHistoryRead(BaseModel):
     id: int
     first_name: Optional[str | None] = None
     last_name: Optional[str | None] = None
     middlename: Optional[str | None] = None
-    nicknames: Optional[List[NicknameRead|None]] = None
+    nicknames: Optional[List[NicknameRead | None]] = None
     gipsyteam: Optional[str | None] = None
     pokerstrategy: Optional[str | None] = None
     description: Optional[str | None] = None
@@ -153,6 +158,7 @@ class RecordHistoryRead(BaseModel):
     model_config = ConfigDict(from_attributes=False)
     created_at: Optional[datetime | None] = None
 
+
 class RecordRead(RecordBase):
     id: int
     created_at: datetime
@@ -163,3 +169,11 @@ class RecordRead(RecordBase):
 
 
 class RecordUpdate(RecordBase): ...
+
+
+class UserMail(BaseModel):
+    user_choice: str
+    name: str
+    email: EmailStr
+    subject: str
+    message: str
