@@ -173,6 +173,12 @@
         @include Montserrat-500;
         font-size: 20px;
       }
+
+      .slide__pagination-active {
+        background: #000;
+        border-radius: 4px;
+        color: #fee100;
+      }
     }
   }
 }
