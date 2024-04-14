@@ -7,14 +7,14 @@ const Navigation = ({onButtonClick}) => {
 
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
-        onButtonClick(); // Вызываем функцию обработчика нажатия на кнопку
+        onButtonClick();
     };
 
     return (
         <>
             <nav className="globalnav__wrap">
                 <ul className="globalnav__list">
-                    <List href="#" class="globalnav globalnav-logo" name={Images.logo} alt="logo"
+                    <List logoLink={true} href="#" class="globalnav globalnav-logo" name={Images.logo} alt="logo"
                           spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen}/>
                     <List href="home" class="globalnav" name={Images.home} alt="home" spanClass="globalnav__text"
                           text="Главная" isOpen={isOpen}/>

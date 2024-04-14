@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from "react-scroll";
 import { useSpring, animated } from 'react-spring';
+import {NavLink} from "react-router-dom";
 
-const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onClick }) => {
+const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onClick, logoLink }) => {
     const contentAnimation = useSpring({
         left: isOpen ? '30' : '45px',
         from: { left: '45px' },
@@ -15,6 +16,19 @@ const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onCl
 
     const handleSetActive = (to) => {
     };
+
+    if (logoLink) {
+        return (
+            <li className={className}>
+                <NavLink to="/" className="globalnav__link">
+                    <animated.img src={name} alt={alt} style={contentAnimation}/>
+                    <animated.span className={spanClass} style={textAnimation}>
+                        {text}
+                    </animated.span>
+                </NavLink>
+            </li>
+        );
+    }
 
     return (
         <li className={className}>
@@ -34,7 +48,7 @@ const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onCl
                 </animated.span>
             </Link>
         </li>
-    )
+    );
 }
 
 export default List;

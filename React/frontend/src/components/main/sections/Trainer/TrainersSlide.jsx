@@ -1,7 +1,5 @@
 import React, {useRef, useState} from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Images from "@/image/image";
 
 function TrainerSlide({slides}) {
@@ -71,8 +69,8 @@ function TrainerSlide({slides}) {
                 sliderRef = slider;
             }} {...settings}>
                 {slides.map((slide, index) => (
-                    <div className="slide__wrap">
-                        <div key={index} className={`slide slide-trainer ${expandedSlideIndex === index ? 'slide__height' : ''}`}>
+                    <div key={index} className="slide__wrap">
+                        <div className={`slide slide-trainer ${expandedSlideIndex === index ? 'slide__height' : ''}`}>
                             <figure className="slide__image">
                                 <img src={slide.src} alt={slide.alt}/>
                             </figure>
@@ -100,6 +98,7 @@ function TrainerSlide({slides}) {
                     </div>
                 ))}
             </Slider>
+
         </>
     );
 }
