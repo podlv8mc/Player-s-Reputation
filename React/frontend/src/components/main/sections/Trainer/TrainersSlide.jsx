@@ -74,7 +74,7 @@ function FundsSlide({ slides }) {
     return (
         <Slider ref={sliderRef} {...settings}>
             {slides.map((slide, index) => (
-                <div key={index} className="slide__wrap">
+                <div key={Math.random()} className="slide__wrap">
                     <div className={`slide slide-trainer ${expandedSlideIndex === index ? "slide__height" : ""}`}>
                         <figure className="slide__image">
                             <img src={slide.src} alt={slide.alt} />

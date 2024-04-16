@@ -20,13 +20,29 @@
 .table__top-wrap {
   position: relative;
 
-  .lol {
+  .table__top-box {
     width: 80vw;
     display: flex;
     justify-content: space-between;
     position: sticky;
     top: 0;
     left: 0;
+
+    .table__top-select {
+      padding: 0px 0px 0px 30px;
+
+      .select {
+        &__control {
+          width: 280px !important;
+          background: #000000 !important;
+        }
+
+        &__menu {
+          width: 280px !important;
+          background: #000000 !important;
+        }
+      }
+    }
 
     .table__top {
       display: flex;
@@ -158,6 +174,10 @@
 
   &__indicator-separator {
     display: none !important;
+  }
+  
+  &__indicator {
+    cursor: pointer;
   }
 
   &__indicator:hover {

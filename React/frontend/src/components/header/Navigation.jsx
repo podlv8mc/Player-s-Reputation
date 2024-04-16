@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Images from "@/image/image";
 import List from "@/components/header/List";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Navigation = ({ onButtonClick }) => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
+    const [authorization, setAuthorization] = useState(false);
 
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
         onButtonClick();
     };
+
+    useEffect(() => {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+            headers:{
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then(() => {
+            setAuthorization(true);
+        }).catch(() => {
+            setAuthorization(false);
+        });
+    }, [authorization]);
 
     const renderLists = () => {
         if (location.pathname === "/") {
@@ -33,9 +47,9 @@ const Navigation = ({ onButtonClick }) => {
             <nav className="globalnav__wrap">
                 <ul className="globalnav__list">
                     <List logoLink={true} href="#" class="globalnav globalnav-logo" name={Images.logo} alt="logo" spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen} />
-                    {renderLists()} {/* Вызываем функцию для отображения нужных списков */}
+                    {renderLists()}
                     {
-                        localStorage.getItem("access_token") ? (
+                        authorization ? (
                             <>
                                 <List tableLink={true} href="#" class="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen} />
                                 <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
@@ -44,10 +58,9 @@ const Navigation = ({ onButtonClick }) => {
                                 }} />
                             </>
                         ) : (
-                            <li>Войдите</li>
+                            <List href="home" class="globalnav" name={Images.login} alt="home" spanClass="globalnav__text" text="Войти" isOpen={isOpen} />
                         )
                     }
-
                 </ul>
             </nav>
             <button className="header__btn" onClick={handleButtonClick}>
