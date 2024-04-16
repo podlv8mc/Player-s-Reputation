@@ -13,6 +13,7 @@ class MailUtil:
         msg["To"] = email_to
 
         context = ssl.create_default_context()
+
         with smtplib.SMTP(email_host, email_port) as server:
             server.ehlo()  # Can be omitted
             server.starttls(context=context)
