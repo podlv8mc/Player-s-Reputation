@@ -1,4 +1,4 @@
-import smtplib
+import smtplib, ssl
 from email.mime.text import MIMEText
 
 from test_data import email_from, password, email_host, email_port
@@ -12,7 +12,11 @@ class MailUtil:
         msg["From"] = email_from
         msg["To"] = email_to
 
-        with smtplib.SMTP_SSL(email_host, email_port) as server:
-            server.starttls()
+        context = ssl.create_default_context()
+        with smtplib.SMTP(email_host, email_port) as server:
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
             server.login(email_from, password)
             server.sendmail(email_from, email_to, msg.as_string())
+            
