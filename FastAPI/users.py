@@ -1,3 +1,4 @@
+import os
 from typing import Any, Optional, Dict
 
 from fastapi import Depends, Request, exceptions
@@ -19,8 +20,8 @@ from utils import exceptions as custom_exceptions
 from auth import BearerTransportRefresh, AuthenticationBackendRefresh
 from db.users_db import get_user_db, models as db_models, User, UsersDB
 
-SECRET = "SECRET"
-REFRESH_SECRET = "REFRESH_SECRET"
+SECRET = os.getenv("API_SECRET")
+REFRESH_SECRET = os.getenv("REFRESH_SECRET")
 
 class PasswordHelperV2(PasswordHelper):
     def __init__(self, password_hash: Optional[PasswordHash] = None) -> None:
