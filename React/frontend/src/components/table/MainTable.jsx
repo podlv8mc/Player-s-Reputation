@@ -326,10 +326,7 @@ function MainTable() {
         setFilterInput('');
     };
 
-    const options = data.map(item => ({
-        value: { id: item.found.id, name: item.found.name },
-        label: item.found.name
-    }));
+
 
 
     const ModalContent = (
@@ -357,12 +354,7 @@ function MainTable() {
                     <label className="table__modal-cell-title">
                         Found ID
                     </label>
-                    <Select
-                        classNamePrefix='select'
-                        value={selectedOption}
-                        onChange={setSelectedOption}
-                        options={options}
-                    />
+
                 </div>
                 <button className="btn-hover table__btn" type="submit">
                 Добавить
