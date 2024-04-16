@@ -3,9 +3,8 @@ import {Link} from "react-scroll"
 
 class MobHeaderList extends React.Component {
     render() {
-        // const handleSetActive = (to) => {
-        //     console.log(to);
-        // };
+        const handleSetActive = (to) => {
+        };
 
         const items = this.props.items.map((item, index) => (
             <li key={index}>
