@@ -35,19 +35,19 @@ const Navigation = ({ onButtonClick }) => {
                     <List logoLink={true} href="#" class="globalnav globalnav-logo" name={Images.logo} alt="logo" spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen} />
                     {renderLists()} {/* Вызываем функцию для отображения нужных списков */}
                     {
-                        localStorage.getItem("access_token") && (
+                        localStorage.getItem("access_token") ? (
                             <>
-                                <List tableLink={true} href="#" class="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen}
-                                />
-                                <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen}
-                                      onClick={() => {
-                                          localStorage.removeItem("access_token");
-                                          window.location.href = "/";
-                                      }}
-                                />
+                                <List tableLink={true} href="#" class="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen} />
+                                <List href="#" class="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
+                                    localStorage.removeItem("access_token");
+                                    window.location.href = "/";
+                                }} />
                             </>
+                        ) : (
+                            <li>Войдите</li>
                         )
                     }
+
                 </ul>
             </nav>
             <button className="header__btn" onClick={handleButtonClick}>
