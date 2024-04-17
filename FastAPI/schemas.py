@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Any, Dict, Optional, List
-from pydantic import BaseModel, ConfigDict, EmailStr
 
 from fastapi_users import schemas as users_schemas
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 from models import Roles
 

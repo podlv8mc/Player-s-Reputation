@@ -1,26 +1,25 @@
-from typing import Tuple, Annotated
+from typing import Annotated
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError
-from fastapi import FastAPI, Depends, HTTPException, Response, status, Request, Header
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi_users.router import common
-from fastapi_users import exceptions as users_exceptions
-from fastapi_users import models as fast_users_models
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi_users.authentication import Strategy
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import Page, add_pagination, paginate
 from fastapi_pagination.utils import disable_installed_extensions_check
+from fastapi_users import models as fast_users_models, exceptions as users_exceptions
+from fastapi import FastAPI, Depends, HTTPException, Response, status, Request, Header
+
 import crud
 import schemas
 import routers
 import permissions
-from utils import mail_module
 from db.users_db import User
-from db.engine import get_async_session
-from users import auth_backend, fastapi_users, UserManager, get_user_manager
-from utils.exceptions import ObjectNotfund, Forbidden, NotEnoughPermissions
-
+from utils import mail_module
 from test_data import email_to, text
+from db.engine import get_async_session
+from utils.exceptions import ObjectNotfund, Forbidden, NotEnoughPermissions
+from users import auth_backend, fastapi_users, UserManager, get_user_manager
 
 
 disable_installed_extensions_check()
@@ -67,8 +66,7 @@ async def get_fund_by_id(
 ):
     try:
         fund = await crud.get_fund_by_id(
-            db=db,
-            fund_id=fund_id,
+            db=db, fund_id=fund_id, current_user=current_user
         )
     except ObjectNotfund:
         raise HTTPException(
@@ -76,6 +74,7 @@ async def get_fund_by_id(
         )
     except Forbidden:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
     return fund
 
 
@@ -110,6 +109,7 @@ async def update_fund_by_id(
         )
     except ObjectNotfund:
         raise HTTPException(status_code=400, detail="No such fund")
+
     return updated_fund
 
 
@@ -123,10 +123,12 @@ async def delete_fund_by_id(
 ):
     try:
         await crud.delete_fund_by_id(db=db, fund_id=fund_id)
+
     except ObjectNotfund:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="No such fund"
         )
+
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -140,12 +142,15 @@ async def add_manager(
 ):
     try:
         await crud.fund_add_manager(fund_id=fund_id, user_id=manager_id, db=db)
+
     except ObjectNotfund:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
     except IntegrityError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Already assigned"
         )
+
     return Response(status_code=status.HTTP_200_OK)
 
 
@@ -162,6 +167,7 @@ async def refresh(
 ):
     user = await refresh_strategy.read_token(refresh_token, user_manager)
     response = await auth_backend.login(strategy, user)
+
     return response
 
 
@@ -206,16 +212,13 @@ app.include_router(
 )
 async def register(
     request: Request,
-    user_create: schemas.UserCreate,  # type: ignore
+    user_create: schemas.UserCreate,
     user_manager: UserManager = Depends(get_user_manager),
-    # current_user = Depends(permissions.read_only_or_higher)
+    current_user=Depends(permissions.read_only_or_higher),
 ):
     try:
         created_user = await user_manager.create_with_funds(
-            user_create,
-            safe=True,
-            request=request,
-            # current_user=current_user
+            user_create, safe=True, request=request, current_user=current_user
         )
     except users_exceptions.UserAlreadyExists:
         raise HTTPException(
@@ -350,7 +353,7 @@ async def send_email(data: schemas.UserMail):
         ),
     )
 
-    return Response(status_code=200)
+    return Response(status_code=status.HTTP_200_OK)
 
 
 add_pagination(app)
