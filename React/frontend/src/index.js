@@ -10,6 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
         <Helmet>
+            <link rel="icon" href={Images.favicon} />
             <link rel="apple-touch-icon" sizes="180x180" href={Images.applefavicon}/>
             <link rel="icon" type="image/png" sizes="32x32" href={Images.applefavicon32}/>
             <link rel="icon" type="image/png" sizes="16x16" href={Images.applefavicon16}/>

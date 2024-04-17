@@ -8,7 +8,9 @@ function Funds() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
     const slidesData = [
-        // Данные для первого слайда
+        [
+            { src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
+        ],
         [
             { src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
         ],
@@ -51,20 +53,28 @@ function Funds() {
             <Sections clarification="ТОП Бекинг Фондов" title="Лучшие тренера по покеру"
                       subtitle="Рейтинг лучших тренеров обучающих игры в Poker"/>
             <div className="funds__btn-wrap">
-                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(0)}>
+                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(0)}>
+                    Все
+                </button>
+                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(1)}>
                     MTT
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(1)}>
+                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(2)}>
                     Кэш-игры
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(2)}>
+                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(3)}>
                     Двухуровневые игры
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(3)}>
+                <button className={`funds__btn ${currentSlideIndex === 4 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(4)}>
                     СНГ
                 </button>
             </div>
-            <TrainersSlide slides={slidesData[currentSlideIndex]} />
+            <TrainersSlide slides={slidesData[currentSlideIndex]}/>
         </section>
     );
 }

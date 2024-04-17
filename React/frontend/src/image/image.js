@@ -30,6 +30,7 @@ const Images = {
     applefavicon32: require('./favicons/favicon-32x32.png'),
     applefavicon16: require('./favicons/favicon-16x16.png'),
     applefaviconsaf: require('./favicons/safari-pinned-tab.svg'),
+    favicon: require('../../public/favicon.ico'),
     add: require('./pictures/add.webp'),
     search: require('./pictures/search.webp'),
     arrow: require('./pictures/arrow.webp'),

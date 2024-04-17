@@ -7,7 +7,14 @@ function Funds() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
     const slidesData = [
-        // Данные для первого слайда
+        [
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+            { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
+        ],
         [
             { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
@@ -54,20 +61,28 @@ function Funds() {
             <Sections clarification="ТОП Бекинг Фондов" title="Бекинговые фонды"
                       subtitle="Список всех бекинговых фондов СНГ."/>
             <div className="funds__btn-wrap">
-                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(0)}>
+                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(0)}>
+                    Все
+                </button>
+                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(1)}>
                     MTT
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(1)}>
+                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(2)}>
                     Кэш-игры
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(2)}>
+                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(3)}>
                     Двухуровневые игры
                 </button>
-                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`} onClick={() => handleButtonClick(3)}>
+                <button className={`funds__btn ${currentSlideIndex === 4 ? "funds__btn-color" : ""}`}
+                        onClick={() => handleButtonClick(4)}>
                     СНГ
                 </button>
             </div>
-            <FundsSlide slides={slidesData[currentSlideIndex]} />
+            <FundsSlide slides={slidesData[currentSlideIndex]}/>
         </section>
     );
 }
