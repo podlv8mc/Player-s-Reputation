@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Images from "@/image/image";
 import axios from "axios";
 
-const Form = () => {
+const Form = ({ id }) => {
     const [recommendation, setRecommendation] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -27,7 +27,7 @@ const Form = () => {
         e.preventDefault();
         console.log('Submitted!', recommendation, name, email, subject, message);
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/send_email", {
+        axios.post("httpil", {
             user_choice: recommendation,
             name: name,
             email: email,
@@ -85,28 +85,24 @@ const Form = () => {
                             className="input"
                             type="text"
                             required
-                            id="name"
+                            id={`name-${id}`}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             autoComplete="off"
                         />
-                        <label htmlFor="name">
-                            Имя
-                        </label>
+                        <label htmlFor={`name-${id}`}>Имя</label>
                     </div>
                     <div className="input__wrap">
                         <input
                             className="input"
                             required
                             type="email"
-                            id="email"
+                            id={`email-${id}`}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             autoComplete="off"
                         />
-                        <label htmlFor="email">
-                            Е-мейл
-                        </label>
+                        <label htmlFor={`email-${id}`}>Е-мейл</label>
                     </div>
                 </div>
                 <div className="input__wrap">
@@ -114,26 +110,22 @@ const Form = () => {
                         className="input"
                         type="text"
                         required
-                        id="subject"
+                        id={`subject-${id}`}
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
                         autoComplete="off"
                     />
-                    <label htmlFor="subject">
-                        Тема
-                    </label>
+                    <label htmlFor={`subject-${id}`}>Тема</label>
                 </div>
                 <div className="input__wrap">
                     <textarea
                         className="input textarea"
                         required
-                        id="message"
+                        id={`message-${id}`}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
-                    <label htmlFor="message">
-                        Ваше сообщение
-                    </label>
+                    <label htmlFor={`message-${id}`}>Ваше сообщение</label>
                 </div>
                 <button className="form__btn btn-hover" type="submit">
                     Отправить
