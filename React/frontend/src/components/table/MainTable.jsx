@@ -18,38 +18,38 @@ function MainTable() {
 
 
     const [newUserData, setNewUserData] = useState({
-        first_name: "string",
-        last_name: "string",
-        middlename: "string",
+        first_name: "",
+        last_name: "",
+        middlename: "",
         nicknames: [
             {
-                room_name: "string",
-                nickname: "string"
+                room_name: "",
+                nickname: ""
             },
             null
         ],
-        gipsyteam: "string",
-        pokerstrategy: "string",
-        description: "string",
-        amount: "string",
-        google: "string",
-        mail: "string",
-        vk: "string",
-        facebook: "string",
-        blog: "string",
-        instagram: "string",
-        forum: "string",
-        neteller: "string",
-        skrill: "string",
-        ecopayz: "string",
-        webmoney_id: "string",
-        wallets: "string",
+        gipsyteam: "",
+        pokerstrategy: "",
+        description: "",
+        amount: "",
+        google: "",
+        mail: "",
+        vk: "",
+        facebook: "",
+        blog: "",
+        instagram: "",
+        forum: "",
+        neteller: "",
+        skrill: "",
+        ecopayz: "",
+        webmoney_id: "",
+        wallets: "",
         old: true,
-        nicknameOld: "string",
-        comments: "string",
-        country: "string",
-        town: "string",
-        address: "string",
+        nicknameOld: "",
+        comments: "",
+        country: "",
+        town: "",
+        address: "",
         fund_id: 0
     });
 
@@ -326,11 +326,8 @@ function MainTable() {
         setFilterInput('');
     };
 
-    const options = [
-        { value: 1, label: 'Фонд 1' },
-        { value: 2, label: 'Фонд 2' },
-        { value: 3, label: 'Фонд 3' },
-    ];
+
+
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -357,13 +354,7 @@ function MainTable() {
                     <label className="table__modal-cell-title">
                         Found ID
                     </label>
-                    <Select
-                        classNamePrefix='select'
-                        value={selectedOption}
-                        defaultValue={options[1]}
-                        options={options}
-                        onChange={setSelectedOption}
-                    />
+
                 </div>
                 <button className="btn-hover table__btn" type="submit">
                 Добавить
@@ -463,8 +454,10 @@ function MainTable() {
     return (
         <main id="main" className="main">
             <div className="table__top-wrap">
-                <div className="lol">
-                    <div></div>
+                <div className="table__top-box">
+                    <div className="table__top-select">
+
+                    </div>
                     <div className="table__top">
                         <input
                             className={filterInputVisible ? "input__search" : "input__search input__search-op"}

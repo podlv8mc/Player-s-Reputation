@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Images from "@/image/image";
+import axios from "axios";
 
 const Form = () => {
     const [recommendation, setRecommendation] = useState('');
@@ -25,6 +26,18 @@ const Form = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Submitted!', recommendation, name, email, subject, message);
+
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/send_email", {
+            user_choice: recommendation,
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
     };
 
     return (
@@ -112,7 +125,7 @@ const Form = () => {
                 </div>
                 <div className="input__wrap">
                     <textarea
-                        className="input"
+                        className="input textarea"
                         required
                         id="message"
                         value={message}
