@@ -33,13 +33,9 @@ const LoginForm = () => {
             })
             .catch(error => {
                 if (error.response && error.response.status === 400) {
-                    if (error.response.data && error.response.data.detail) {
-                        setError(error.response.data.detail);
-                    } else {
-                        setError('Неверное имя пользователя или пароль.');
-                    }
+                    setError('Неверное имя пользователя или пароль');
                 } else {
-                    setError('Произошла ошибка при входе. Пожалуйста, попробуйте снова позже.');
+                    setError('Произошла ошибка при входе. Пожалуйста, попробуйте снова позже');
                 }
             });
     };
@@ -55,9 +51,9 @@ const LoginForm = () => {
                 <div className="login__title">
                     Войти
                 </div>
-                <div className={`input__wrap ${error && 'input__error'}`}>
+                <div className="input__wrap">
                     <input
-                        className={`input ${error && 'input__error'}`}
+                        className="input"
                         type="text"
                         required
                         id="email"
@@ -69,9 +65,9 @@ const LoginForm = () => {
                         Имя пользователя
                     </label>
                 </div>
-                <div className={`input__wrap ${error && 'input__error'}`}>
+                <div className="input__wrap">
                     <input
-                        className={`input ${error && 'input__error'}`}
+                        className="input"
                         type="password"
                         required
                         id="password"
@@ -83,7 +79,7 @@ const LoginForm = () => {
                         Пароль
                     </label>
                 </div>
-                {error && <div className="error-message">{error}</div>}
+                {error && <div className="massage__error">{error}</div>}
                 <button className="form__btn btn-hover" type="submit">
                     Войти
                 </button>
