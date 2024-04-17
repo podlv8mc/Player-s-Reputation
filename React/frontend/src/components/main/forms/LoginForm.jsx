@@ -33,7 +33,11 @@ const LoginForm = () => {
             })
             .catch(error => {
                 if (error.response && error.response.status === 400) {
-                    setError('Неверное имя пользователя или пароль.');
+                    if (error.response.data && error.response.data.detail) {
+                        setError(error.response.data.detail);
+                    } else {
+                        setError('Неверное имя пользователя или пароль.');
+                    }
                 } else {
                     setError('Произошла ошибка при входе. Пожалуйста, попробуйте снова позже.');
                 }
@@ -51,9 +55,9 @@ const LoginForm = () => {
                 <div className="login__title">
                     Войти
                 </div>
-                <div className="input__wrap">
+                <div className={`input__wrap ${error && 'input__error'}`}>
                     <input
-                        className="input"
+                        className={`input ${error && 'input__error'}`}
                         type="text"
                         required
                         id="email"
@@ -65,9 +69,9 @@ const LoginForm = () => {
                         Имя пользователя
                     </label>
                 </div>
-                <div className="input__wrap">
+                <div className={`input__wrap ${error && 'input__error'}`}>
                     <input
-                        className="input"
+                        className={`input ${error && 'input__error'}`}
                         type="password"
                         required
                         id="password"
