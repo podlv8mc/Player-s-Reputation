@@ -36,9 +36,6 @@ module.exports = {
         historyApiFallback: true,
         port: 9000,
         allowedHosts: 'all',
-        client: {
-            webSocketURL: false,
-        },
     },
     resolve: {
         extensions: ['.js', '.json', '.jsx', '.scss'],

@@ -3,7 +3,7 @@ import { Link } from "react-scroll";
 import { useSpring, animated } from 'react-spring';
 import { NavLink } from "react-router-dom";
 
-const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onClick, logoLink, tableLink }) => {
+const List = ({ className, name, alt, spanClass, text, isOpen, onClick, linkTo }) => {
     const contentAnimation = useSpring({
         left: isOpen ? '30' : '45px',
         from: { left: '45px' },
@@ -14,52 +14,44 @@ const List = ({ class: className, href, name, alt, spanClass, text, isOpen, onCl
         from: { left: '65px' },
     });
 
-    const handleSetActive = (to) => {
+    const renderLink = () => {
+        if (!linkTo) return null;
+
+        if (linkTo.startsWith('/')) {
+            return (
+                <NavLink to={linkTo} className="globalnav__link">
+                    {renderContent()}
+                </NavLink>
+            );
+        } else {
+            return (
+                <Link
+                    className="globalnav__link"
+                    to={linkTo}
+                    spy={true}
+                    smooth={true}
+                    offset={0}
+                    duration={0}
+                    onClick={onClick}
+                >
+                    {renderContent()}
+                </Link>
+            );
+        }
     };
 
-    if (logoLink) {
-        return (
-            <li className={className}>
-                <NavLink to="/" className="globalnav__link">
-                    <animated.img src={name} alt={alt} style={contentAnimation}/>
-                    <animated.span className={spanClass} style={textAnimation}>
-                        {text}
-                    </animated.span>
-                </NavLink>
-            </li>
-        );
-    }
-
-    if (tableLink) {
-        return (
-            <li className={className}>
-                <NavLink to="/table" className="globalnav__link">
-                    <animated.img src={name} alt={alt} style={contentAnimation}/>
-                    <animated.span className={spanClass} style={textAnimation}>
-                        {text}
-                    </animated.span>
-                </NavLink>
-            </li>
-        );
-    }
+    const renderContent = () => (
+        <>
+            <animated.img src={name} alt={alt} style={contentAnimation} />
+            <animated.span className={spanClass} style={textAnimation}>
+                {text}
+            </animated.span>
+        </>
+    );
 
     return (
         <li className={className}>
-            <Link
-                className="globalnav__link"
-                to={href}
-                spy={true}
-                smooth={true}
-                offset={0}
-                duration={0}
-                onSetActive={handleSetActive}
-                onClick={onClick}
-            >
-                <animated.img src={name} alt={alt} style={contentAnimation} />
-                <animated.span className={spanClass} style={textAnimation}>
-                    {text}
-                </animated.span>
-            </Link>
+            {renderLink()}
         </li>
     );
 }
