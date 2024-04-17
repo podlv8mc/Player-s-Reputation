@@ -90,8 +90,8 @@ function MainTable() {
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch((data) => {
-            //alert("Авторизируйтесь!")
-            //window.location.href = "/"
+            alert("Авторизируйтесь!")
+            window.location.href = "/"
         })
     }, []);
 
