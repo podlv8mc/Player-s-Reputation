@@ -1,31 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import '@styles/index.scss';
-import Header from "@/components/header/Header";
-import MobHeader from "@/components/header/mobile-header/MobHeader";
+import React from 'react';
+import ResizableHeader from "@/components/ResizableHeader";
 import MainTable from "@/components/table/MainTable";
 
 function Table() {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
     return (
         <div className="App app__table">
-            {windowWidth >= 801 ? (
-                <Header/>
-            ) : (
-                <MobHeader />
-            )}
+            <ResizableHeader />
             <MainTable />
         </div>
     );
