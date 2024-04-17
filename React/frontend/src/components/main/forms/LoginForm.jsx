@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Images from "@/image/image";
 import axios from 'axios';
-import {document} from "postcss"; // Импортируем axios
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -27,10 +26,18 @@ const LoginForm = () => {
         const formData = new FormData()
         formData.append('username', email)
         formData.append('password', password)
-        axios.post('http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/login', formData).then(data => {
-            localStorage.setItem("access_token", data.data.access_token)
-            window.location.href = '/table';
-        })
+        axios.post('http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/login', formData)
+            .then(data => {
+                localStorage.setItem("access_token", data.data.access_token)
+                window.location.href = '/table';
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 400) {
+                    setError('Неверное имя пользователя или пароль.');
+                } else {
+                    setError('Произошла ошибка при входе. Пожалуйста, попробуйте снова позже.');
+                }
+            });
     };
 
     return (
@@ -73,13 +80,9 @@ const LoginForm = () => {
                     </label>
                 </div>
                 {error && <div className="error-message">{error}</div>}
-
-
-                        <button className="form__btn btn-hover" type="submit">
-                            Войти
-                        </button>
-
-
+                <button className="form__btn btn-hover" type="submit">
+                    Войти
+                </button>
             </form>
         </>
     );
