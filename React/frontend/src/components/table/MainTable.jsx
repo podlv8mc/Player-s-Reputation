@@ -82,22 +82,6 @@ function MainTable() {
         comments: "Комментарии",
     };
 
-    const toggleModal = () => {
-        const ll = document.querySelector('.ll');
-        const bb = document.querySelector('.bb');
-        const modalBtn = document.querySelector('.modal__btn-new');
-
-        if (ll.classList.contains('hidden')) {
-            ll.classList.remove('hidden');
-            bb.classList.add('hidden');
-            modalBtn.classList.remove('hidden');
-        } else {
-            ll.classList.add('hidden');
-            bb.classList.remove('hidden');
-            modalBtn.classList.add('hidden');
-        }
-    };
-
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
             headers: {
@@ -378,59 +362,62 @@ function MainTable() {
         </Modal>
     );
 
+    const EditModalContent = editingUserData && (
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
+            <div className="table__modal-title">
+                Редактировать пользователя
+            </div>
+            <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
+                {/* Определяем массив с информацией о полях */}
+                {Object.entries(newUserData).map(([key, value]) => (
+                    <div className="table__modal-row" key={key}>
+                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                        <input
+                            className="table__modal-cell"
+                            id={key}
+                            type="text"
+                            name={key}
+                            value={editingUserData[key]}
+                            onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                            autoComplete="off"
+                        />
+                    </div>
+                ))}
+                <div className="table__btn-row">
+                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                        Отменить
+                    </button>
+                    <button className="btn-hover table__btn" type="submit">
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </Modal>
+    );
+
+
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-            <button className={`modal__btn-new table__top-btn ${isModalOpen ? 'hidden' : ''}`} onClick={toggleModal}>
+            <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
             </button>
-            <div className={`ll ${isModalOpen ? 'hidden' : ''}`}>
-                <div className="table__modal-title">
-                    Информация о пользователе
-                </div>
-                <div className="table__modal-form-wrap">
-                    {selectedUser && columns.map(column => (
-                        <div className="table__modal-row" key={column.accessor}>
-                            <div className="table__modal-cell-title">
-                                {column.Header}
-                            </div>
-                            <div className="table__modal-cell">
-                                {typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            <div className="table__modal-title">
+                Информация о пользователе
             </div>
-            <div className={`bb hidden ${isModalOpen ? '' : 'hidden'}`}>
-                <div className="table__modal-title">
-                    Редактировать пользователя
-                </div>
-                <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                    {/* Определяем массив с информацией о полях */}
-                    {Object.entries(newUserData).map(([key, value]) => (
-                        <div className="table__modal-row" key={key}>
-                            <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
-                            <input
-                                className="table__modal-cell"
-                                id={key}
-                                type="text"
-                                name={key}
-                                value={editingUserData[key]}
-                                onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
-                                autoComplete="off"
-                            />
+            <div className="table__modal-form-wrap">
+                {columns.map(column => (
+                    <div className="table__modal-row" key={column.accessor}>
+                        <div className="table__modal-cell-title">
+                            {column.Header}
                         </div>
-                    ))}
-                    <div className="table__btn-row">
-                        <button className="btn-hover table__btn" onClick={toggleModal}>
-                            Отменить
-                        </button>
-                        <button className="btn-hover table__btn" type="submit">
-                            Сохранить
-                        </button>
+                        <div className="table__modal-cell">
+                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
+                        </div>
                     </div>
-                </form>
+                ))}
             </div>
+
         </Modal>
     );
 
@@ -513,6 +500,7 @@ function MainTable() {
                 </tbody>
             </table>
             {PageButtons}
+            {EditModalContent}
             {ModalContent}
             {ViewModalContent}
         </main>
