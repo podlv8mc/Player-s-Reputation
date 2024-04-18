@@ -108,6 +108,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: "public/site.webmanifest", to: "" },
+                { from: "public/manifest.json", to: "" },
             ],
         }),
         new CleanWebpackPlugin(

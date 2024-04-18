@@ -11,9 +11,10 @@ const Trainers = React.lazy(() => import("@/components/main/sections/Trainer/Tra
 
 class Main extends React.Component {
     render() {
+        const {handleModalOpen} =this.props;
         return (
             <main id="main" className="main">
-                <Home />
+                <Home handleModalOpen={handleModalOpen}/>
                 <About />
                 <Suspense fallback={<div>Loading...</div>}>
                     <Funds />

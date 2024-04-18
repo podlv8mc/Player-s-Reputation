@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from "@/components/header/Header";
 import MobHeader from "@/components/header/mobile-header/MobHeader";
 
-const ResizableHeader = () => {
+const ResizableHeader = ({handleModalOpen}) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const ResizableHeader = () => {
     return (
         <>
             {windowWidth >= 801 ? (
-                <Header/>
+                <Header handleModalOpen={handleModalOpen}/>
             ) : (
                 <MobHeader />
             )}

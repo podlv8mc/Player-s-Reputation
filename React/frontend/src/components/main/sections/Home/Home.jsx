@@ -3,7 +3,7 @@ import Title from "@/components/headers/Title";
 import Images from "@/image/image";
 
 
-const Home = () => {
+const Home = ({ handleModalOpen }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const Home = () => {
                     <img src={Images.homeBackgroundMobile} className="secondIMage" alt="background"/>
                 )}
             </figure>
-            <Title/>
+            <Title handleModalOpen={handleModalOpen}/>
         </section>
     );
 };

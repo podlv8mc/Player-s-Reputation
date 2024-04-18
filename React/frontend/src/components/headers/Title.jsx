@@ -3,8 +3,7 @@ import Modal from "@/components/main/modal/Modal";
 import LoginForm from "@/components/main/forms/LoginForm";
 import axios from "axios";
 
-const Title = () => {
-    const [modalActive, setModalActive] = useState(false);
+const Title = ({handleModalOpen}) => {
     const [bodyClass, setBodyClass] = useState('');
     const [authorization, setAuthorization] = useState(false);
 
@@ -32,16 +31,6 @@ const Title = () => {
         });
     }, []);
 
-    const handleModalOpen = () => {
-        setModalActive(true);
-        setBodyClass('modal-index');
-    };
-
-    const handleModalClose = () => {
-        setModalActive(false);
-        setBodyClass('');
-    };
-
     return (
         <div className="title__wrap">
             <h1>
@@ -57,10 +46,6 @@ const Title = () => {
                         <button onClick={handleModalOpen} type="button" className="btn-hover title__btn">
                             Войти
                         </button>
-                        <Modal active={modalActive} setActive={handleModalClose}>
-                            <button className="modal__btn-close" onClick={handleModalClose}></button>
-                            <LoginForm/>
-                        </Modal>
                     </>
                 )
             }

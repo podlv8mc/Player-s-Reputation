@@ -125,6 +125,7 @@ function MainTable() {
     const closeEditModal = () => {
         setIsEditModalOpen(false);
     };
+
     const handleChange = e => {
         const {name, value} = e.target;
         setNewUserData(prevData => ({
@@ -399,24 +400,56 @@ function MainTable() {
 
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
-            <button className="modal__btn-close" onClick={closeViewModal}/>
-            <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
-                <img src={Images.edit} alt="edit"/>
-            </button>
-            <div className="table__modal-title">
-                Информация о пользователе
+            <div className="ll">
+                <button className="modal__btn-close" onClick={closeViewModal}/>
+                <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
+                    <img src={Images.edit} alt="edit"/>
+                </button>
+                <div className="table__modal-title">
+                    Информация о пользователе
+                </div>
+                <div className="table__modal-form-wrap">
+                    {columns.map(column => (
+                        <div className="table__modal-row" key={column.accessor}>
+                            <div className="table__modal-cell-title">
+                                {column.Header}
+                            </div>
+                            <div className="table__modal-cell">
+                                {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className="table__modal-form-wrap">
-                {columns.map(column => (
-                    <div className="table__modal-row" key={column.accessor}>
-                        <div className="table__modal-cell-title">
-                            {column.Header}
+            <div className="bb">
+                <div className="table__modal-title">
+                    Редактировать пользователя
+                </div>
+                <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
+                    {/* Определяем массив с информацией о полях */}
+                    {Object.entries(newUserData).map(([key, value]) => (
+                        <div className="table__modal-row" key={key}>
+                            <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                            <input
+                                className="table__modal-cell"
+                                id={key}
+                                type="text"
+                                name={key}
+                                value={editingUserData[key]}
+                                onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                autoComplete="off"
+                            />
                         </div>
-                        <div className="table__modal-cell">
-                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
-                        </div>
+                    ))}
+                    <div className="table__btn-row">
+                        <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                            Отменить
+                        </button>
+                        <button className="btn-hover table__btn" type="submit">
+                            Сохранить
+                        </button>
                     </div>
-                ))}
+                </form>
             </div>
         </Modal>
     );
@@ -455,7 +488,7 @@ function MainTable() {
         <main id="main" className="main">
             <div className="table__top-wrap">
                 <div className="table__top-box">
-                    <div className="table__top-select">
+                <div className="table__top-select">
 
                     </div>
                     <div className="table__top">
