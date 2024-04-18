@@ -389,13 +389,13 @@ function MainTable() {
                     Информация о пользователе
                 </div>
                 <div className="table__modal-form-wrap">
-                    {columns.map(column => (
+                    {selectedUser && columns.map(column => (
                         <div className="table__modal-row" key={column.accessor}>
                             <div className="table__modal-cell-title">
                                 {column.Header}
                             </div>
                             <div className="table__modal-cell">
-                                {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
+                                {typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
                             </div>
                         </div>
                     ))}
