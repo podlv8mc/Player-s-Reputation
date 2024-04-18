@@ -513,7 +513,6 @@ function MainTable() {
                 </tbody>
             </table>
             {PageButtons}
-            {EditModalContent}
             {ModalContent}
             {ViewModalContent}
         </main>
