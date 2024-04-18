@@ -1,21 +1,21 @@
-from enum import Enum as PythonEnum
-from typing import Any, List, Optional
+from typing import List
 from datetime import datetime
+from enum import Enum as PythonEnum
+
 from sqlalchemy import (
     ForeignKey,
     String,
     Integer,
     Table,
     Column,
-    JSON,
     Enum,
     DateTime,
     Text,
-    Boolean
+    Boolean,
 )
-from sqlalchemy.orm import mapped_column, Mapped, relationship
 from fastapi_users.db import SQLAlchemyBaseUserTable
-import json
+from sqlalchemy.orm import mapped_column, Mapped, relationship
+
 from db.engine import Base
 
 
@@ -44,10 +44,10 @@ managers_in_funds = Table(
 class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer(), primary_key=True, index=True)
-    login: Mapped[str] = mapped_column(String(64), nullable=True)
+    login: Mapped[str] = mapped_column(String(64), default="-")
     username: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
-    email: Mapped[str] = mapped_column(String(256), nullable=True)
-    discord: Mapped[str] = mapped_column(String(256), nullable=True)
+    email: Mapped[str] = mapped_column(String(256), default="-")
+    discord: Mapped[str] = mapped_column(String(256), default="-")
     role: Mapped[str] = mapped_column(Enum(Roles))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default="now()"
@@ -58,7 +58,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     managed_funds: Mapped[List["Fund"]] = relationship(
         secondary=managers_in_funds, back_populates="managers"
     )
-    old_id: Mapped[str] = mapped_column(String(), nullable=True)
+    old_id: Mapped[str] = mapped_column(String(), default="-")
 
 
 class Fund(Base):
@@ -79,6 +79,7 @@ class Fund(Base):
     records: Mapped[List["Record"]] = relationship()
     records_history: Mapped[List["RecordHistory"]] = relationship()
     old_id: Mapped[str] = mapped_column(String(), nullable=True)
+
 
 class Nickname(Base):
     __tablename__ = "nicknames"
@@ -131,6 +132,7 @@ class Record(Base):
 
     old_id = Column(String(), nullable=True)
 
+
 class RecordHistory(Base):
     __tablename__ = "records_history"
     id = Column(Integer, primary_key=True)
@@ -167,6 +169,5 @@ class RecordHistory(Base):
     updated_at = Column(DateTime(timezone=True), nullable=True)
     current_version_id = Column(Integer, ForeignKey("records.id"))
     current_version = relationship("Record", back_populates="previous_versions")
-
 
     old_id = Column(String(), nullable=True)
