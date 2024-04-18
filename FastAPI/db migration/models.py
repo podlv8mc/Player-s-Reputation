@@ -1,22 +1,22 @@
-from enum import Enum as PythonEnum
-from typing import Any, List, Optional
+from typing import List
 from datetime import datetime
+from enum import Enum as PythonEnum
+
 from sqlalchemy import (
     ForeignKey,
     String,
     Integer,
     Table,
     Column,
-    JSON,
     Enum,
     DateTime,
     Text,
-    Boolean
+    Boolean,
 )
-from sqlalchemy.orm import mapped_column, Mapped, relationship
 from fastapi_users.db import SQLAlchemyBaseUserTable
-import json
-from engine import Base
+from sqlalchemy.orm import mapped_column, Mapped, relationship
+
+from db.engine import Base
 
 
 class Roles(PythonEnum):
@@ -44,10 +44,10 @@ managers_in_funds = Table(
 class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer(), primary_key=True, index=True)
-    login: Mapped[str] = mapped_column(String(64), nullable=True)
+    login: Mapped[str] = mapped_column(String(64), default="-")
     username: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
-    email: Mapped[str] = mapped_column(String(256), nullable=True)
-    discord: Mapped[str] = mapped_column(String(256), nullable=True)
+    email: Mapped[str] = mapped_column(String(256), default="-")
+    discord: Mapped[str] = mapped_column(String(256), default="-")
     role: Mapped[str] = mapped_column(Enum(Roles))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default="now()"
@@ -65,9 +65,9 @@ class Fund(Base):
     __tablename__ = "funds"
     id: Mapped[int] = mapped_column(Integer(), primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String(), nullable=False)
-    email: Mapped[str] = mapped_column(String(), nullable=True)
-    discord: Mapped[str] = mapped_column(String(), nullable=True)
-    link: Mapped[str] = mapped_column(String(), nullable=True)
+    email: Mapped[str] = mapped_column(String(), default="-")
+    discord: Mapped[str] = mapped_column(String(), default="-")
+    link: Mapped[str] = mapped_column(String(), default="-")
     users: Mapped[List["User"]] = relationship(
         secondary=users_in_funds, back_populates="funds"
     )
@@ -80,11 +80,12 @@ class Fund(Base):
     records_history: Mapped[List["RecordHistory"]] = relationship()
     old_id: Mapped[str] = mapped_column(String(), nullable=True)
 
+
 class Nickname(Base):
     __tablename__ = "nicknames"
     id = Column(Integer, primary_key=True)
-    room_name = Column(String(64), nullable=True)
-    nickname = Column(String(64), nullable=True)
+    room_name = Column(String(64), default="-")
+    nickname = Column(String(64), default="-")
     record_id = Column(Integer, ForeignKey("records.id"), nullable=True)
     record = relationship("Record", back_populates="nicknames")
     history_record_id = Column(Integer, ForeignKey("records_history.id"), nullable=True)
@@ -94,79 +95,77 @@ class Nickname(Base):
 class Record(Base):
     __tablename__ = "records"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(64), nullable=True)
-    last_name = Column(String(64), nullable=True)
-    middlename = Column(String(64), nullable=True)
+    first_name = Column(String(64), default="-")
+    last_name = Column(String(64), default="-")
+    middlename = Column(String(64), default="-")
     nicknames = relationship("Nickname", back_populates="record")
-    gipsyteam = Column(Text(), nullable=True)
-    pokerstrategy = Column(Text(), nullable=True)
-    description = Column(Text(), nullable=True)
-    amount = Column(Text(), nullable=True)
-    google = Column(Text(), nullable=True)
-    mail = Column(Text(), nullable=True)
-    vk = Column(Text(), nullable=True)
-    facebook = Column(Text(), nullable=True)
-    blog = Column(Text(), nullable=True)
-    instagram = Column(Text(), nullable=True)
-    forum = Column(Text(), nullable=True)
-    neteller = Column(Text(), nullable=True)
-    skrill = Column(Text(), nullable=True)
-    ecopayz = Column(Text(), nullable=True)
+    gipsyteam = Column(Text(), default="-")
+    pokerstrategy = Column(Text(), default="-")
+    description = Column(Text(), default="-")
+    amount = Column(Text(), default="-")
+    google = Column(Text(), default="-")
+    mail = Column(Text(), default="-")
+    vk = Column(Text(), default="-")
+    facebook = Column(Text(), default="-")
+    blog = Column(Text(), default="-")
+    instagram = Column(Text(), default="-")
+    forum = Column(Text(), default="-")
+    neteller = Column(Text(), default="-")
+    skrill = Column(Text(), default="-")
+    ecopayz = Column(Text(), default="-")
     old = Column(Boolean(), default=False)
-    fundName = Column(Text(), nullable=True)
+    fundName = Column(Text(), default="-")
     fund = relationship(Fund, back_populates="records")
     fund_id = Column(Integer, ForeignKey("funds.id"))
-    nicknameOld = Column(Text(), nullable=True)
-    comments = Column(Text(), nullable=True)
-    country = Column(Text(), nullable=True)
-    town = Column(Text(), nullable=True)
-    address = Column(Text(), nullable=True)
+    nicknameOld = Column(Text(), default="-")
+    comments = Column(Text(), default="-")
+    country = Column(Text(), default="-")
+    town = Column(Text(), default="-")
+    address = Column(Text(), default="-")
     created_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_by = relationship("User")
-    created_at = Column(DateTime(timezone=True), nullable=True, default=datetime.now())
-    webmoney_id = Column(Text(), nullable=True)
-    wallets = Column(Text(), nullable=True)
+    created_at = Column(DateTime(timezone=True))
+    webmoney_id = Column(Text(), default="-")
+    wallets = Column(Text(), default="-")
     updated_at = Column(DateTime(timezone=True), nullable=True)
     previous_versions = relationship("RecordHistory", back_populates="current_version")
-
     old_id = Column(String(), nullable=True)
+
 
 class RecordHistory(Base):
     __tablename__ = "records_history"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(64), nullable=True)
-    last_name = Column(String(64), nullable=True)
-    middlename = Column(String(64), nullable=True)
+    first_name = Column(String(64), default="-")
+    last_name = Column(String(64), default="-")
+    middlename = Column(String(64), default="-")
     nicknames = relationship("Nickname", back_populates="record_history")
-    gipsyteam = Column(Text(), nullable=True)
-    pokerstrategy = Column(Text(), nullable=True)
-    description = Column(Text(), nullable=True)
-    amount = Column(Text(), nullable=True)
-    google = Column(Text(), nullable=True)
-    mail = Column(Text(), nullable=True)
-    vk = Column(Text(), nullable=True)
-    facebook = Column(Text(), nullable=True)
-    blog = Column(Text(), nullable=True)
-    instagram = Column(Text(), nullable=True)
-    forum = Column(Text(), nullable=True)
-    neteller = Column(Text(), nullable=True)
-    skrill = Column(Text(), nullable=True)
-    ecopayz = Column(Text(), nullable=True)
+    gipsyteam = Column(Text(), default="-")
+    pokerstrategy = Column(Text(), default="-")
+    description = Column(Text(), default="-")
+    amount = Column(Text(), default="-")
+    google = Column(Text(), default="-")
+    mail = Column(Text(), default="-")
+    vk = Column(Text(), default="-")
+    facebook = Column(Text(), default="-")
+    blog = Column(Text(), default="-")
+    instagram = Column(Text(), default="-")
+    forum = Column(Text(), default="-")
+    neteller = Column(Text(), default="-")
+    skrill = Column(Text(), default="-")
+    ecopayz = Column(Text(), default="-")
     old = Column(Boolean(), default=False)
-    fundName = Column(Text(), nullable=True)
+    fundName = Column(Text(), default="-")
     fund = relationship(Fund, back_populates="records_history")
     fund_id = Column(Integer, ForeignKey("funds.id"))
-    nicknameOld = Column(Text(), nullable=True)
-    comments = Column(Text(), nullable=True)
-    country = Column(Text(), nullable=True)
-    town = Column(Text(), nullable=True)
-    address = Column(Text(), nullable=True)
-    created_at = Column(DateTime(timezone=True), nullable=True)
-    webmoney_id = Column(Text(), nullable=True)
-    wallets = Column(Text(), nullable=True)
+    nicknameOld = Column(Text(), default="-")
+    comments = Column(Text(), default="-")
+    country = Column(Text(), default="-")
+    town = Column(Text(), default="-")
+    address = Column(Text(), default="-")
+    created_at = Column(DateTime(timezone=True))
+    webmoney_id = Column(Text(), default="-")
+    wallets = Column(Text(), default="-")
     updated_at = Column(DateTime(timezone=True), nullable=True)
     current_version_id = Column(Integer, ForeignKey("records.id"))
     current_version = relationship("Record", back_populates="previous_versions")
-
-
     old_id = Column(String(), nullable=True)
