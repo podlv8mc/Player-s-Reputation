@@ -82,9 +82,25 @@ function MainTable() {
         comments: "Комментарии",
     };
 
+    const toggleModal = () => {
+        const ll = document.querySelector('.ll');
+        const bb = document.querySelector('.bb');
+        const modalBtn = document.querySelector('.modal__btn-new');
+
+        if (ll.classList.contains('hidden')) {
+            ll.classList.remove('hidden');
+            bb.classList.add('hidden');
+            modalBtn.classList.remove('hidden');
+        } else {
+            ll.classList.add('hidden');
+            bb.classList.remove('hidden');
+            modalBtn.classList.add('hidden');
+        }
+    };
+
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
-            headers:{
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
@@ -142,8 +158,8 @@ function MainTable() {
             createdAt: createdAt
         }
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  userDataWithTimestamp, {
-            headers:{
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp, {
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
@@ -157,18 +173,18 @@ function MainTable() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-            axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/records/${editingUserData.id}`, editingUserData, {
-                headers:{
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
+        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/records/${editingUserData.id}`, editingUserData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then((response) => {
+                console.log(response.data);
+                setIsModalOpen(false);
             })
-                .then((response) => {
-                    console.log(response.data);
-                    setIsModalOpen(false);
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
+            .catch((error) => {
+                console.error(error);
+            })
 
     };
 
@@ -328,8 +344,6 @@ function MainTable() {
     };
 
 
-
-
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -358,53 +372,19 @@ function MainTable() {
 
                 </div>
                 <button className="btn-hover table__btn" type="submit">
-                Добавить
+                    Добавить
                 </button>
             </form>
         </Modal>
     );
-
-    const EditModalContent = editingUserData && (
-        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
-            <div className="table__modal-title">
-                Редактировать пользователя
-            </div>
-            <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {/* Определяем массив с информацией о полях */}
-                {Object.entries(newUserData).map(([key, value]) => (
-                    <div className="table__modal-row" key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
-                        <input
-                            className="table__modal-cell"
-                            id={key}
-                            type="text"
-                            name={key}
-                            value={editingUserData[key]}
-                            onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
-                            autoComplete="off"
-                        />
-                    </div>
-                ))}
-                <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
-                        Отменить
-                    </button>
-                    <button className="btn-hover table__btn" type="submit">
-                        Сохранить
-                    </button>
-                </div>
-            </form>
-        </Modal>
-    );
-
 
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
-            <div className="ll">
-                <button className="modal__btn-close" onClick={closeViewModal}/>
-                <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
-                    <img src={Images.edit} alt="edit"/>
-                </button>
+            <button className="modal__btn-close" onClick={closeViewModal}/>
+            <button className={`modal__btn-new table__top-btn ${isModalOpen ? 'hidden' : ''}`} onClick={toggleModal}>
+                <img src={Images.edit} alt="edit"/>
+            </button>
+            <div className={`ll ${isModalOpen ? 'hidden' : ''}`}>
                 <div className="table__modal-title">
                     Информация о пользователе
                 </div>
@@ -421,7 +401,7 @@ function MainTable() {
                     ))}
                 </div>
             </div>
-            <div className="bb">
+            <div className={`bb hidden ${isModalOpen ? '' : 'hidden'}`}>
                 <div className="table__modal-title">
                     Редактировать пользователя
                 </div>
@@ -442,7 +422,7 @@ function MainTable() {
                         </div>
                     ))}
                     <div className="table__btn-row">
-                        <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                        <button className="btn-hover table__btn" onClick={toggleModal}>
                             Отменить
                         </button>
                         <button className="btn-hover table__btn" type="submit">
@@ -488,7 +468,7 @@ function MainTable() {
         <main id="main" className="main">
             <div className="table__top-wrap">
                 <div className="table__top-box">
-                <div className="table__top-select">
+                    <div className="table__top-select">
 
                     </div>
                     <div className="table__top">
