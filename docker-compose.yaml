@@ -12,7 +12,7 @@ services:
       - 'postgres:/var/lib/postgresql/data'
     networks:
       - my_network
-  
+
   api:
     build:
       context: ./FastAPI
@@ -31,9 +31,9 @@ services:
       - reputationpg
     networks:
       - my_network
-  
+
   client:
-    build: 
+    build:
       context: ./React
       dockerfile: Dockerfile
     depends_on:
@@ -45,6 +45,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfiile_nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "81:81"
@@ -52,11 +53,30 @@ services:
     depends_on:
       - api
       - client
+    volumes:
+      - ./data/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     networks:
       - my_network
 
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    networks:
+      - my_network
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
 volumes:
   postgres:
+
 
 networks:
   my_network:
