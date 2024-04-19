@@ -8,4 +8,4 @@ COPY . .
 
 RUN chmod +x ./init-letsencrypt.sh
 
-RUN sudo ./init-letsencrypt.sh
+RUN ./init-letsencrypt.sh
