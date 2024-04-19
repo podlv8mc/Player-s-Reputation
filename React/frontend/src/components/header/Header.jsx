@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StickyBox from "react-sticky-box";
 import Navigation from "@/components/header/Navigation";
 
-const Header = () => {
+const Header = ({ handleModalOpen }) => {
     const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     const handleButtonClick = () => {
@@ -13,7 +13,7 @@ const Header = () => {
         <div className={`header__wrap ${isButtonClicked ? 'header__wrap-width' : ''}`}>
             <StickyBox offsetTop={5} offsetBottom={0}>
                 <header className={`header ${isButtonClicked ? 'header-width' : ''}`}>
-                    <Navigation onButtonClick={handleButtonClick} />
+                    <Navigation onButtonClick={handleButtonClick} handleModalOpen={handleModalOpen}/>
                 </header>
             </StickyBox>
         </div>

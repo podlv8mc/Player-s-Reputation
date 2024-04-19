@@ -84,7 +84,7 @@ function MainTable() {
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
-            headers:{
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
@@ -125,6 +125,7 @@ function MainTable() {
     const closeEditModal = () => {
         setIsEditModalOpen(false);
     };
+
     const handleChange = e => {
         const {name, value} = e.target;
         setNewUserData(prevData => ({
@@ -141,8 +142,8 @@ function MainTable() {
             createdAt: createdAt
         }
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records",  userDataWithTimestamp, {
-            headers:{
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp, {
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
@@ -156,18 +157,18 @@ function MainTable() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-            axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/records/${editingUserData.id}`, editingUserData, {
-                headers:{
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
+        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/records/${editingUserData.id}`, editingUserData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then((response) => {
+                console.log(response.data);
+                setIsModalOpen(false);
             })
-                .then((response) => {
-                    console.log(response.data);
-                    setIsModalOpen(false);
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
+            .catch((error) => {
+                console.error(error);
+            })
 
     };
 
@@ -327,8 +328,6 @@ function MainTable() {
     };
 
 
-
-
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -357,7 +356,7 @@ function MainTable() {
 
                 </div>
                 <button className="btn-hover table__btn" type="submit">
-                Добавить
+                    Добавить
                 </button>
             </form>
         </Modal>
@@ -418,6 +417,7 @@ function MainTable() {
                     </div>
                 ))}
             </div>
+
         </Modal>
     );
 

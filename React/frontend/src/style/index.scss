@@ -27,6 +27,10 @@
   padding: 0px !important;
 }
 
+.hidden {
+  display: none !important;
+}
+
 h1 {
   @include Montserrat-700;
   background: linear-gradient(327deg, #f29000 0%, #f18f00 0.01%, #fccd55 61.26%, #f8b736 100%);

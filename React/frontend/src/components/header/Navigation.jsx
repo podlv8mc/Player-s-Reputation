@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Images from "@/image/image";
 import List from "@/components/header/List";
-import { useLocation } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import axios from "axios";
 
-const Navigation = ({ onButtonClick }) => {
+const Navigation = ({onButtonClick, handleModalOpen}) => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
     const [authorization, setAuthorization] = useState(false);
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
-            headers:{
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(() => {
@@ -30,14 +30,17 @@ const Navigation = ({ onButtonClick }) => {
         if (location.pathname === "/") {
             return (
                 <>
-                    <List linkTo="home" className="globalnav" name={Images.home} alt="home" spanClass="globalnav__text" text="Главная" isOpen={isOpen} />
-                    <List linkTo="about" className="globalnav" name={Images.about} alt="about" spanClass="globalnav__text" text="О нас" isOpen={isOpen} />
-                    <List linkTo="funds" className="globalnav" name={Images.funds} alt="funds" spanClass="globalnav__text" text="Фонды" isOpen={isOpen} />
-                    <List linkTo="trainers" className="globalnav" name={Images.trainer} alt="trainer" spanClass="globalnav__text" text="Тренера" isOpen={isOpen} />
+                    <List linkTo="home" className="globalnav" name={Images.home} alt="home" spanClass="globalnav__text"
+                          text="Главная" isOpen={isOpen}/>
+                    <List linkTo="about" className="globalnav" name={Images.about} alt="about"
+                          spanClass="globalnav__text" text="О нас" isOpen={isOpen}/>
+                    <List linkTo="funds" className="globalnav" name={Images.funds} alt="funds"
+                          spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
+                    <List linkTo="trainers" className="globalnav" name={Images.trainer} alt="trainer"
+                          spanClass="globalnav__text" text="Тренера" isOpen={isOpen}/>
                 </>
             );
-        }
-        else {
+        } else {
             return null;
         }
     };
@@ -46,31 +49,39 @@ const Navigation = ({ onButtonClick }) => {
         <>
             <nav className="globalnav__wrap">
                 <ul className="globalnav__list">
-                    <List linkTo="/" className="globalnav globalnav-logo" name={Images.logo} alt="logo" spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen} />
+                    <List linkTo="/" className="globalnav globalnav-logo" name={Images.logo} alt="logo"
+                          spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen}/>
                     {renderLists()}
                     {
                         authorization && (location.pathname === "/table" || location.pathname === "/Users" || location.pathname === "/Funds" || location.pathname === "/Cabinet") ? (
                             <>
-                                <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen} />
-                                <List linkTo="/Funds" className="globalnav" name={Images.funds__table} alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen} />
-                                <List linkTo="/Users" className="globalnav" name={Images.users} alt="users" spanClass="globalnav__text" text="Пользователи" isOpen={isOpen} />
-                                <List linkTo="/Cabinet" className="globalnav" name={Images.cabinet} alt="cabinet" spanClass="globalnav__text" text="Кабинет" isOpen={isOpen} />
-                                <List linkTo="#" className="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
+                                <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
+                                      spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
+                                <List linkTo="/Funds" className="globalnav" name={Images.funds__table}
+                                      alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
+                                <List linkTo="/Users" className="globalnav" name={Images.users} alt="users"
+                                      spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
+                                <List linkTo="/Cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
+                                      spanClass="globalnav__text" text="Кабинет" isOpen={isOpen}/>
+                                <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
+                                      spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
                                     localStorage.removeItem("access_token");
                                     window.location.href = "/";
-                                }} />
+                                }}/>
                             </>
                         ) : (
                             authorization ? (
                                 <>
-                                    <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table" spanClass="globalnav__text" text="Таблица" isOpen={isOpen} />
-                                    <List linkTo="#" className="globalnav" name={Images.exit} alt="exit" spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
+                                    <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
+                                          spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
+                                    <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
+                                          spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
                                         localStorage.removeItem("access_token");
                                         window.location.href = "/";
-                                    }} />
+                                    }}/>
                                 </>
                             ) : (
-                                <List linkTo="home" className="globalnav" name={Images.login} alt="home" spanClass="globalnav__text" text="Войти" isOpen={isOpen} />
+                                <List onClick={handleModalOpen} linkTo="#" className="globalnav" name={Images.login} alt="home" spanClass="globalnav__text" text="Войти" isOpen={isOpen} />
                             )
                         )
                     }
@@ -83,6 +94,7 @@ const Navigation = ({ onButtonClick }) => {
                           fill="white"/>
                 </svg>
             </button>
+
         </>
     );
 }

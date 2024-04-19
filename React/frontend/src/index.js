@@ -15,7 +15,7 @@ root.render(
             <link rel="icon" type="image/png" sizes="32x32" href={Images.applefavicon32}/>
             <link rel="icon" type="image/png" sizes="16x16" href={Images.applefavicon16}/>
             <link rel="mask-icon" href={Images.applefaviconsaf} color="#000000"/>
-            <link rel="manifest" href="./site.webmanifest"/>
+            <link rel="manifest" href="/manifest.json"/>
             <meta name="msapplication-TileColor" content="#000000"/>
             <meta name="theme-color" content="#ffffff"/>
         </Helmet>
