@@ -3,7 +3,6 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import Select from "react-select";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -11,7 +10,6 @@ function MainTable() {
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingUserData, setEditingUserData] = useState(null);
-    const [selectedOption, setSelectedOption] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
@@ -44,19 +42,20 @@ function MainTable() {
         ecopayz: "",
         webmoney_id: "",
         wallets: "",
-        old: true,
         nicknameOld: "",
         comments: "",
         country: "",
         town: "",
         address: "",
-        fund_id: 0
+        fund_id: 0,
+        old: true, //old всегда должен быть последним
     });
 
     const inputLabels = {
         nicknameOld: "Ники",
         last_name: "Фамилия",
         first_name: "Имя",
+        nicknames: "Дисциплина",
         middlename: "Отчество",
         description: "Описание",
         amount: "Ущерб",
@@ -142,6 +141,7 @@ function MainTable() {
             createdAt: createdAt
         }
 
+        console.log(userDataWithTimestamp);
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -335,13 +335,14 @@ function MainTable() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                {Object.keys(newUserData).map(key => (
-                    <div className="table__modal-row" key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                {Object.keys(newUserData).map((key, index, array) => (
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                        <label className="table__modal-cell-title" htmlFor={key}>
+                            {inputLabels[key]}
+                        </label>
                         <input
                             className="table__modal-cell"
                             id={key}
-                            type="text"
                             name={key}
                             value={newUserData[key]}
                             onChange={handleChange}
@@ -349,12 +350,6 @@ function MainTable() {
                         />
                     </div>
                 ))}
-                <div className="table__modal-row">
-                    <label className="table__modal-cell-title">
-                        Found ID
-                    </label>
-
-                </div>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
