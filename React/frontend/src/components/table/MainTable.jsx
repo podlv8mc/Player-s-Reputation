@@ -3,7 +3,6 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import Select from "react-select";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -11,7 +10,6 @@ function MainTable() {
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingUserData, setEditingUserData] = useState(null);
-    const [selectedOption, setSelectedOption] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
