@@ -42,13 +42,13 @@ function MainTable() {
         ecopayz: "",
         webmoney_id: "",
         wallets: "",
-        old: true,
         nicknameOld: "",
         comments: "",
         country: "",
         town: "",
         address: "",
-        fund_id: 0
+        fund_id: 0,
+        old: true, //old всегда должен быть последним
     });
 
     const inputLabels = {
@@ -350,7 +350,7 @@ function MainTable() {
                         />
                     </div>
                 ))}
-                <div className="table__modal-row">
+                <div className="table__modal-row hidden">
                     <label className="table__modal-cell-title">
                         Дисциплина
                     </label>
