@@ -252,6 +252,10 @@
     justify-content: space-between;
     gap: 10px;
 
+    &:last-child {
+      display: none !important;
+    }
+
     .table__modal-cell-title {
       @include Montserrat-500;
       font-size: 16px;
@@ -271,10 +275,6 @@
       color: #ffffff;
       padding: 5px 20px;
       text-align: center;
-    }
-
-    &:last-child {
-      display: none !important;
     }
   }
 

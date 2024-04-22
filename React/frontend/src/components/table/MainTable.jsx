@@ -350,7 +350,7 @@ function MainTable() {
                             className="table__modal-cell"
                             id={key}
                             name={key}
-                            value={newUserData[key]}
+                            value={typeof newUserData[key] === 'object' ? newUserData[key].room_name : newUserData[key]}
                             onChange={handleChange}
                             autoComplete="off"
                         />
