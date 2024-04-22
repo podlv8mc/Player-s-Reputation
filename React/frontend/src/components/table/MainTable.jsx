@@ -134,19 +134,11 @@ function MainTable() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const createdAt = new Date().toISOString();
+        e.preventDefault()
+        const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt
-        };
-
-        // Обновляем только поле room_name в объекте nicknames
-        if (newUserData.nicknames && newUserData.nicknames.room_name !== undefined) {
-            userDataWithTimestamp.nicknames = {
-                ...userDataWithTimestamp.nicknames,
-                room_name: newUserData.nicknames.room_name
-            };
         }
 
         console.log(userDataWithTimestamp);
@@ -160,6 +152,7 @@ function MainTable() {
             });
 
         setIsModalOpen(false);
+
     };
 
     const handleEditSubmit = async (e) => {
@@ -343,14 +336,15 @@ function MainTable() {
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
                 {Object.keys(newUserData).map(key => (
-                    <div className="table__modal-row" key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
-
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                        <label className="table__modal-cell-title" htmlFor={key}>
+                            {inputLabels[key]}
+                        </label>
                         <input
                             className="table__modal-cell"
                             id={key}
                             name={key}
-                            value={typeof newUserData[key] === 'object' ? newUserData[key].room_name : newUserData[key]}
+                            value={newUserData[key]}
                             onChange={handleChange}
                             autoComplete="off"
                         />
