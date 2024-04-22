@@ -342,7 +342,6 @@ function MainTable() {
                         <input
                             className="table__modal-cell"
                             id={key}
-                            type="text"
                             name={key}
                             value={newUserData[key[0].room_name]}
                             onChange={handleChange}
@@ -350,11 +349,6 @@ function MainTable() {
                         />
                     </div>
                 ))}
-                <div className="table__modal-row hidden">
-                    <label className="table__modal-cell-title">
-                        Дисциплина
-                    </label>
-                </div>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
