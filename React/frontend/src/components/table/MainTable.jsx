@@ -55,6 +55,7 @@ function MainTable() {
         nicknameOld: "Ники",
         last_name: "Фамилия",
         first_name: "Имя",
+        nicknames: "Дисциплина",
         middlename: "Отчество",
         description: "Описание",
         amount: "Ущерб",
@@ -336,12 +337,13 @@ function MainTable() {
                 {Object.keys(newUserData).map(key => (
                     <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+
                         <input
                             className="table__modal-cell"
                             id={key}
                             type="text"
                             name={key}
-                            value={newUserData[key]}
+                            value={newUserData[key[0].room_name]}
                             onChange={handleChange}
                             autoComplete="off"
                         />
@@ -349,9 +351,8 @@ function MainTable() {
                 ))}
                 <div className="table__modal-row">
                     <label className="table__modal-cell-title">
-                        Found ID
+                        Дисциплина
                     </label>
-
                 </div>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
