@@ -141,6 +141,7 @@ function MainTable() {
             createdAt: createdAt
         }
 
+        console.log(userDataWithTimestamp);
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
