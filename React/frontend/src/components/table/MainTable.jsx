@@ -134,11 +134,19 @@ function MainTable() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        const createdAt = new Date().toISOString()
+        e.preventDefault();
+        const createdAt = new Date().toISOString();
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt
+        };
+
+        // Обновляем только поле room_name в объекте nicknames
+        if (newUserData.nicknames && newUserData.nicknames.room_name !== undefined) {
+            userDataWithTimestamp.nicknames = {
+                ...userDataWithTimestamp.nicknames,
+                room_name: newUserData.nicknames.room_name
+            };
         }
 
         console.log(userDataWithTimestamp);
@@ -152,7 +160,6 @@ function MainTable() {
             });
 
         setIsModalOpen(false);
-
     };
 
     const handleEditSubmit = async (e) => {
@@ -343,7 +350,7 @@ function MainTable() {
                             className="table__modal-cell"
                             id={key}
                             name={key}
-                            value={newUserData[key[0].room_name]}
+                            value={newUserData[key]}
                             onChange={handleChange}
                             autoComplete="off"
                         />
