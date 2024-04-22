@@ -335,7 +335,7 @@ function MainTable() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                {Object.keys(newUserData).map(key => (
+                {Object.keys(newUserData).map((key, index, array) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
