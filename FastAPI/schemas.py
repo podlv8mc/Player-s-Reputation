@@ -30,16 +30,16 @@ class CreateUpdateDictModel(BaseModel):
         return {k: Optional[v] for k, v in self.__annotations__.items()}
 
 
-class NicknameBase(CreateUpdateDictModel):
-    room_name: Optional[str | None] = None
-    nickname: Optional[str | None] = None
-    model_config = ConfigDict(from_attributes=False)
+# class NicknameBase(CreateUpdateDictModel):
+#     room_name: Optional[str | None] = None
+#     nickname: Optional[str | None] = None
+#     model_config = ConfigDict(from_attributes=False)
 
 
-class NicknameCreate(NicknameBase): ...
+# class NicknameCreate(NicknameBase): ...
 
 
-class NicknameRead(NicknameBase): ...
+# class NicknameRead(NicknameBase): ...
 
 
 class UserRead(users_schemas.BaseUser):
@@ -95,7 +95,7 @@ class RecordBase(CreateUpdateDictModel):
     first_name: Optional[str | None] = None
     last_name: Optional[str | None] = None
     middlename: Optional[str | None] = None
-    nicknames: Optional[List[NicknameRead | None]] = None
+    room_name: Optional[str | None] = None
     gipsyteam: Optional[str | None] = None
     pokerstrategy: Optional[str | None] = None
     description: Optional[str | None] = None
@@ -131,7 +131,7 @@ class RecordHistoryRead(BaseModel):
     first_name: Optional[str | None] = None
     last_name: Optional[str | None] = None
     middlename: Optional[str | None] = None
-    nicknames: Optional[List[NicknameRead | None]] = None
+    room_name: Optional[str | None] = None
     gipsyteam: Optional[str | None] = None
     pokerstrategy: Optional[str | None] = None
     description: Optional[str | None] = None

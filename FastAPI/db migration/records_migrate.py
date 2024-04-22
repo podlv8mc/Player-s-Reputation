@@ -12,7 +12,7 @@ def migrate_records():
         records_list = arb_json.readlines()
 
     with engine.sync_session() as db:
-        for record in records_list:
+        for record in records_list[:10]:
             try:
                 record_dict = json.loads(record)
 
@@ -40,17 +40,12 @@ def migrate_records():
 
             new_arb.old_id = record_dict.pop("id")
             new_arb.fund = fund
-            nicknames = record_dict.pop("nickname")
+            room_name = record_dict.pop("nickname")
 
-            if nicknames:
-                nicknames = [
-                    models.Nickname(room_name=nickname.get("discipline"))
-                    for nickname in nicknames
-                ]
+            if room_name:
+                print(room_name)
+                new_arb.room_name = room_name[0].get("discipline")
 
-            print(nicknames)
-
-            new_arb.nicknames.extend(nicknames)
             webmoney = record_dict.pop("webmoney")
 
             if webmoney:

@@ -16,7 +16,7 @@ from sqlalchemy import (
 from fastapi_users.db import SQLAlchemyBaseUserTable
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from engine import Base
+from db.engine import Base
 
 
 class Roles(PythonEnum):
@@ -81,15 +81,15 @@ class Fund(Base):
     old_id: Mapped[str] = mapped_column(String(), nullable=True)
 
 
-class Nickname(Base):
-    __tablename__ = "nicknames"
-    id = Column(Integer, primary_key=True)
-    room_name = Column(String(64), default="-")
-    nickname = Column(String(64), default="-")
-    record_id = Column(Integer, ForeignKey("records.id"), nullable=True)
-    record = relationship("Record", back_populates="nicknames")
-    history_record_id = Column(Integer, ForeignKey("records_history.id"), nullable=True)
-    record_history = relationship("RecordHistory", back_populates="nicknames")
+# class RoomName(Base):
+#     __tablename__ = "roomnames"
+#     id = Column(Integer, primary_key=True)
+#     room_name = Column(String(64), default="-")
+#     nickname = Column(String(64), default="-")
+#     record_id = Column(Integer, ForeignKey("records.id"), nullable=True)
+#     record = relationship("Record", back_populates="nicknames")
+#     history_record_id = Column(Integer, ForeignKey("records_history.id"), nullable=True)
+#     record_history = relationship("RecordHistory", back_populates="nicknames")
 
 
 class Record(Base):
@@ -98,7 +98,7 @@ class Record(Base):
     first_name = Column(String(64), default="-")
     last_name = Column(String(64), default="-")
     middlename = Column(String(64), default="-")
-    nicknames = relationship("Nickname", back_populates="record")
+    room_name = Column(Text(), default="-")
     gipsyteam = Column(Text(), default="-")
     pokerstrategy = Column(Text(), default="-")
     description = Column(Text(), default="-")
@@ -138,7 +138,7 @@ class RecordHistory(Base):
     first_name = Column(String(64), default="-")
     last_name = Column(String(64), default="-")
     middlename = Column(String(64), default="-")
-    nicknames = relationship("Nickname", back_populates="record_history")
+    room_name = Column(Text(), default="-")
     gipsyteam = Column(Text(), default="-")
     pokerstrategy = Column(Text(), default="-")
     description = Column(Text(), default="-")
