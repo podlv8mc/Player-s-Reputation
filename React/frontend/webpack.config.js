@@ -109,7 +109,6 @@ module.exports = {
             patterns: [
                 { from: "public/site.webmanifest", to: "" },
                 { from: "public/manifest.json", to: "" },
-                { from: "src/components/table/users.json", to: "" },
             ],
         }),
         new CleanWebpackPlugin(
