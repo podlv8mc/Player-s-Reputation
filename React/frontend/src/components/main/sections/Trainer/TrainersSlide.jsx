@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Images from "@/image/image";
 
-function FundsSlide({ slides }) {
+function TrainersSlide ({ slides }) {
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
     const [expandedSlideIndex, setExpandedSlideIndex] = useState(null);
     const sliderRef = useRef(null);
@@ -33,12 +33,14 @@ function FundsSlide({ slides }) {
         infinite: false,
         dots: true,
         speed: 500,
-        slidesToScroll: 2,
+        slidesToScroll: 3,
         responsive: [
             {
                 breakpoint: 800,
                 settings: {
                     slidesToShow: 1,
+                    slidesToScroll: 1,
+
                     rows: 3,
                 }
             },
@@ -46,6 +48,8 @@ function FundsSlide({ slides }) {
                 breakpoint: 600,
                 settings: {
                     slidesToShow: 1,
+                    slidesToScroll: 1,
+
                     rows: 1,
                 }
             },
@@ -74,7 +78,7 @@ function FundsSlide({ slides }) {
     return (
         <Slider ref={sliderRef} {...settings}>
             {slides.map((slide, index) => (
-                <div key={Math.random()} className="slide__wrap">
+                <div key={slide.id} id={slide.id} className="slide__wrap">
                     <div className={`slide slide-trainer ${expandedSlideIndex === index ? "slide__height" : ""}`}>
                         <figure className="slide__image">
                             <img src={slide.src} alt={slide.alt} />
@@ -106,4 +110,4 @@ function FundsSlide({ slides }) {
     );
 }
 
-export default FundsSlide;
+export default TrainersSlide;
