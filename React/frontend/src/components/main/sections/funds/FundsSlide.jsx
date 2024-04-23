@@ -74,7 +74,7 @@ function FundsSlide({ slides }) {
     return (
         <Slider ref={sliderRef} {...settings}>
             {slides.map((slide, index) => (
-                <div key={index} className="slide__wrap">
+                <div key={slide.id} id={slide.id} className="slide__wrap">
                     <div className={`slide ${expandedSlideIndex === index ? "slide__height" : ""}`}>
                         <figure className="slide__image">
                             <img src={slide.src} alt={slide.alt} />

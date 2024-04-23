@@ -3,18 +3,17 @@ import Sections from "@/components/headers/Sections";
 import ImagesFunds from "@/image/trainers/imageTrainers";
 import TrainersSlide from "@/components/main/sections/Trainer/TrainersSlide";
 import imageTrainers from "@/image/trainers/imageTrainers";
+import SliderBtn from "@/components/main/sections/funds/SliderBtn";
 
 function Funds() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
     const slidesData = [
         [
-            { src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
         ],
         [
             { src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
         ],
-        // Данные для второго слайда
         [
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "фцулкпрфдупи цуш зцшугпрз    шгцРАЩшаоцшгА   ЦЩГАП   ЦШгпащцшАПигшпшг щшфурпшгпуушцгфпра гШГЗпЗШГУЫПРШЗГЫКПЦУ АЦУГШПАЦУШГАОЦУЩШАРПЦУШГ ЩШ3ЙПАШ2ГЦРПШОПЦШЩ УЦУЩШАРЦУШГИАЦЩШУОАЦШГГАЦ ЩЦУПРДЦШУГПЦУИрыжлип", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
@@ -26,14 +25,12 @@ function Funds() {
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ],
-        // Данные для третьего слайда
         [
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "фцулкпрфдупи цуш зцшугпрз    шгцРАЩшаоцшгА   ЦЩГАП   ЦШгпащцшАПигшпшг щшфурпшгпуушцгфпра гШГЗпЗШГУЫПРШЗГЫКПЦУ АЦУГШПАЦУШГАОЦУЩШАРПЦУШГ ЩШ3ЙПАШ2ГЦРПШОПЦШЩ УЦУЩШАРЦУШГИАЦЩШУОАЦШГГАЦ ЩЦУПРДЦШУГПЦУИрыжлип", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ],
-        // Данные для четвертого слайда
         [
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "фцулкпрфдупи цуш зцшугпрз    шгцРАЩшаоцшгА   ЦЩГАП   ЦШгпащцшАПигшпшг щшфурпшгпуушцгфпра гШГЗпЗШГУЫПРШЗГЫКПЦУ АЦУГШПАЦУШГАОЦУЩШАРПЦУШГ ЩШ3ЙПАШ2ГЦРПШОПЦШЩ УЦУЩШАРЦУШГИАЦЩШУОАЦШГГАЦ ЩЦУПРДЦШУГПЦУИрыжлип", alt: "fundsOne" },
             { src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "фцулкпрфдупи цуш зцшугпрз    шгцРАЩшаоцшгА   ЦЩГАП   ЦШгпащцшАПигшпшг щшфурпшгпуушцгфпра гШГЗпЗШГУЫПРШЗГЫКПЦУ АЦУГШПАЦУШГАОЦУЩШАРПЦУШГ ЩШ3ЙПАШ2ГЦРПШОПЦШЩ УЦУЩШАРЦУШГИАЦЩШУОАЦШГГАЦ ЩЦУПРДЦШУГПЦУИрыжлип", alt: "fundsOne" },
@@ -44,6 +41,8 @@ function Funds() {
         ]
     ];
 
+    const initialSlides = slidesData.slice(1).flat();
+
     const handleButtonClick = (index) => {
         setCurrentSlideIndex(index);
     };
@@ -52,29 +51,8 @@ function Funds() {
         <section id="trainers" className="funds__wrap">
             <Sections clarification="ТОП Бекинг Фондов" title="Лучшие тренера по покеру"
                       subtitle="Рейтинг лучших тренеров обучающих игры в Poker"/>
-            <div className="funds__btn-wrap">
-                <button className={`funds__btn ${currentSlideIndex === 0 ? "funds__btn-color" : ""}`}
-                        onClick={() => handleButtonClick(0)}>
-                    Все
-                </button>
-                <button className={`funds__btn ${currentSlideIndex === 1 ? "funds__btn-color" : ""}`}
-                        onClick={() => handleButtonClick(1)}>
-                    MTT
-                </button>
-                <button className={`funds__btn ${currentSlideIndex === 2 ? "funds__btn-color" : ""}`}
-                        onClick={() => handleButtonClick(2)}>
-                    Кэш-игры
-                </button>
-                <button className={`funds__btn ${currentSlideIndex === 3 ? "funds__btn-color" : ""}`}
-                        onClick={() => handleButtonClick(3)}>
-                    Двухуровневые игры
-                </button>
-                <button className={`funds__btn ${currentSlideIndex === 4 ? "funds__btn-color" : ""}`}
-                        onClick={() => handleButtonClick(4)}>
-                    СНГ
-                </button>
-            </div>
-            <TrainersSlide slides={slidesData[currentSlideIndex]}/>
+            <SliderBtn currentSlideIndex={currentSlideIndex} handleButtonClick={handleButtonClick} />
+            <TrainersSlide slides={currentSlideIndex === 0 ? initialSlides : slidesData[currentSlideIndex]}/>
         </section>
     );
 }
