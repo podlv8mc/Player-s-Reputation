@@ -163,9 +163,13 @@ async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
     return record
 
 
-async def create_record(db: AsyncSession, record_data: schemas.RecordCreate):
+async def create_record(
+    db: AsyncSession, record_data: schemas.RecordCreate, current_user: models.User
+):
     record_data = record_data.create_update_dict()
-    fund = await get_fund_by_id(db=db, fund_id=record_data.pop("fund_id"))
+    fund = await get_fund_by_id(
+        db=db, fund_id=record_data.pop("fund_id"), current_user=current_user
+    )
     create_record_query = insert(models.Record).values(record_data)
 
     try:

@@ -218,7 +218,7 @@ async def register(
 ):
     try:
         created_user = await user_manager.create_with_funds(
-            user_create, safe=True, request=request#, current_user=current_user
+            user_create, safe=True, request=request  # , current_user=current_user
         )
     except users_exceptions.UserAlreadyExists:
         raise HTTPException(
@@ -292,10 +292,14 @@ async def get_record_by_id(
     dependencies=[Depends(permissions.manager_or_higher)],
 )
 async def create_record(
-    record_data: schemas.RecordCreate, db: AsyncSession = Depends(get_async_session)
+    record_data: schemas.RecordCreate,
+    db: AsyncSession = Depends(get_async_session),
+    current_user=Depends(permissions.read_only_or_higher),
 ):
     try:
-        new_record = await crud.create_record(db=db, record_data=record_data)
+        new_record = await crud.create_record(
+            db=db, record_data=record_data, current_user=current_user
+        )
     except ObjectNotfund:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
