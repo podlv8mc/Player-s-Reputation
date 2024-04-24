@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import Select from "react-select/base";
+import SelectSigns from "@/components/table/SelectSigns";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -42,7 +42,6 @@ function MainTable() {
         country: "",
         town: "",
         address: "",
-        //fund_id: 0,
         old: true, //old всегда должен быть последним
     });
 
@@ -61,7 +60,6 @@ function MainTable() {
         country: "Страна",
         town: "Город",
         address: "Адрес",
-        //fund_id: "Found Id",
         gipsyteam: "Gipsy team",
         neteller: "Neteller",
         pokerstrategy: "Poker strategy",
@@ -323,10 +321,7 @@ function MainTable() {
         setFilterInput('');
     };
 
-    const optionsFounds = [
-        { value: 1, label: 'Бастион' },
-        { value: 2, label: 'ЛОПлипклопуклопкуп' },
-    ];
+
 
 
     const ModalContent = (
@@ -336,21 +331,7 @@ function MainTable() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                <div className="table__modal-row">
-                    <label className="table__modal-cell-title">
-                        Fund ID
-                    </label>
-                    <select className="table__modal-cell" onChange={(e) => {
-                        setfundId(Number(e.target.value))
-                        console.log(typeof fundId)
-                    }}>
-                        {optionsFounds.map((option, index) => (
-                            <option key={index} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <SelectSigns />
                 {Object.keys(newUserData).map((key, index, array) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
@@ -379,9 +360,8 @@ function MainTable() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {/* Определяем массив с информацией о полях */}
                 {Object.entries(newUserData).map(([key, value]) => (
-                    <div className="table__modal-row" key={key}>
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
                         <input
                             className="table__modal-cell"
@@ -398,7 +378,7 @@ function MainTable() {
                     <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
                         Отменить
                     </button>
-                    <button className="btn-hover table__btn" type="submit">
+                    <button className="btn-hover table__btn" type="submit" onClick={() => setIsModalOpen(false)}>
                         Сохранить
                     </button>
                 </div>
