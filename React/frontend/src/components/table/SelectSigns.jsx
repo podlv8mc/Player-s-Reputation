@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-function SelectSigns() {
+function SelectSigns({ onSelect }) {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const optionsFounds = [
@@ -11,6 +11,7 @@ function SelectSigns() {
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
+        onSelect(selectedOption);
     };
 
     return (

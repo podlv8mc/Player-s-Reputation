@@ -16,6 +16,7 @@ function MainTable() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundId, setfundId] = useState(1);
     const [fundSelect, setfundSelect] = useState();
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -146,7 +147,7 @@ function MainTable() {
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt,
-            fund_id: fundId,
+            fund_id: selectedOption ? selectedOption.value : null,
         }
 
         console.log(userDataWithTimestamp);
@@ -160,8 +161,8 @@ function MainTable() {
             });
 
         setIsModalOpen(false);
-
     };
+
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
@@ -343,7 +344,7 @@ function MainTable() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                <SelectSigns />
+                <SelectSigns onSelect={setSelectedOption}/>
                 {Object.keys(newUserData).map((key, index, array) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
