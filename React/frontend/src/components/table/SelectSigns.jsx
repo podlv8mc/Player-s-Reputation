@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 
 function SelectSigns() {
-    const [fundId, setFundId] = useState(1);
     const [selectedOption, setSelectedOption] = useState({ value: 1, label: 'Бастион' });
 
     const optionsFounds = [
@@ -10,12 +9,8 @@ function SelectSigns() {
         { value: 2, label: 'Пират' },
     ];
 
-    useEffect(() => {
-        setSelectedOption(optionsFounds.find(option => option.value === fundId));
-    }, [fundId, optionsFounds]);
-
     const handleSelectChange = (selectedOption) => {
-        setFundId(selectedOption.value);
+        setSelectedOption(selectedOption);
     };
 
     return (
