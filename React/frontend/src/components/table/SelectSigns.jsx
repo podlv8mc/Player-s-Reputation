@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 
 function SelectSigns() {
-    const [selectedOption, setSelectedOption] = useState({ value: 1, label: 'Бастион' });
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const optionsFounds = [
         { value: 1, label: 'Бастион' },
