@@ -257,10 +257,6 @@ function MainTable() {
                 accessor: row => row.wallets,
             },
             {
-                Header: 'Old',
-                accessor: row => row.old,
-            },
-            {
                 Header: 'Страна',
                 accessor: row => row.country,
             },
@@ -271,10 +267,6 @@ function MainTable() {
             {
                 Header: 'Адрес',
                 accessor: row => row.address,
-            },
-            {
-                Header: 'Found id',
-                accessor: row => row.fund_id,
             },
             {
                 Header: 'Facebook',
@@ -388,10 +380,10 @@ function MainTable() {
                     </div>
                 ))}
                 <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                    <button className="btn-hover table__btn" onClick={() => closeEditModal(true)}>
                         Отменить
                     </button>
-                    <button className="btn-hover table__btn" type="submit" onClick={() => setIsModalOpen(false)}>
+                    <button className="btn-hover table__btn" type="submit">
                         Сохранить
                     </button>
                 </div>
