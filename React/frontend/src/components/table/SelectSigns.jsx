@@ -1,16 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 
 function SelectSigns() {
     const [fundId, setFundId] = useState(1);
 
     const optionsFounds = [
-        {value: 1, label: 'Бастион'},
-        {value: 2, label: 'Пират'},
-        {value: 3, label: 'wefwef'},
+        { value: 1, label: 'Бастион' },
+        { value: 2, label: 'Пират' },
+        { value: 3, label: 'Пйцкйцкйират' },
     ];
-
-    const selectedOption = optionsFounds.find(option => option.value === fundId);
 
     const handleSelectChange = (selectedOption) => {
         setFundId(selectedOption.value);
@@ -18,13 +16,15 @@ function SelectSigns() {
 
     return (
         <div className="table__modal-row">
-            <label className="table__modal-cell-title">Fund ID</label>
+            <label className="table__modal-cell-title">
+                Фонд
+            </label>
             <Select
                 classNamePrefix='select'
-                value={selectedOption}
+                value={fundId}
                 onChange={handleSelectChange}
                 options={optionsFounds}
-                />
+            />
         </div>
     );
 }
