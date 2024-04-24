@@ -3,6 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
+import Select from "react-select/base";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -13,7 +14,7 @@ function MainTable() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
-
+    const [fundId, setfundId] = useState(1)
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -41,7 +42,7 @@ function MainTable() {
         country: "",
         town: "",
         address: "",
-        fund_id: 0,
+        //fund_id: 0,
         old: true, //old всегда должен быть последним
     });
 
@@ -60,7 +61,7 @@ function MainTable() {
         country: "Страна",
         town: "Город",
         address: "Адрес",
-        fund_id: "Found Id",
+        //fund_id: "Found Id",
         gipsyteam: "Gipsy team",
         neteller: "Neteller",
         pokerstrategy: "Poker strategy",
@@ -83,8 +84,8 @@ function MainTable() {
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch((data) => {
-            alert("Авторизируйтесь!")
-            window.location.href = "/"
+            //alert("Авторизируйтесь!")
+            //window.location.href = "/"
         })
     }, []);
 
@@ -132,7 +133,8 @@ function MainTable() {
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
-            createdAt: createdAt
+            createdAt: createdAt,
+            fund_id: fundId,
         }
 
         console.log(userDataWithTimestamp);
@@ -321,6 +323,11 @@ function MainTable() {
         setFilterInput('');
     };
 
+    const optionsFounds = [
+        { value: 1, label: 'Бастион' },
+        { value: 2, label: 'ЛОПлипклопуклопкуп' },
+    ];
+
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -329,6 +336,21 @@ function MainTable() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
+                <div className="table__modal-row">
+                    <label className="table__modal-cell-title">
+                        Fund ID
+                    </label>
+                    <select className="table__modal-cell" onChange={(e) => {
+                        setfundId(Number(e.target.value))
+                        console.log(typeof fundId)
+                    }}>
+                        {optionsFounds.map((option, index) => (
+                            <option key={index} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 {Object.keys(newUserData).map((key, index, array) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
