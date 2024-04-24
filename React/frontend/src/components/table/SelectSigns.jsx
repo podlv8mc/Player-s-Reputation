@@ -12,8 +12,8 @@ function SelectSigns({ onSelect }) {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data);
-            setfundSelect(data.map(function(obj) {
+            console.log(data.data);
+            setfundSelect(data.data.map(function(obj) {
                 return {'value': obj.id, 'label': obj.name};
             }));
             console.log(fundSelect);
