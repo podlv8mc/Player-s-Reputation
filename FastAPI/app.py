@@ -287,7 +287,7 @@ async def get_record_by_id(
 
 @app.post(
     "/records",
-    # response_model=schemas.RecordRead,
+    response_model=schemas.RecordRead,
     tags=["records"],
     dependencies=[Depends(permissions.manager_or_higher)],
 )
