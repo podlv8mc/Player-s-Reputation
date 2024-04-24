@@ -19,13 +19,7 @@ function MainTable() {
         first_name: "",
         last_name: "",
         middlename: "",
-        nicknames: [
-            {
-                room_name: "",
-                nickname: ""
-            },
-            null
-        ],
+        room_name: "",
         gipsyteam: "",
         pokerstrategy: "",
         description: "",
@@ -55,7 +49,7 @@ function MainTable() {
         nicknameOld: "Ники",
         last_name: "Фамилия",
         first_name: "Имя",
-        nicknames: "Дисциплина",
+        room_name: "Дисциплина",
         middlename: "Отчество",
         description: "Описание",
         amount: "Ущерб",
@@ -198,7 +192,7 @@ function MainTable() {
             },
             {
                 Header: 'Дисциплина',
-                accessor: row => (row.nicknames && row.nicknames.length > 0) ? row.nicknames[0].room_name : '',
+                accessor: row => row.room_name,
             },
             {
                 Header: 'ФИО',
