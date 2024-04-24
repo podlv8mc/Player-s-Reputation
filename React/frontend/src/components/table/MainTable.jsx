@@ -14,7 +14,8 @@ function MainTable() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
-    const [fundId, setfundId] = useState(1)
+    const [fundId, setfundId] = useState(1);
+    const [fundSelect, setfundSelect] = useState();
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -96,6 +97,19 @@ function MainTable() {
             )
         );
     }, [data, filterInput]);
+
+    useEffect(() => {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            console.log(data);
+            setfundSelect(data);
+        }).catch((data) => {
+
+        })
+    }, []);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -322,8 +336,6 @@ function MainTable() {
     };
 
 
-
-
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -447,7 +459,16 @@ function MainTable() {
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-
+                        {/*<select className="select" onChange={(e) => {
+                            setfundId(Number(e.target.value))
+                            console.log(typeof fundId)
+                        }}>
+                            {fundSelect.items.map((option, index) => (
+                                <option key={index} value={option.id}>
+                                    {option.name}
+                                </option>
+                            ))}
+                        </select>*/}
                     </div>
                     <div className="table__top">
                         <input
