@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-
+import SelectSigns from "@/components/table/SelectSigns";
 
 function MainFunds() {
     const [data, setData] = useState([]);
@@ -14,6 +14,9 @@ function MainFunds() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
+    const [fundSelect, setfundSelect] = useState();
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [filterValue, setFilterValue] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
         name: "",
@@ -34,7 +37,7 @@ function MainFunds() {
             }
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
-        }).catch((data) => {
+        }).catch(() => {
             alert("Авторизируйтесь!")
             window.location.href = "/"
         })
@@ -49,6 +52,27 @@ function MainFunds() {
             )
         );
     }, [data, filterInput]);
+
+    useEffect(() => {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            console.log(data);
+            setfundSelect(data);
+        }).catch(() => {
+
+        })
+    }, []);
+
+    useEffect(() => {
+        if (filterValue) {
+            setFilteredData(data.filter(row => row.fund.name === filterValue));
+        } else {
+            setFilteredData(data);
+        }
+    }, [data, filterValue]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -84,7 +108,8 @@ function MainFunds() {
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
-            createdAt: createdAt
+            createdAt: createdAt,
+            fund_id: selectedOption ? selectedOption.value : null,
         }
 
         console.log(userDataWithTimestamp);
@@ -98,7 +123,6 @@ function MainFunds() {
             });
 
         setIsModalOpen(false);
-
     };
 
     const handleEditSubmit = async (e) => {
@@ -110,7 +134,7 @@ function MainFunds() {
         })
             .then((response) => {
                 console.log(response.data);
-                setIsModalOpen(false);
+                setIsEditModalOpen(false);
             })
             .catch((error) => {
                 console.error(error);
@@ -153,11 +177,18 @@ function MainFunds() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0},
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
     );
+
+    const handleFilterChange = (selectedOption) => {
+        setFilterValue(selectedOption ? selectedOption.value : null);
+    };
+
+
+
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -187,6 +218,7 @@ function MainFunds() {
                         />
                     </div>
                 ))}
+                <SelectSigns onSelect={setSelectedOption}/>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
@@ -200,10 +232,11 @@ function MainFunds() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {/* Определяем массив с информацией о полях */}
-                {Object.entries(newUserData).map(([key, value]) => (
-                    <div className="table__modal-row" key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                {Object.entries(newUserData).map(([key,], index, array) => (
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                        <label className="table__modal-cell-title" htmlFor={key}>
+                            {inputLabels[key]}
+                        </label>
                         <input
                             className="table__modal-cell"
                             id={key}
@@ -216,7 +249,7 @@ function MainFunds() {
                     </div>
                 ))}
                 <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                    <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
                     <button className="btn-hover table__btn" type="submit">
@@ -229,7 +262,7 @@ function MainFunds() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
@@ -288,7 +321,6 @@ function MainFunds() {
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-
                     </div>
                     <div className="table__top">
                         <input
