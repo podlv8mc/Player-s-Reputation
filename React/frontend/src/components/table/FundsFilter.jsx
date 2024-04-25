@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 
-const TableFilter = ({ onChange }) => {
+const TableFilter = ({onChange}) => {
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
@@ -11,13 +11,13 @@ const TableFilter = ({ onChange }) => {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(response => {
-            console.log(data.items);
-                const options = response.data.items.map(item => ({
-                    value: item.found.id,
-                    label: item.found.name
-                }));
-                setOptions(options);
-            })
+            const options = response.data.items.map(item => ({
+                value: item.found.id,
+                label: item.found.name
+            }));
+            console.log('Filter options:', options);
+            setOptions(options);
+        })
             .catch(error => {
                 console.error('Error fetching filter options:', error);
             });
