@@ -17,7 +17,7 @@ function SelectSigns({ onSelect }) {
                 return {'value': obj.id, 'label': obj.name};
             }));
             console.log(fundSelect);
-        }).catch((data) => {
+        }).catch(() => {
 
         })
     }, []);

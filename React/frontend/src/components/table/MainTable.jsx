@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import Select from "react-select";
+import TableFilter from "@/components/table/FundsFilter";
 import SelectSigns from "@/components/table/SelectSigns";
 
 function MainTable() {
@@ -17,8 +17,7 @@ function MainTable() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [filterValue, setFilterValue] = useState("");
-    const [options, setOptions] = useState([]);
+    const [filterValue, setFilterValue] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -85,9 +84,9 @@ function MainTable() {
             }
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
-        }).catch((data) => {
-            //alert("Авторизируйтесь!")
-            //window.location.href = "/"
+        }).catch(() => {
+            alert("Авторизируйтесь!")
+            window.location.href = "/"
         })
     }, []);
 
@@ -109,22 +108,12 @@ function MainTable() {
         }).then((data) => {
             console.log(data);
             setfundSelect(data);
-        }).catch((data) => {
+        }).catch(() => {
 
         })
     }, []);
 
-    useEffect(() => {
-        // Запрос данных из базы данных
-        axios.get("http://213-134-31-78.netherlands.vps.ac/api/v1/funds")
-            .then(response => {
-                // Обработка данных и установка опций для фильтра
-                setOptions(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching options:", error);
-            });
-    }, []);
+
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -337,11 +326,8 @@ function MainTable() {
         usePagination
     );
 
-    const handleFilterChange = (selectedOption) => {
-        const value = selectedOption ? selectedOption.value : "";
-        setFilter("columnName", value);
+    const handleFilterChange = (value) => {
         setFilterValue(value);
-        setSelectedOption(selectedOption); // Добавление выбранной опции в состояние
     };
 
 
@@ -388,7 +374,7 @@ function MainTable() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key, value]) => (
+                {Object.entries(newUserData).map(([key]) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
@@ -418,7 +404,7 @@ function MainTable() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
@@ -493,12 +479,7 @@ function MainTable() {
                                 </option>
                             ))}
                         </select>*/}
-                        <Select
-                            classNamePrefix='select'
-                            value={fundSelect.find(option => option.value === filterValue)}
-                            onChange={handleFilterChange}
-                            options={fundSelect}
-                        />
+                        <TableFilter onChange={handleFilterChange}/>
                     </div>
                     <div className="table__top">
                         <input
