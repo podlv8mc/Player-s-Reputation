@@ -181,7 +181,7 @@ function MainTable() {
         })
             .then((response) => {
                 console.log(response.data);
-                setIsModalOpen(false);
+                setIsEditModalOpen(false);
             })
             .catch((error) => {
                 console.error(error);
@@ -381,7 +381,7 @@ function MainTable() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,], index) => (
+                {Object.entries(newUserData).map(([key,], index, array) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
@@ -398,7 +398,7 @@ function MainTable() {
                     </div>
                 ))}
                 <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={() => closeEditModal(true)}>
+                    <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
                     <button className="btn-hover table__btn" type="submit">
