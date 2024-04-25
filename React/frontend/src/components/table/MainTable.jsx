@@ -325,8 +325,9 @@ function MainTable() {
     );
 
     const handleFilterChange = (value) => {
-        setFilterValue(value);
+        setFilter('fund.name', value, true);
     };
+
 
 
 
