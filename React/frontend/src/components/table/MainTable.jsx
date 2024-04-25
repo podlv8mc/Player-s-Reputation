@@ -121,7 +121,6 @@ function MainTable() {
         }
     }, [data, filterValue]);
 
-
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -334,7 +333,6 @@ function MainTable() {
     );
 
     const handleFilterChange = (selectedOption) => {
-        // Обработчик изменения значения фильтра
         setFilterValue(selectedOption ? selectedOption.value : null);
     };
 
