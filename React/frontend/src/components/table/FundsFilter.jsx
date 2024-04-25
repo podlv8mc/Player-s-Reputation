@@ -11,6 +11,7 @@ const TableFilter = ({ onChange }) => {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(response => {
+            console.log(data.items);
                 const options = response.data.items.map(item => ({
                     value: item.found.id,
                     label: item.found.name
