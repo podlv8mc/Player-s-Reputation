@@ -53,7 +53,7 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                           spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen}/>
                     {renderLists()}
                     {
-                        authorization && (location.pathname === "/table" || location.pathname === "/Users" || location.pathname === "/Funds" || location.pathname === "/Cabinet") ? (
+                        authorization && (location.pathname === "/table" || location.pathname === "/users" || location.pathname === "/funds" || location.pathname === "/cabinet") ? (
                             <>
                                 <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
                                       spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
@@ -61,7 +61,7 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                                       alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
                                 <List linkTo="/Users" className="globalnav" name={Images.users} alt="users"
                                       spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
-                                {/*<List linkTo="/Cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
+                                {/*<List linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
                                       spanClass="globalnav__text" text="Кабинет" isOpen={isOpen}/>*/}
                                 <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
                                       spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {

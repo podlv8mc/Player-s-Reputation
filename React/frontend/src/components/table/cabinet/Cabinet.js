@@ -1,12 +1,12 @@
 import React from 'react';
 import ResizableHeader from "@/components/ResizableHeader";
-import MainUsers from "@/components/table/Users/MainUsers";
+import MainCabinet from "@/components/table/cabinet/MainCabinet";
 
 function Users() {
     return (
         <div className="App app__table">
             <ResizableHeader />
-            <MainUsers />
+            <MainCabinet />
         </div>
     );
 }
