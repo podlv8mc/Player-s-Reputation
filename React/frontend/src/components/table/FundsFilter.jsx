@@ -7,8 +7,11 @@ const TableFilter = ({ onChange }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records')
-            .then(response => {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then(response => {
                 const options = response.data.items.map(item => ({
                     value: item.found.id,
                     label: item.found.name
