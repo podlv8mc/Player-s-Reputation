@@ -146,15 +146,15 @@ function MainFunds() {
         () => [
             {
                 Header: 'Название',
-                accessor: 'name',
+                accessor: row => row.name,
             },
             {
                 Header: 'Discord',
-                accessor: 'discord',
+                accessor: row => row.discord,
             },
             {
                 Header: 'Сайт',
-                accessor: 'link',
+                accessor: row => row.link,
             },
         ],
         []
@@ -182,13 +182,6 @@ function MainFunds() {
         useFilters,
         usePagination
     );
-
-    const handleFilterChange = (selectedOption) => {
-        setFilterValue(selectedOption ? selectedOption.value : null);
-    };
-
-
-
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -232,8 +225,8 @@ function MainFunds() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,], index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.entries(newUserData).map(([key, value]) => (
+                    <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
