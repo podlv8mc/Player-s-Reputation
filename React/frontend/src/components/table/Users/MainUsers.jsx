@@ -194,7 +194,6 @@ function MainUsers() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {/* Определяем массив с информацией о полях */}
                 {Object.entries(newUserData).map(([key, value]) => (
                     <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>

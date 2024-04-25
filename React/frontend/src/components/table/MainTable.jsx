@@ -381,7 +381,7 @@ function MainTable() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key]) => (
+                {Object.entries(newUserData).map(([key,], index) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
