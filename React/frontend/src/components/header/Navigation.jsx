@@ -57,9 +57,9 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                             <>
                                 <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
                                       spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
-                                <List linkTo="/Funds" className="globalnav" name={Images.funds__table}
+                                <List linkTo="/funds" className="globalnav" name={Images.funds__table}
                                       alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
-                                <List linkTo="/Users" className="globalnav" name={Images.users} alt="users"
+                                <List linkTo="/users" className="globalnav" name={Images.users} alt="users"
                                       spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
                                 {/*<List linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
                                       spanClass="globalnav__text" text="Кабинет" isOpen={isOpen}/>*/}
