@@ -1,27 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import axios from 'axios';
 
-const TableFilter = ({onChange}) => {
-    const [options, setOptions] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+const TableFilter = ({ data, onChange }) => {
+    // Функция для получения уникальных значений поля "Фонд"
+    const getUniqueFunds = () => {
+        const uniqueFunds = new Set(); // Используем Set для хранения уникальных значений
+        data.forEach(row => {
+            const fund = row.fund.name;
+            if (fund) {
+                uniqueFunds.add(fund); // Добавляем значение поля "Фонд" в множество
             }
-        }).then(response => {
-            const options = response.data.items.map(item => ({
-                value: item.found.id,
-                label: item.found.name
-            }));
-            console.log('Filter options:', options);
-            setOptions(options);
-        })
-            .catch(error => {
-                console.error('Error fetching filter options:', error);
-            });
-    }, []);
+        });
+        return Array.from(uniqueFunds).map(fund => ({ value: fund, label: fund }));
+    };
+
+    const [options, setOptions] = useState(getUniqueFunds()); // Получаем уникальные фонды при монтировании компонента
 
     const handleChange = (selectedOption) => {
         onChange(selectedOption); // Изменение передаваемого значения

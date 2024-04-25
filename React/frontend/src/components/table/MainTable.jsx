@@ -17,7 +17,7 @@ function MainTable() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [filterData, setFilterData] = useState(data);
+    const [filterValue, setFilterValue] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -112,6 +112,15 @@ function MainTable() {
 
         })
     }, []);
+
+    useEffect(() => {
+        if (filterValue) {
+            setFilteredData(data.filter(row => row.fund.name === filterValue));
+        } else {
+            setFilteredData(data);
+        }
+    }, [data, filterValue]);
+
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -325,12 +334,8 @@ function MainTable() {
     );
 
     const handleFilterChange = (selectedOption) => {
-        if (!selectedOption) {
-            setFilterData(data); // Если фильтр сброшен, показываем все данные
-        } else {
-            const filtered = data.filter(row => row.fund.name === selectedOption.label); // Фильтрация данных по выбранному значению
-            setFilterData(filtered);
-        }
+        // Обработчик изменения значения фильтра
+        setFilterValue(selectedOption ? selectedOption.value : null);
     };
 
 
@@ -483,7 +488,7 @@ function MainTable() {
                                 </option>
                             ))}
                         </select>*/}
-                        <TableFilter onChange={handleFilterChange} />
+                        <TableFilter data={data} onChange={handleFilterChange} />
                     </div>
                     <div className="table__top">
                         <input
