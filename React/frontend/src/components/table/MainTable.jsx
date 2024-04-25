@@ -318,7 +318,7 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0},
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination

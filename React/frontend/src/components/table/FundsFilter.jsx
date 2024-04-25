@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const TableFilter = ({ onChange }) => {
     const [options, setOptions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
@@ -24,14 +23,12 @@ const TableFilter = ({ onChange }) => {
     }, []);
 
     const handleChange = (selectedOption) => {
-        setSelectedOption(selectedOption);
         onChange(selectedOption ? selectedOption.value : null);
     };
 
     return (
         <Select
             classNamePrefix='select'
-            value={selectedOption}
             onChange={handleChange}
             options={options}
             isClearable={true}

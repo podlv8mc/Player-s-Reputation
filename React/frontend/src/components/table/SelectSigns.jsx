@@ -37,6 +37,7 @@ function SelectSigns({ onSelect }) {
                 value={selectedOption}
                 onChange={handleSelectChange}
                 options={fundSelect}
+                placeholder="Выбрать фонд"
             />
         </div>
     );
