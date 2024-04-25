@@ -3,6 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
+import Select from "react-select";
 import SelectSigns from "@/components/table/SelectSigns";
 
 function MainTable() {
@@ -14,9 +15,9 @@ function MainTable() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
-    const [fundId, setfundId] = useState(1);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
+    const [filterValue, setFilterValue] = useState("");
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -162,7 +163,6 @@ function MainTable() {
 
         setIsModalOpen(false);
     };
-
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
@@ -313,6 +313,7 @@ function MainTable() {
         canNextPage,
         previousPage,
         nextPage,
+        setFilter,
     } = useTable(
         {
             columns,
@@ -322,6 +323,19 @@ function MainTable() {
         useFilters,
         usePagination
     );
+
+    const handleFilterChange = (selectedOption) => {
+        const value = selectedOption ? selectedOption.value : ""; // Получаем значение фильтра
+        setFilter("columnName", value); // Устанавливаем фильтр для определенной колонки
+        setFilterValue(value); // Обновляем значение фильтра в стейте
+    };
+
+    // Опции для селекта
+    const options = [
+        { value: "", label: "Выберите значение" },
+        { value: "value1", label: "Значение 1" },
+        { value: "value2", label: "Значение 2" },
+    ];
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -367,7 +381,9 @@ function MainTable() {
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
                 {Object.entries(newUserData).map(([key, value]) => (
                     <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                        <label className="table__modal-cell-title" htmlFor={key}>
+                            {inputLabels[key]}
+                        </label>
                         <input
                             className="table__modal-cell"
                             id={key}
@@ -453,8 +469,14 @@ function MainTable() {
                 <div className="table__top-box">
                     <div className="table__top-select">
                         {/*<select className="select" onChange={(e) => {
-                            setfundId(Number(e.target.value))
-                            console.log(typeof fundId)
+                            setData(...data.filter((b) => {
+                                return b.fund.name === e.target.value;
+                            }))
+                           let black = data;
+                            black.filter((b) => {
+                                return b.fund.name === e.target.value;
+                            })
+                            setData(black)
                         }}>
                             {fundSelect.items.map((option, index) => (
                                 <option key={index} value={option.id}>
@@ -462,6 +484,12 @@ function MainTable() {
                                 </option>
                             ))}
                         </select>*/}
+                        <Select
+                            classNamePrefix='select'
+                            value={options.find(option => option.value === filterValue)}
+                            onChange={handleFilterChange}
+                            options={options}
+                        />
                     </div>
                     <div className="table__top">
                         <input

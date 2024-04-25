@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Select from "react-select";
 import axios from "axios";
 
-function SelectSigns({ onSelect }) {
+function FundsFilter({ onSelect }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [fundSelect, setfundSelect] = useState();
 
@@ -28,18 +28,15 @@ function SelectSigns({ onSelect }) {
     };
 
     return (
-        <div className="table__modal-row">
-            <label className="table__modal-cell-title">
-                Фонд
-            </label>
+
             <Select
                 classNamePrefix='select'
                 value={selectedOption}
                 onChange={handleSelectChange}
                 options={fundSelect}
             />
-        </div>
+
     );
 }
 
-export default SelectSigns;
+export default FundsFilter;
