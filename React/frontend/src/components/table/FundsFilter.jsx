@@ -12,15 +12,16 @@ const TableFilter = ({ onChange }) => {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(response => {
-                const options = response.data.items.map(item => ({
+            const options = response.data.items
+                .filter(item => item.found) // Фильтруем элементы без поля found
+                .map(item => ({
                     value: item.found.id,
                     label: item.found.name
                 }));
-                setOptions(options);
-            })
-            .catch(error => {
-                console.error('Error fetching filter options:', error);
-            });
+            setOptions(options);
+        }).catch(error => {
+            console.error('Error fetching filter options:', error);
+        });
     }, []);
 
     const handleChange = (selectedOption) => {
