@@ -113,8 +113,6 @@ function MainTable() {
         })
     }, []);
 
-
-
     const openModal = () => {
         setIsModalOpen(true);
     };

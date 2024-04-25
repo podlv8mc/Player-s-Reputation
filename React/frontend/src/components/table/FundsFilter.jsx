@@ -7,21 +7,20 @@ const TableFilter = ({ onChange }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(response => {
-            const options = response.data.items
-                .filter(item => item.found) // Фильтруем элементы без поля found
-                .map(item => ({
-                    value: item.found.id,
-                    label: item.found.name
+                const options = response.data.items.map(item => ({
+                    value: item.id,
+                    label: item.name
                 }));
-            setOptions(options);
-        }).catch(error => {
-            console.error('Error fetching filter options:', error);
-        });
+                setOptions(options);
+            })
+            .catch(error => {
+                console.error('Error fetching filter options:', error);
+            });
     }, []);
 
     const handleChange = (selectedOption) => {
