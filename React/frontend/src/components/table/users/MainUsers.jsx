@@ -147,8 +147,20 @@ function MainUsers() {
                 accessor: row => row.username,
             },
             {
+                Header: 'Логин',
+                accessor: row => row.login,
+            },
+            {
+                Header: 'Discord',
+                accessor: row => row.discord,
+            },
+            {
                 Header: 'Email',
                 accessor: row => row.email,
+            },
+            {
+                Header: 'Фонд',
+                accessor: row => row.funds,
             },
         ],
         []
