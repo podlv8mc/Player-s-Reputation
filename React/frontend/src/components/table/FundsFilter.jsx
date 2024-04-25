@@ -24,7 +24,7 @@ const TableFilter = ({onChange}) => {
     }, []);
 
     const handleChange = (selectedOption) => {
-        onChange(selectedOption ? selectedOption.value : null);
+        onChange(selectedOption); // Изменение передаваемого значения
     };
 
     return (

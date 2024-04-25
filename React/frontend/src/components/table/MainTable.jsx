@@ -17,7 +17,7 @@ function MainTable() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [filterValue, setFilterValue] = useState(null);
+    const [filterData, setFilterData] = useState(data);
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -324,8 +324,13 @@ function MainTable() {
         usePagination
     );
 
-    const handleFilterChange = (value) => {
-        setFilter('fund.name', value, true);
+    const handleFilterChange = (selectedOption) => {
+        if (!selectedOption) {
+            setFilterData(data); // Если фильтр сброшен, показываем все данные
+        } else {
+            const filtered = data.filter(row => row.fund.name === selectedOption.label); // Фильтрация данных по выбранному значению
+            setFilterData(filtered);
+        }
     };
 
 
@@ -478,7 +483,7 @@ function MainTable() {
                                 </option>
                             ))}
                         </select>*/}
-                        <TableFilter onChange={handleFilterChange}/>
+                        <TableFilter onChange={handleFilterChange} />
                     </div>
                     <div className="table__top">
                         <input
