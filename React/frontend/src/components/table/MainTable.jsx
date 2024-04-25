@@ -18,6 +18,7 @@ function MainTable() {
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState("");
+    const [options, setOptions] = useState([]);
 
     const [newUserData, setNewUserData] = useState({
         first_name: "",
@@ -111,6 +112,18 @@ function MainTable() {
         }).catch((data) => {
 
         })
+    }, []);
+
+    useEffect(() => {
+        // Запрос данных из базы данных
+        axios.get("http://213-134-31-78.netherlands.vps.ac/api/v1/funds")
+            .then(response => {
+                // Обработка данных и установка опций для фильтра
+                setOptions(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching options:", error);
+            });
     }, []);
 
     const openModal = () => {
@@ -325,17 +338,13 @@ function MainTable() {
     );
 
     const handleFilterChange = (selectedOption) => {
-        const value = selectedOption ? selectedOption.value : ""; // Получаем значение фильтра
-        setFilter("columnName", value); // Устанавливаем фильтр для определенной колонки
-        setFilterValue(value); // Обновляем значение фильтра в стейте
+        const value = selectedOption ? selectedOption.value : "";
+        setFilter("columnName", value);
+        setFilterValue(value);
+        setSelectedOption(selectedOption); // Добавление выбранной опции в состояние
     };
 
-    // Опции для селекта
-    const options = [
-        { value: "", label: "Выберите значение" },
-        { value: "value1", label: "Значение 1" },
-        { value: "value2", label: "Значение 2" },
-    ];
+
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -486,9 +495,9 @@ function MainTable() {
                         </select>*/}
                         <Select
                             classNamePrefix='select'
-                            value={options.find(option => option.value === filterValue)}
+                            value={fundSelect.find(option => option.value === filterValue)}
                             onChange={handleFilterChange}
-                            options={options}
+                            options={fundSelect}
                         />
                     </div>
                     <div className="table__top">
