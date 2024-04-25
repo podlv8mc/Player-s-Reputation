@@ -225,7 +225,7 @@ function MainFunds() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key, value]) => (
+                {Object.entries(newUserData).map(([key,]) => (
                     <div className="table__modal-row" key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}

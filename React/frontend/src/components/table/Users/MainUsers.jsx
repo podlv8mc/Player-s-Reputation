@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-
+import SelectSigns from "@/components/table/SelectSigns";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -14,6 +14,9 @@ function MainUsers() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
+    const [fundSelect, setfundSelect] = useState();
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [filterValue, setFilterValue] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
         username: "",
@@ -26,13 +29,13 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
-        }).catch((data) => {
+        }).catch(() => {
             alert("Авторизируйтесь!")
             window.location.href = "/"
         })
@@ -47,6 +50,27 @@ function MainUsers() {
             )
         );
     }, [data, filterInput]);
+
+    useEffect(() => {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            console.log(data);
+            setfundSelect(data);
+        }).catch(() => {
+
+        })
+    }, []);
+
+    useEffect(() => {
+        if (filterValue) {
+            setFilteredData(data.filter(row => row.fund.name === filterValue));
+        } else {
+            setFilteredData(data);
+        }
+    }, [data, filterValue]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -82,11 +106,12 @@ function MainUsers() {
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
-            createdAt: createdAt
+            createdAt: createdAt,
+            fund_id: selectedOption ? selectedOption.value : null,
         }
 
         console.log(userDataWithTimestamp);
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/funds", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -96,19 +121,18 @@ function MainUsers() {
             });
 
         setIsModalOpen(false);
-
     };
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/users/${editingUserData.id}`, editingUserData, {
+        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/funds/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
             .then((response) => {
                 console.log(response.data);
-                setIsModalOpen(false);
+                setIsEditModalOpen(false);
             })
             .catch((error) => {
                 console.error(error);
@@ -120,11 +144,11 @@ function MainUsers() {
         () => [
             {
                 Header: 'Имя пользователя',
-                accessor: 'username',
+                accessor: row => row.username,
             },
             {
-                Header: 'Емейл',
-                accessor: 'email',
+                Header: 'Email',
+                accessor: row => row.email,
             },
         ],
         []
@@ -147,7 +171,7 @@ function MainUsers() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0},
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
@@ -167,7 +191,7 @@ function MainUsers() {
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
                 {Object.keys(newUserData).map((key, index, array) => (
-                    <div className="table__modal-row" key={key}>
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -181,6 +205,7 @@ function MainUsers() {
                         />
                     </div>
                 ))}
+                <SelectSigns onSelect={setSelectedOption}/>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
@@ -194,9 +219,11 @@ function MainUsers() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key, value]) => (
+                {Object.entries(newUserData).map(([key,]) => (
                     <div className="table__modal-row" key={key}>
-                        <label className="table__modal-cell-title" htmlFor={key}>{inputLabels[key]}</label>
+                        <label className="table__modal-cell-title" htmlFor={key}>
+                            {inputLabels[key]}
+                        </label>
                         <input
                             className="table__modal-cell"
                             id={key}
@@ -209,7 +236,7 @@ function MainUsers() {
                     </div>
                 ))}
                 <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={() => setIsModalOpen(false)}>
+                    <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
                     <button className="btn-hover table__btn" type="submit">
@@ -222,7 +249,7 @@ function MainUsers() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser !== null} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
@@ -281,7 +308,6 @@ function MainUsers() {
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-
                     </div>
                     <div className="table__top">
                         <input
