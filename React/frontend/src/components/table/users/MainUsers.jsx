@@ -29,7 +29,7 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -52,7 +52,7 @@ function MainUsers() {
     }, [data, filterInput]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -111,7 +111,7 @@ function MainUsers() {
         }
 
         console.log(userDataWithTimestamp);
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/funds", userDataWithTimestamp, {
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -125,7 +125,7 @@ function MainUsers() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/funds/${editingUserData.id}`, editingUserData, {
+        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/users/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
