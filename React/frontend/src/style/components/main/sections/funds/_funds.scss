@@ -81,6 +81,17 @@
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
             overflow: hidden;
+            transition: all .3s ease;
+
+            &::-webkit-scrollbar {
+              width: 5px;
+              border-radius: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: #23272c;
+              border-radius: 5px;
+            }
           }
         }
 
@@ -106,8 +117,9 @@
         .slide__text-wrap {
           .slide__text {
             display: flex;
-            height: fit-content;
+            height: 87px;
             min-height: 35px;
+            overflow-y: scroll;
           }
         }
 

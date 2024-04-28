@@ -31,15 +31,35 @@
     .table__top-select {
       padding: 0px 0px 0px 30px;
 
+      .stub {
+        background: #101117e6;
+        inset: 0;
+        opacity: 0;
+        pointer-events: none;
+        position: fixed;
+        transition: all .4s ease;
+        visibility: hidden;
+      }
+
+      .active {
+        opacity: 1;
+        pointer-events: all;
+        visibility: visible;
+        z-index: 2000;
+      }
+
       .select {
+
         &__control {
           width: 280px !important;
           background: #000000 !important;
+          z-index: 3000 !important;
         }
 
         &__menu {
           width: 280px !important;
           background: #000000 !important;
+          z-index: 3000 !important;
         }
       }
     }

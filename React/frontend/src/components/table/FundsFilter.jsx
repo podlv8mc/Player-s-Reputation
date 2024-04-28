@@ -14,6 +14,7 @@ const TableFilter = ({ data, onChange }) => {
     };
 
     const [options, setOptions] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const uniqueFunds = getUniqueFunds();
@@ -24,14 +25,28 @@ const TableFilter = ({ data, onChange }) => {
         onChange(selectedOption);
     };
 
+    const handleMenuOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleMenuClose = () => {
+        setIsOpen(false);
+    };
+
     return (
-        <Select
-            classNamePrefix='select'
-            onChange={handleChange}
-            options={options}
-            isClearable={true}
-            placeholder="Выбрать фонд..."
-        />
+        <>
+            <Select
+                classNamePrefix='select'
+                onChange={handleChange}
+                options={options}
+                isClearable={true}
+                placeholder="Выбрать фонд..."
+                onMenuOpen={handleMenuOpen}
+                onMenuClose={handleMenuClose}
+            />
+            <div className={`stub ${isOpen ? 'active' : ''}`}>
+            </div>
+        </>
     );
 };
 
