@@ -20,35 +20,38 @@ function MainTable() {
     const [filterValue, setFilterValue] = useState(null);
 
     const [newUserData, setNewUserData] = useState({
+        nicknameOld: "",
+        room_name: "",
         first_name: "",
         last_name: "",
         middlename: "",
-        room_name: "",
-        gipsyteam: "",
-        pokerstrategy: "",
         description: "",
         amount: "",
-        google: "",
+        gipsyteam: "",
+        neteller: "",
+        pokerstrategy: "",
         mail: "",
         vk: "",
-        facebook: "",
-        blog: "",
-        instagram: "",
-        forum: "",
-        neteller: "",
+        google: "",
         skrill: "",
-        ecopayz: "",
-        webmoney_id: "",
         wallets: "",
-        nicknameOld: "",
-        comments: "",
         country: "",
         town: "",
         address: "",
+        facebook: "",
+        blog: "",
+        forum: "",
+        instagram: "",
+        ecopayz: "",
+        webmoney_id: "",
+        comments: "",
         old: true, //old всегда должен быть последним
     });
 
     const inputLabels = {
+
+
+
         nicknameOld: "Ники",
         last_name: "Фамилия",
         first_name: "Имя",
@@ -376,7 +379,7 @@ function MainTable() {
     );
 
     const EditModalContent = editingUserData && (
-        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
             <div className="table__modal-title">
                 Редактировать пользователя
             </div>
@@ -470,22 +473,6 @@ function MainTable() {
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-                        {/*<select className="select" onChange={(e) => {
-                            setData(...data.filter((b) => {
-                                return b.fund.name === e.target.value;
-                            }))
-                           let black = data;
-                            black.filter((b) => {
-                                return b.fund.name === e.target.value;
-                            })
-                            setData(black)
-                        }}>
-                            {fundSelect.items.map((option, index) => (
-                                <option key={index} value={option.id}>
-                                    {option.name}
-                                </option>
-                            ))}
-                        </select>*/}
                         <TableFilter data={data} onChange={handleFilterChange} />
                     </div>
                     <div className="table__top">

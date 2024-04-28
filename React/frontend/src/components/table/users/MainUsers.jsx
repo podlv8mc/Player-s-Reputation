@@ -20,12 +20,18 @@ function MainUsers() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
+        login:"",
+        discord:"",
         email: "",
+        funds: "",
     });
 
     const inputLabels = {
         username: "Имя пользователя",
-        email: "Емейл",
+        login:"Логин",
+        discord:"Discord",
+        email: "Email",
+        funds: "Фонд",
     };
 
     useEffect(() => {
