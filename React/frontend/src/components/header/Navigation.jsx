@@ -66,6 +66,7 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                                 <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
                                       spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
                                     localStorage.removeItem("access_token");
+                                    localStorage.removeItem("refresh_token");
                                     window.location.href = "/";
                                 }}/>
                             </>
@@ -77,6 +78,7 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                                     <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
                                           spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
                                         localStorage.removeItem("access_token");
+                                        localStorage.removeItem("refresh_token");
                                         window.location.href = "/";
                                     }}/>
                                 </>
