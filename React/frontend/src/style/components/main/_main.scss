@@ -332,6 +332,26 @@
       }
     }
   }
+
+  .modal-scroll {
+    padding: 0px !important;
+
+    .modal__content {
+      display: block !important;
+      height: fit-content !important;
+
+      .table__modal-form-wrap {
+        .table__modal-row {
+          flex-direction: column;
+
+          .table__modal-cell {
+            width: 100%;
+            max-width: 500px;
+          }
+        }
+      }
+    }
+  }
 }
 
 /* === / Styles === */
