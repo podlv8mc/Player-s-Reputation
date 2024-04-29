@@ -557,20 +557,16 @@ function MainTable() {
                     ))}
                     </thead>
                     <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.map((row, index) => {
+                    {page.map(row => {
                         prepareRow(row);
-                        if (index === 0) {
-                            return (
-                                <tr className="table__body" {...row.getRowProps()}
-                                    onClick={() => openViewModal(row.original)}>
-                                    {row.cells.map((cell, index) => (
-                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                                    ))}
-                                </tr>
-                            );
-                        } else {
-                            return null;
-                        }
+                        return (
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                ))}
+                            </tr>
+                        );
                     })}
                     </tbody>
                 </table>
