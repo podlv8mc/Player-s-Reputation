@@ -47,6 +47,7 @@ class UserRead(users_schemas.BaseUser):
     username: str
     role: Roles
     email: Optional[str | None] = None
+    discord: Optional[str | None] = None
     created_at: datetime
 
 
@@ -61,6 +62,7 @@ class UserCreate(users_schemas.BaseUserCreate):
     password: str
     role: Roles
     email: Optional[str | None] = None
+    discord: Optional[str | None] = None
     created_at: datetime
 
 
