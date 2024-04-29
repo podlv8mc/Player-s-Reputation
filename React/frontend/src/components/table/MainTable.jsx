@@ -548,7 +548,7 @@ function MainTable() {
             ) : (
                 <table className="table" {...getTableProps()}>
                     <thead className="table__header-wrap">
-                    {headerGroups.slice(0, 1).map(headerGroup => (
+                    {headerGroups.map(headerGroup => (
                         <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
                                 <th className="table__headers" {...column.getHeaderProps()}>
@@ -559,10 +559,11 @@ function MainTable() {
                     ))}
                     </thead>
                     <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.slice(0, 1).map(row => {
+                    {page.map(row => {
                         prepareRow(row);
                         return (
-                            <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
                                 {row.cells.map((cell, index) => (
                                     <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
                                 ))}
@@ -571,6 +572,7 @@ function MainTable() {
                     })}
                     </tbody>
                 </table>
+
             )}
 
             {PageButtons}
