@@ -196,10 +196,11 @@
 
       .massage__error {
         width: 100%;
-        @include Montserrat-600;
-        font-size: 16px;
+        @include Montserrat-500;
+        font-size: 13px;
         text-align: center;
-        color: white;
+        color: #e63232;
+        opacity: .8;
       }
 
       .form__btn {
