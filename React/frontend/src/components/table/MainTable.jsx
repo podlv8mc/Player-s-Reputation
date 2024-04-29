@@ -52,7 +52,6 @@ function MainTable() {
     const inputLabels = {
 
 
-
         nicknameOld: "Ники",
         last_name: "Фамилия",
         first_name: "Имя",
@@ -89,8 +88,8 @@ function MainTable() {
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
-            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh",null,{
-                headers:{
+            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
+                headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
             })
@@ -366,8 +365,6 @@ function MainTable() {
     };
 
 
-
-
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
         setFilterInput('');
@@ -499,7 +496,7 @@ function MainTable() {
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-                        <TableFilter data={data} onChange={handleFilterChange} />
+                        <TableFilter data={data} onChange={handleFilterChange}/>
                     </div>
                     <div className="table__top">
                         <input
@@ -536,7 +533,8 @@ function MainTable() {
                     {page.map(row => {
                         prepareRow(row);
                         return (
-                            <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
                                 {row.cells.map((cell, index) => (
                                     <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
                                 ))}
@@ -548,7 +546,7 @@ function MainTable() {
             ) : (
                 <table className="table" {...getTableProps()}>
                     <thead className="table__header-wrap">
-                    {headerGroups.map(headerGroup => (
+                    {headerGroups.slice(0, 1).map(headerGroup => (
                         <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
                                 <th className="table__headers" {...column.getHeaderProps()}>
@@ -559,20 +557,23 @@ function MainTable() {
                     ))}
                     </thead>
                     <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.map(row => {
+                    {page.map((row, index) => {
                         prepareRow(row);
-                        return (
-                            <tr className="table__body" {...row.getRowProps()}
-                                onClick={() => openViewModal(row.original)}>
-                                {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                                ))}
-                            </tr>
-                        );
+                        if (index === 0) {
+                            return (
+                                <tr className="table__body" {...row.getRowProps()}
+                                    onClick={() => openViewModal(row.original)}>
+                                    {row.cells.map((cell, index) => (
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    ))}
+                                </tr>
+                            );
+                        } else {
+                            return null;
+                        }
                     })}
                     </tbody>
                 </table>
-
             )}
 
             {PageButtons}
