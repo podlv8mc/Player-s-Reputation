@@ -94,7 +94,6 @@ function MainTable() {
                 }
             })
                 .then((response) => {
-                    console.log(response.data);
                     localStorage.setItem("access_token", data.data.access_token)
                     localStorage.setItem("refresh_token", data.data.refresh_token)
                 })
@@ -123,7 +122,6 @@ function MainTable() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data);
             setfundSelect(data);
         }).catch(() => {
 
@@ -187,7 +185,6 @@ function MainTable() {
             fund_id: selectedOption ? selectedOption.value : null,
         }
 
-        console.log(userDataWithTimestamp);
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/records", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -208,7 +205,6 @@ function MainTable() {
             }
         })
             .then((response) => {
-                console.log(response.data);
                 setIsEditModalOpen(false);
             })
             .catch((error) => {
@@ -544,32 +540,9 @@ function MainTable() {
                     </tbody>
                 </table>
             ) : (
-                <table className="table" {...getTableProps()}>
-                    <thead className="table__header-wrap">
-                    {headerGroups.slice(0, 1).map(headerGroup => (
-                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th className="table__headers" {...column.getHeaderProps()}>
-                                    {column.render('Header')}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                    </thead>
-                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.map(row => {
-                        prepareRow(row);
-                        return (
-                            <tr className="table__body" {...row.getRowProps()}
-                                onClick={() => openViewModal(row.original)}>
-                                {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                                ))}
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
+                <div className="">
+
+                </div>
             )}
 
             {PageButtons}
