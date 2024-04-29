@@ -18,6 +18,7 @@ function MainTable() {
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [newUserData, setNewUserData] = useState({
         nicknameOld: "",
@@ -137,6 +138,17 @@ function MainTable() {
             setFilteredData(data);
         }
     }, [data, filterValue]);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -505,31 +517,62 @@ function MainTable() {
                     </div>
                 </div>
             </div>
-            <table className="table" {...getTableProps()}>
-                <thead className="table__header-wrap">
-                {headerGroups.map(headerGroup => (
-                    <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th className="table__headers" {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                {page.map(row => {
-                    prepareRow(row);
-                    return (
-                        <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
-                            {row.cells.map((cell, index) => (
-                                <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+
+
+            {windowWidth >= 650 ? (
+                <table className="table" {...getTableProps()}>
+                    <thead className="table__header-wrap">
+                    {headerGroups.map(headerGroup => (
+                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th className="table__headers" {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </th>
                             ))}
                         </tr>
-                    );
-                })}
-                </tbody>
-            </table>
+                    ))}
+                    </thead>
+                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                    {page.map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                ))}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+            ) : (
+                <table className="table" {...getTableProps()}>
+                    <thead className="table__header-wrap">
+                    {headerGroups.slice(0, 1).map(headerGroup => (
+                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th className="table__headers" {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                    {page.slice(0, 1).map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                ))}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+            )}
+
             {PageButtons}
             {EditModalContent}
             {ModalContent}
