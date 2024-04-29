@@ -88,9 +88,24 @@ function MainTable() {
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
-
+            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh",null,{
+                headers:{
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    localStorage.setItem("access_token", data.data.access_token)
+                    localStorage.setItem("refresh_token", data.data.refresh_token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert("Авторизируйтесь!")
+                    window.location.href = "/"
+                })
         })
     }, []);
+
 
     useEffect(() => {
         setFilteredData(
