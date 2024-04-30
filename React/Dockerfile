@@ -7,6 +7,6 @@ RUN npm i
 
 COPY frontend/ .
 
-RUN npm run build
+RUN npm run watch
 
 CMD ["npm", "run", "start" ]
