@@ -350,7 +350,7 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: { pageIndex: 0, filters: []},
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
@@ -365,7 +365,7 @@ function MainTable() {
             prepareRow,
             gotoPage,
             pageCount,
-            state: { pageIndex },
+            state: {pageIndex},
             canPreviousPage,
             canNextPage,
             previousPage,
@@ -375,7 +375,7 @@ function MainTable() {
             {
                 columns,
                 data: filteredData,
-                initialState: { pageIndex: 0, filters: [], pageSize: 1 },
+                initialState: {pageIndex: 0, filters: [], pageSize: 1},
             },
             useFilters,
             usePagination
@@ -399,14 +399,14 @@ function MainTable() {
                     {page.map(row => {
                         prepareRow(row);
                         return (
-                            <div className="">
-                                <tr className="table__body" {...row.getRowProps()}
-                                    onClick={() => openViewModal(row.original)}>
-                                    {row.cells.map((cell, index) => (
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <div className="qweer">
                                         <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                                    ))}
-                                </tr>
-                            </div>
+                                    </div>
+                                ))}
+                            </tr>
                         );
                     })}
                     </tbody>
@@ -416,7 +416,7 @@ function MainTable() {
                         Previous
                     </button>
                     <button onClick={() => nextPage()} disabled={!canNextPage}>
-                    Next
+                        Next
                     </button>
                 </div>
             </>
@@ -611,7 +611,7 @@ function MainTable() {
                     {PageButtons}
                 </>
             ) : (
-                <TableMobile />
+                <TableMobile/>
             )}
             {EditModalContent}
             {ModalContent}
