@@ -332,6 +332,8 @@ function MainTable() {
         []
     );
 
+    const isMobile = windowWidth < 650;
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -350,7 +352,7 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, pageSize: 1, filters: []},
+            initialState: { pageIndex: 0, filters: [], ...(isMobile && { pageSize: 1 }) },
         },
         useFilters,
         usePagination
