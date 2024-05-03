@@ -391,6 +391,7 @@
     .mob-header__btn {
       right: 27px;
       top: 16px;
+      z-index: 4100;
     }
   }
 
@@ -479,6 +480,12 @@
       padding: 8px 6px;
       background: #000000;
       border-radius: 10px;
+    }
+  }
+
+  .select {
+    &__control {
+      width: 250px !important;
     }
   }
 }
