@@ -574,12 +574,6 @@ function MainTable() {
                         <button onClick={() => nextPage()} disabled={!canNextPage}>
                             Next
                         </button>
-                        <div>
-                            Page{' '}
-                            <em>
-                                {pageIndex + 1} of {pageOptions.length}
-                            </em>
-                        </div>
                     </div>
                 </>
             )}
