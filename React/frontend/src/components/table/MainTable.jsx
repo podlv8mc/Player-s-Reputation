@@ -402,7 +402,7 @@ function MainTable() {
                             <tr className="table__body" {...row.getRowProps()}
                                 onClick={() => openViewModal(row.original)}>
                                 {row.cells.map((cell, index) => (
-                                    <div className="qweer">
+                                    <div className="table__body-cell-wrap">
                                         <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
                                     </div>
                                 ))}

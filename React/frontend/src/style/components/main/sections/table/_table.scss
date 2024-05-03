@@ -388,6 +388,22 @@
 }
 
 @media (max-width: 650px) {
+  .table__top-wrap {
+    .table__top-box {
+      width: 100%;
+      position: relative;
+      flex-direction: column;
+
+      .table__top-select {
+
+      }
+
+      .table__top {
+
+      }
+    }
+  }
+
   .table {
     width: 100%;
     flex-direction: row;
@@ -414,8 +430,14 @@
         height: fit-content;
         background: transparent;
 
-        .table__body-cell {
+        .table__body-cell-wrap {
+          background: #000000;
           border-radius: 10px;
+          display: flex;
+          justify-content: center;
+        }
+
+        .table__body-cell {
         }
 
         &:hover {
