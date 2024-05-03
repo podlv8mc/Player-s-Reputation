@@ -1,38 +1,50 @@
 import React from 'react';
-import {Link} from "react-scroll"
+import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 
-class MobHeaderList extends React.Component {
-    render() {
-        const handleSetActive = (to) => {
-        };
+const MobHeaderList = ({ className, name, alt, spanClass, text, onClick, linkTo }) => {
 
-        const items = this.props.items.map((item, index) => (
-            <li key={index}>
+
+    const renderLink = () => {
+        if (!linkTo) return null;
+
+        if (linkTo.startsWith('/')) {
+            return (
+                <NavLink to={linkTo} className="globalnav__link">
+                    {renderContent()}
+                </NavLink>
+            );
+        } else {
+            return (
                 <Link
-                    className="mob-header-link"
-                    to={item.link}
+                    className="globalnav__link"
+                    to={linkTo}
                     spy={true}
                     smooth={true}
                     offset={0}
                     duration={0}
-                    onSetActive={handleSetActive}
+                    onClick={onClick}
                 >
-                    <img src={item.src} alt={item.alt}/>
-                    <p>
-                        {item.text}
-                    </p>
+                    {renderContent()}
                 </Link>
-            </li>
-        ));
+            );
+        }
+    };
 
-        return (
-            <nav className="mob-header__column">
-                <ul className="mob-header__list">
-                    {items}
-                </ul>
-            </nav>
-        );
-    }
+    const renderContent = () => (
+        <>
+            <img src={name} alt={alt} />
+            <span className={spanClass}>
+                {text}
+            </span>
+        </>
+    );
+
+    return (
+        <li className={className}>
+            {renderLink()}
+        </li>
+    );
 }
 
 export default MobHeaderList;
