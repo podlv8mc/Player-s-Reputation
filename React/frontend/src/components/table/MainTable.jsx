@@ -399,12 +399,14 @@ function MainTable() {
                     {page.map(row => {
                         prepareRow(row);
                         return (
-                            <tr className="table__body" {...row.getRowProps()}
-                                onClick={() => openViewModal(row.original)}>
-                                {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                                ))}
-                            </tr>
+                            <div className="">
+                                <tr className="table__body" {...row.getRowProps()}
+                                    onClick={() => openViewModal(row.original)}>
+                                    {row.cells.map((cell, index) => (
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    ))}
+                                </tr>
+                            </div>
                         );
                     })}
                     </tbody>
@@ -414,7 +416,7 @@ function MainTable() {
                         Previous
                     </button>
                     <button onClick={() => nextPage()} disabled={!canNextPage}>
-                        Next
+                    Next
                     </button>
                 </div>
             </>

@@ -381,7 +381,7 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (min-width: 650px) and (max-width: 800px) {
   .table {
     padding: 0px 20px;
   }
@@ -415,8 +415,11 @@
         background: transparent;
 
         .table__body-cell {
-          background: #000000;
           border-radius: 10px;
+        }
+
+        &:hover {
+          background: transparent;
         }
       }
     }
