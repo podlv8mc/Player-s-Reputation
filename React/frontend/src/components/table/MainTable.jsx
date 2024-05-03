@@ -411,12 +411,12 @@ function MainTable() {
                     })}
                     </tbody>
                 </table>
-                <div>
-                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        Previous
+                <div className="pagination__mob-wrap">
+                    <button className="pagination__mob-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        Предыдущая
                     </button>
-                    <button onClick={() => nextPage()} disabled={!canNextPage}>
-                        Next
+                    <button className="pagination__mob-btn" onClick={() => nextPage()} disabled={!canNextPage}>
+                        Следующая
                     </button>
                 </div>
             </>
@@ -569,7 +569,7 @@ function MainTable() {
                             onChange={e => setFilterInput(e.target.value)}
                             placeholder="Поиск..."
                         />
-                        <button className="table__top-btn" onClick={toggleFilterInput}>
+                        <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
                         <button className="table__top-btn" onClick={openModal}>

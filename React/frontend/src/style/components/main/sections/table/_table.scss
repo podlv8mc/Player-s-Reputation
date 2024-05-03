@@ -199,7 +199,7 @@
   &__indicator-separator {
     display: none !important;
   }
-  
+
   &__indicator {
     cursor: pointer;
   }
@@ -375,8 +375,7 @@
 
   &:hover {
     img {
-      filter: invert(66%) sepia(64%) saturate(517%) hue-rotate(352deg)
-      brightness(105%) contrast(94%);
+      filter: invert(66%) sepia(64%) saturate(517%) hue-rotate(352deg) brightness(105%) contrast(94%);
     }
   }
 }
@@ -415,11 +414,9 @@
           padding: 0px 48px 0px 10px;
         }
 
-        .table__top-btn {
-          &:first-child {
-            position: absolute;
-            left: 202px;
-          }
+        .table__top-btn-1 {
+          position: absolute;
+          left: 202px;
         }
       }
     }
@@ -465,6 +462,23 @@
           background: transparent;
         }
       }
+    }
+  }
+
+  .pagination__mob-wrap {
+    width: 100%;
+    padding: 0px 0px 15px 0px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+
+    .pagination__mob-btn {
+      @include Montserrat-500;
+      color: #FFFFFF;
+      font-size: 16px;
+      padding: 4px 6px;
+      background: #000000;
+      border-radius: 10px;
     }
   }
 }
