@@ -393,6 +393,10 @@
       top: 16px;
       z-index: 4100;
     }
+
+    .mob-header__wrap.open {
+      z-index: 4000;
+    }
   }
 
   .table__top-wrap {
