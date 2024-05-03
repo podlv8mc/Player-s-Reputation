@@ -8,12 +8,12 @@
 
 .app__table {
   max-width: none !important;
-  padding: 8px 0px 8px 20px !important;
+  padding: 0px !important;
 
   .main {
     gap: 30px;
     overflow: unset;
-    padding-right: 20px;
+    padding: 8px 20px 8px 20px;
   }
 }
 
@@ -396,6 +396,10 @@
 
     .mob-header__wrap.open {
       z-index: 4000;
+    }
+
+    .main {
+      padding: 8px 20px 8px 20px;
     }
   }
 
