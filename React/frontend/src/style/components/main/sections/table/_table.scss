@@ -388,7 +388,39 @@
 }
 
 @media (max-width: 650px) {
+  .table {
+    width: 100%;
+    flex-direction: row;
+    min-width: auto;
 
+    .table__header-wrap {
+      .table__header {
+        flex-direction: column;
+        gap: 10px;
+
+        .table__headers {
+          height: 60px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    .table__body-wrap {
+      flex-grow: 1;
+
+      .table__body {
+        flex-direction: column;
+        height: fit-content;
+        background: transparent;
+
+        .table__body-cell {
+          background: #000000;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
 }
 
 /* === / Styles === */

@@ -409,6 +409,14 @@ function MainTable() {
                     })}
                     </tbody>
                 </table>
+                <div>
+                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        Previous
+                    </button>
+                    <button onClick={() => nextPage()} disabled={!canNextPage}>
+                        Next
+                    </button>
+                </div>
             </>
         );
     };
@@ -598,11 +606,11 @@ function MainTable() {
                         })}
                         </tbody>
                     </table>
+                    {PageButtons}
                 </>
             ) : (
                 <TableMobile />
             )}
-            {PageButtons}
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
