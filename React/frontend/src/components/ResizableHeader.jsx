@@ -22,7 +22,7 @@ const ResizableHeader = ({handleModalOpen}) => {
             {windowWidth >= 801 ? (
                 <Header handleModalOpen={handleModalOpen}/>
             ) : (
-                <MobHeader />
+                <MobHeader handleModalOpen={handleModalOpen}/>
             )}
         </>
     );

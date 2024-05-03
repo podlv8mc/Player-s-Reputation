@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 import axios from "axios";
 import List from "@/components/header/List";
 
-const MobHeader = () => {
+const MobHeader = ({handleModalOpen}) => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
     const [authorization, setAuthorization] = useState(false);
