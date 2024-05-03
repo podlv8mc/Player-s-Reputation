@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 
-const MobHeaderList = ({ className, name, alt, spanClass, text, onClick, linkTo }) => {
+const MobHeaderList = ({ className, name, alt, text, onClick, linkTo }) => {
 
 
     const renderLink = () => {
@@ -10,14 +10,14 @@ const MobHeaderList = ({ className, name, alt, spanClass, text, onClick, linkTo 
 
         if (linkTo.startsWith('/')) {
             return (
-                <NavLink to={linkTo} className="globalnav__link">
+                <NavLink to={linkTo} className="mob-header-link">
                     {renderContent()}
                 </NavLink>
             );
         } else {
             return (
                 <Link
-                    className="globalnav__link"
+                    className="mob-header-link"
                     to={linkTo}
                     spy={true}
                     smooth={true}
@@ -34,9 +34,9 @@ const MobHeaderList = ({ className, name, alt, spanClass, text, onClick, linkTo 
     const renderContent = () => (
         <>
             <img src={name} alt={alt} />
-            <span className={spanClass}>
+            <p>
                 {text}
-            </span>
+            </p>
         </>
     );
 
