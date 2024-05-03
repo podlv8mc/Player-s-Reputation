@@ -332,8 +332,6 @@ function MainTable() {
         []
     );
 
-    const isMobile = windowWidth < 650;
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -352,11 +350,74 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: { pageIndex: 0, filters: [], ...(isMobile && { pageSize: 1 }) },
+            initialState: { pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
     );
+
+    const TableMobile = () => {
+        const {
+            getTableProps,
+            getTableBodyProps,
+            headerGroups,
+            page,
+            prepareRow,
+            gotoPage,
+            pageCount,
+            state: { pageIndex },
+            canPreviousPage,
+            canNextPage,
+            previousPage,
+            nextPage,
+            setFilter,
+        } = useTable(
+            {
+                columns,
+                data: filteredData,
+                initialState: { pageIndex: 0, filters: [], pageSize: 1 },
+            },
+            useFilters,
+            usePagination
+        );
+
+        return (
+            <>
+                <table {...getTableProps()}>
+                    <thead>
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                    {page.map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                })}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+                <div>
+                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        Previous
+                    </button>
+                    <button onClick={() => nextPage()} disabled={!canNextPage}>
+                        Next
+                    </button>
+                </div>
+            </>
+        );
+    };
+
 
     const handleFilterChange = (selectedOption) => {
         setFilterValue(selectedOption ? selectedOption.value : null);
@@ -545,39 +606,7 @@ function MainTable() {
                     {PageButtons}
                 </>
             ) : (
-                <>
-                    <table {...getTableProps()}>
-                        <thead>
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                ))}
-                            </tr>
-                        ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                        {page.map(row => {
-                            prepareRow(row);
-                            return (
-                                <tr {...row.getRowProps()}>
-                                    {row.cells.map(cell => {
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                    })}
-                                </tr>
-                            );
-                        })}
-                        </tbody>
-                    </table>
-                    <div>
-                        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                            Previous
-                        </button>
-                        <button onClick={() => nextPage()} disabled={!canNextPage}>
-                            Next
-                        </button>
-                    </div>
-                </>
+                <TableMobile />
             )}
             {EditModalContent}
             {ModalContent}
