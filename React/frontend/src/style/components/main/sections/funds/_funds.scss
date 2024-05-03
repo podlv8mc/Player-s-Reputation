@@ -193,4 +193,26 @@
   }
 }
 
+@media (max-width: 600px) {
+  .funds__wrap {
+    .slider__wrap {
+      .slick-dots {
+        gap: 13px;
+
+        .dots__wrap {
+          max-width: 85%;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 6px;
+
+          li {
+            margin: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
 /* === / Styles === */

@@ -58,7 +58,9 @@ function FundsSlide({ slides }) {
                 <button className="slide__btn-nav" onClick={previous}>
                     <img src={Images.arrow} alt="arrow" />
                 </button>
-                <div className="">{dots}</div>
+                <div className="dots__wrap">
+                    {dots}
+                </div>
                 <button className="slide__btn-nav" onClick={next}>
                     <img src={Images.arrow} alt="arrow" />
                 </button>

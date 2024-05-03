@@ -350,7 +350,7 @@ function MainTable() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            initialState: {pageIndex: 0, pageSize: 1, filters: []},
         },
         useFilters,
         usePagination
@@ -544,8 +544,8 @@ function MainTable() {
                 </>
             ) : (
                 <>
-                    <table className="table" {...getTableProps()}>
-                        <thead className="table__header-wrap">
+                    <table {...getTableProps()}>
+                        <thead>
                         {headerGroups.map(headerGroup => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map(column => (
@@ -554,7 +554,7 @@ function MainTable() {
                             </tr>
                         ))}
                         </thead>
-                        <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()}>
                         {page.map(row => {
                             prepareRow(row);
                             return (
@@ -577,8 +577,6 @@ function MainTable() {
                     </div>
                 </>
             )}
-
-            {PageButtons}
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
