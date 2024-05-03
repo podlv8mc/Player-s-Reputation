@@ -383,37 +383,32 @@ function MainTable() {
 
         return (
             <>
-                <table {...getTableProps()}>
-                    <thead>
+                <table className="table" {...getTableProps()}>
+                    <thead className="table__header-wrap">
                     {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                <th className="table__headers" {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </th>
                             ))}
                         </tr>
                     ))}
                     </thead>
-                    <tbody {...getTableBodyProps()}>
+                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
                     {page.map(row => {
                         prepareRow(row);
                         return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-                                })}
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                ))}
                             </tr>
                         );
                     })}
                     </tbody>
                 </table>
-                <div>
-                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        Previous
-                    </button>
-                    <button onClick={() => nextPage()} disabled={!canNextPage}>
-                        Next
-                    </button>
-                </div>
             </>
         );
     };
@@ -603,11 +598,11 @@ function MainTable() {
                         })}
                         </tbody>
                     </table>
-                    {PageButtons}
                 </>
             ) : (
                 <TableMobile />
             )}
+            {PageButtons}
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
