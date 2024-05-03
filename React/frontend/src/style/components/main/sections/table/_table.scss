@@ -388,18 +388,39 @@
 }
 
 @media (max-width: 650px) {
+  .app__table {
+    .mob-header__btn {
+      right: 27px;
+      top: 16px;
+    }
+  }
+
   .table__top-wrap {
     .table__top-box {
       width: 100%;
       position: relative;
+      gap: 10px;
       flex-direction: column;
 
       .table__top-select {
-
+        padding: 0px;
       }
 
       .table__top {
+        justify-content: space-between;
 
+        .input__search-op {
+          opacity: 1 !important;
+          visibility: visible !important;
+          padding: 0px 48px 0px 10px;
+        }
+
+        .table__top-btn {
+          &:first-child {
+            position: absolute;
+            left: 202px;
+          }
+        }
       }
     }
   }
