@@ -9,6 +9,7 @@
 .preloader__wrap {
   position: fixed;
   inset: 0;
+  opacity: .8;
   background: black;
   z-index: 2000;
 }

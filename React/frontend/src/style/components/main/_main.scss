@@ -196,6 +196,7 @@
 
       .massage__error {
         width: 100%;
+        max-width: 325px;
         @include Montserrat-500;
         font-size: 13px;
         text-align: center;
