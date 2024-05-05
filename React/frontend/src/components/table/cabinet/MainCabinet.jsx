@@ -34,8 +34,8 @@ function MainCabinet() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(cabinet)
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
+        console.log(loading)
+        await axios.patch('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', loading, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
