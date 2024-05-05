@@ -99,8 +99,14 @@ function MainTable() {
                 })
                 .catch((error) => {
                     console.error(error);
-                    alert("Авторизируйтесь!")
-                    window.location.href = "/"
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
                 })
         })
     }, []);

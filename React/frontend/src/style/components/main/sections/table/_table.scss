@@ -6,6 +6,18 @@
 
 /* === Styles === */
 
+.authorization__wrap {
+  position: fixed;
+  inset: 0;
+  background: #101117;
+  color: #FFFFFF;
+  @include Montserrat-600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+}
+
 .app__table {
   max-width: none !important;
   padding: 0px !important;

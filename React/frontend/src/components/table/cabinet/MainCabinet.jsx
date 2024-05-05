@@ -26,8 +26,14 @@ function MainCabinet() {
                 })
                 .catch((error) => {
                     console.error(error);
-                    alert("Авторизируйтесь!")
-                    window.location.href = "/"
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
                 })
         })
     }, []);
@@ -49,9 +55,9 @@ function MainCabinet() {
 
     return (
         <>
-            <h1>
+            <h3>
                 Настройка аккаунта
-            </h1>
+            </h3>
             <form onSubmit={handleSubmit} className="profile__form-wrap">
                 <div className="profile__form">
                     <label className="profile__form-title" htmlFor="login">
