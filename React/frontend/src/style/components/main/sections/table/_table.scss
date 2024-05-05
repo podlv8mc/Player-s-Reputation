@@ -249,6 +249,19 @@
   }
 }
 
+.profile__form-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 600px;
+
+  .profile__form {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+}
+
 .modal__btn-new {
   position: absolute;
   top: 15px;

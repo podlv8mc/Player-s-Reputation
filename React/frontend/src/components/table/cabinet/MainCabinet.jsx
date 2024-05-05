@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 function MainCabinet() {
-    const [cabinet, setCabinet] = useState([]);
+    const [cabinet, setCabinet] = useState({});
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
@@ -11,7 +11,7 @@ function MainCabinet() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            setCabinet(Array.isArray(data.data.items) ? data.data.items : []);
+            setCabinet(data.data)
         }).catch(() => {
             axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
                 headers: {
@@ -31,12 +31,31 @@ function MainCabinet() {
         })
     }, []);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(cabinet)
+    };
+
     return (
-        <form>
-            {cabinet.map((item, i) => (
+        <form onSubmit={handleSubmit} className="profile__form-wrap">
+            <div className="profile__form">
+                <label className="profile__form-title" htmlFor="login">
+                    Логин
+                </label>
                 <input
+                    className="profile__form-input"
+                    id="login"
+                    value={cabinet.username}
+                    onChange={(e) => {
+                        setCabinet({...cabinet, username:e.target.value})
+                    }}
+                    autoComplete="off"
                 />
-            ))}
+            </div>
+
+            <button className="form__btn btn-hover" type="submit">
+                Отправить
+            </button>
         </form>
     );
 }
