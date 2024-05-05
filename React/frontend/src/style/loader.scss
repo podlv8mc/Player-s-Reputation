@@ -9,9 +9,66 @@
 .preloader__wrap {
   position: fixed;
   inset: 0;
-  opacity: .8;
-  background: black;
   z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #101117;
+  transition: 1s all;
+
+  .preloader {
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #000000;
+    animation: spin 1.7s linear infinite;
+    z-index: 11;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid transparent;
+    }
+
+    &:before {
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-top-color: #fdb401;
+      animation: spin-reverse .6s linear infinite;
+    }
+
+    &:after {
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-top-color: #FFFFFF;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* === / Styles === */

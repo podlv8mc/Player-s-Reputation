@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Modal from "@/components/main/modal/Modal";
-import LoginForm from "@/components/main/forms/LoginForm";
 import axios from "axios";
 
 const Title = ({handleModalOpen}) => {

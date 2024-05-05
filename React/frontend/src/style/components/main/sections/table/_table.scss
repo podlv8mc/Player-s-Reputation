@@ -264,6 +264,18 @@
       color: #ffffff;
     }
   }
+
+  .profile__btn {
+    background: #000;
+    border: 2px solid #fdb401;
+    border-radius: 100px;
+    color: #fff;
+    font-family: Montserrat-600, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    width: 100%;
+    padding: 12px 64px;
+  }
 }
 
 .modal__btn-new {
