@@ -39,12 +39,12 @@ function MainCabinet() {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        }.then((data) => {
+        }).then((data) => {
             console.log(data)
         })
             .catch((error) => {
                 console.log(error)
-            }))
+            })
     };
 
     return (
