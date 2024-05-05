@@ -28,7 +28,7 @@ const ProfileInput = ({label, value, onChange, type = 'text', disabled = false})
             {type === 'password' && (
                 <button
                     type="button"
-                    className={`profile__password-toggle ${focused ? '' : 'vv'}`}
+                    className="profile__password-toggle"
                     onClick={togglePasswordVisibility}
                 >
                     {showPassword ? 'Скрыть' : 'Показать'}

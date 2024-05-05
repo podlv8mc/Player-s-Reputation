@@ -286,6 +286,7 @@
       align-items: center;
       gap: 15px;
       width: 100%;
+      position: relative;
 
       .profile__form-title {
         @include Montserrat-500;
@@ -308,13 +309,12 @@
       .profile__password-toggle {
         width: 49px;
         height: 49px;
+        position: absolute;
+        right: -59px;
+        bottom: 0px;
         background: #000000;
+        border-radius: 8px;
         color: #ffffff;
-        opacity: 1;
-      }
-
-      .vv {
-        opacity: 0;
       }
     }
 

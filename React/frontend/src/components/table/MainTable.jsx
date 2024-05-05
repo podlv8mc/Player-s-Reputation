@@ -586,7 +586,7 @@ function MainTable() {
             </div>
 
 
-            {windowWidth >= 650 ? (
+            {windowWidth >= 800 ? (
                 <>
                     <table className="table" {...getTableProps()}>
                         <thead className="table__header-wrap">
