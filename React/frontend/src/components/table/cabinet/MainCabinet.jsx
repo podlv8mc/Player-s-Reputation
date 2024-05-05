@@ -4,6 +4,7 @@ import axios from "axios";
 
 function MainCabinet() {
     const [cabinet, setCabinet] = useState({});
+    const [loading, setLoading] = useState({is_active: true, is_superuser: true, is_verified: true, role: "admin"});
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
@@ -34,6 +35,16 @@ function MainCabinet() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(cabinet)
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }.then((data) => {
+            console.log(data)
+        })
+            .catch((error) => {
+                console.log(error)
+            }))
     };
 
     return (
@@ -43,11 +54,60 @@ function MainCabinet() {
                     Логин
                 </label>
                 <input
+                    disabled
                     className="profile__form-input"
                     id="login"
                     value={cabinet.username}
                     onChange={(e) => {
-                        setCabinet({...cabinet, username:e.target.value})
+                        setCabinet({...cabinet, username: e.target.value})
+                    }}
+                    autoComplete="off"
+                />
+            </div>
+
+            <div className="profile__form">
+                <label className="profile__form-title" htmlFor="discord">
+                    Ник в Discord
+                </label>
+                <input
+                    disabled
+                    className="profile__form-input"
+                    id="discord"
+                    value={cabinet.discord}
+                    onChange={(e) => {
+                        setCabinet({...cabinet, discord: e.target.value})
+                    }}
+                    autoComplete="off"
+                />
+            </div>
+
+            <div className="profile__form">
+                <label className="profile__form-title" htmlFor="email">
+                    Email
+                </label>
+                <input
+                    className="profile__form-input"
+                    id="email"
+                    value={cabinet.email}
+                    onChange={(e) => {
+                        setCabinet({...cabinet, email: e.target.value})
+                        setLoading({...loading, email: e.target.value})
+                    }}
+                    autoComplete="off"
+                />
+            </div>
+
+            <div className="profile__form">
+                <label className="profile__form-title" htmlFor="password">
+                    Новый пароль
+                </label>
+                <input
+                    className="profile__form-input"
+                    id="password"
+                    value={cabinet.password}
+                    onChange={(e) => {
+                        setCabinet({...cabinet, password: e.target.value})
+                        setLoading({...loading, password: e.target.value})
                     }}
                     autoComplete="off"
                 />
