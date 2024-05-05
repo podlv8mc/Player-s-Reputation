@@ -4,7 +4,7 @@ import HomePage from "@/components/HomePage";
 import Table from "@/components/table/Table";
 import Users from "@/components/table/users/Users";
 import Funds from "@/components/table/funds/Funds";
-//import Cabinet from "@/components/table/cabinet/Cabinet";
+import Cabinet from "@/components/table/cabinet/Cabinet";
 //import Loader from "@/components/loader/Loader";
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
                 <Route path="/table" element={<Table/>}/>
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/funds" element={<Funds/>}/>
-                {/*<Route path="/cabinet" element={<cabinet />} />*/}
+                <Route path="/cabinet" element={<Cabinet />} />
             </Routes>
         </>
     );
