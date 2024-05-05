@@ -76,8 +76,8 @@ const MobHeader = ({handleModalOpen}) => {
                                           alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
                                     <MobHeaderList linkTo="/users" className="globalnav" name={Images.users} alt="users"
                                           spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
-                                    {/*<MobHeaderList linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
-                                      spanClass="globalnav__text" text="Кабинет" isOpen={isOpen}/>*/}
+                                    <MobHeaderList linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
+                                      spanClass="globalnav__text" text="Профиль" isOpen={isOpen}/>
                                     <MobHeaderList linkTo="#" className="globalnav" name={Images.exit} alt="exit"
                                           spanClass="globalnav__text" text="Выйти" isOpen={isOpen} onClick={() => {
                                         localStorage.removeItem("access_token");
