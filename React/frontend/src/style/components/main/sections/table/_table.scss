@@ -261,6 +261,11 @@
   }
 }
 
+.profile__title {
+  padding: 60px 20px 0px 20px;
+  font-size: 35px;
+}
+
 .profile__form-wrap {
   display: flex;
   flex-direction: column;
@@ -269,11 +274,26 @@
 
   .profile__form {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 8px;
     width: 100%;
 
     .profile__form-title {
+      @include Montserrat-500;
+      font-size: 16px;
       color: #ffffff;
+    }
+
+    .profile__form-input {
+      width: 300px;
+      text-align: center;
+      background: #000000;
+      border-radius: 8px;
+      @include Montserrat-500;
+      font-size: 15px;
+      color: #FFFFFF;
+      padding: 5px 20px;
     }
   }
 
@@ -536,6 +556,10 @@
     &__control {
       width: 250px !important;
     }
+  }
+
+  .profile__form {
+    flex-direction: column;
   }
 }
 

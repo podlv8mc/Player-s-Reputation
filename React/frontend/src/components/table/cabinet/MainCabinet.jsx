@@ -17,7 +17,6 @@ function MainCabinet() {
             axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
-
                 }
             })
                 .then((response) => {
@@ -60,9 +59,9 @@ function MainCabinet() {
 
     return (
         <>
-            <h3>
+            <h2 className="profile__title">
                 Настройка аккаунта
-            </h3>
+            </h2>
             <form onSubmit={handleSubmit} className="profile__form-wrap">
                 <ProfileInput
                     label="Логин"
