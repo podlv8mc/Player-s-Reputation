@@ -58,7 +58,7 @@ function MainCabinet() {
     };
 
     return (
-        <>
+        <div className="profile__wrap">
             <h2 className="profile__title">
                 Настройка аккаунта
             </h2>
@@ -91,7 +91,7 @@ function MainCabinet() {
                     Отправить
                 </button>
             </form>
-        </>
+        </div>
     );
 }
 
