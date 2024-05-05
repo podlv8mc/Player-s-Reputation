@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-
+import ProfileInput from "@/components/table/cabinet/ProfileInput";
 
 function MainCabinet() {
     const [cabinet, setCabinet] = useState({});
@@ -53,76 +53,41 @@ function MainCabinet() {
             })
     };
 
+    const handleChange = (key, value) => {
+        setCabinet({...cabinet, [key]: value});
+        setLoading({...loading, [key]: value});
+    };
+
     return (
         <>
             <h3>
                 Настройка аккаунта
             </h3>
             <form onSubmit={handleSubmit} className="profile__form-wrap">
-                <div className="profile__form">
-                    <label className="profile__form-title" htmlFor="login">
-                        Логин
-                    </label>
-                    <input
-                        disabled
-                        className="profile__form-input"
-                        id="login"
-                        value={cabinet.username}
-                        onChange={(e) => {
-                            setCabinet({...cabinet, username: e.target.value})
-                        }}
-                        autoComplete="off"
-                    />
-                </div>
-
-                <div className="profile__form">
-                    <label className="profile__form-title" htmlFor="discord">
-                        Ник в Discord
-                    </label>
-                    <input
-                        disabled
-                        className="profile__form-input"
-                        id="discord"
-                        value={cabinet.discord}
-                        onChange={(e) => {
-                            setCabinet({...cabinet, discord: e.target.value})
-                        }}
-                        autoComplete="off"
-                    />
-                </div>
-
-                <div className="profile__form">
-                    <label className="profile__form-title" htmlFor="email">
-                        Email
-                    </label>
-                    <input
-                        className="profile__form-input"
-                        id="email"
-                        value={cabinet.email}
-                        onChange={(e) => {
-                            setCabinet({...cabinet, email: e.target.value})
-                            setLoading({...loading, email: e.target.value})
-                        }}
-                        autoComplete="off"
-                    />
-                </div>
-
-                <div className="profile__form">
-                    <label className="profile__form-title" htmlFor="password">
-                        Новый пароль
-                    </label>
-                    <input
-                        className="profile__form-input"
-                        id="password"
-                        value={cabinet.password}
-                        onChange={(e) => {
-                            setCabinet({...cabinet, password: e.target.value})
-                            setLoading({...loading, password: e.target.value})
-                        }}
-                        autoComplete="off"
-                    />
-                </div>
-
+                <ProfileInput
+                    label="Логин"
+                    value={cabinet.username || ''}
+                    onChange={(e) => handleChange('username', e.target.value)}
+                    disabled
+                />
+                <ProfileInput
+                    label="Ник в Discord"
+                    value={cabinet.discord || ''}
+                    onChange={(e) => handleChange('discord', e.target.value)}
+                    disabled
+                />
+                <ProfileInput
+                    label="Email"
+                    value={cabinet.email || ''}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    type="email"
+                />
+                <ProfileInput
+                    label="Новый пароль"
+                    value={cabinet.password || ''}
+                    onChange={(e) => handleChange('password', e.target.value)}
+                    type="password"
+                />
                 <button className="profile__btn btn-hover" type="submit">
                     Отправить
                 </button>
