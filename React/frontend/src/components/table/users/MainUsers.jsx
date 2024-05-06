@@ -24,7 +24,6 @@ function MainUsers() {
         name:"",
         discord:"",
         email: "",
-        funds: "",
         password:"",
     });
 
@@ -192,10 +191,6 @@ function MainUsers() {
             {
                 Header: 'Email',
                 accessor: row => row.email,
-            },
-            {
-                Header: 'Фонд',
-                accessor: row => row.funds,
             },
         ],
         []
