@@ -256,7 +256,7 @@
   pointer-events: all;
   opacity: 1;
   visibility: visible;
-  z-index: 3000;
+  z-index: 4500;
 
   .modal__content {
     transform: scale(1);
@@ -264,7 +264,7 @@
 }
 
 .modal.active.edit-modal {
-  z-index: 3000;
+  z-index: 4600;
 }
 
 .modal-scroll {
