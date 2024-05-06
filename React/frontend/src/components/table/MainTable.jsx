@@ -507,7 +507,7 @@ function MainTable() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>

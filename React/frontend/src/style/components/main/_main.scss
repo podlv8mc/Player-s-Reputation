@@ -355,4 +355,14 @@
   }
 }
 
+@media (max-width: 520px) {
+  .modal__mob {
+    .modal__content {
+      .table__modal-title {
+        padding: 68px 0px 25px 0px;
+      }
+    }
+  }
+}
+
 /* === / Styles === */

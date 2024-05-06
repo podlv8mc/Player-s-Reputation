@@ -4,7 +4,7 @@ import ProfileInput from "@/components/table/cabinet/ProfileInput";
 
 function MainCabinet() {
     const [cabinet, setCabinet] = useState({});
-    const [loading, setLoading] = useState({is_active: true, is_superuser: true, is_verified: true, role: "admin"});
+    const [loading, setLoading] = useState({});
 
     useEffect(() => {
         axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
@@ -63,6 +63,11 @@ function MainCabinet() {
                 Настройка аккаунта
             </h2>
             <form onSubmit={handleSubmit} className="profile__form-wrap">
+                <ProfileInput
+                    label="Имя"
+                    value={cabinet.name || ''}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                />
                 <ProfileInput
                     label="Логин"
                     value={cabinet.username || ''}

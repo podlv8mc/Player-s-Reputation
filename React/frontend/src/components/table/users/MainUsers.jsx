@@ -17,6 +17,7 @@ function MainUsers() {
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [newUserData, setNewUserData] = useState({
         username: "",
@@ -42,10 +43,29 @@ function MainUsers() {
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
-            alert("Авторизируйтесь!")
-            window.location.href = "/"
+            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
+                headers: {
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            })
+                .then((response) => {
+                    localStorage.setItem("access_token", data.data.access_token)
+                    localStorage.setItem("refresh_token", data.data.refresh_token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                })
         })
     }, []);
+
 
     useEffect(() => {
         setFilteredData(
@@ -58,12 +78,11 @@ function MainUsers() {
     }, [data, filterInput]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
+        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data);
             setfundSelect(data);
         }).catch(() => {
 
@@ -77,6 +96,17 @@ function MainUsers() {
             setFilteredData(data);
         }
     }, [data, filterValue]);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -116,7 +146,6 @@ function MainUsers() {
             fund_id: selectedOption ? selectedOption.value : null,
         }
 
-        console.log(userDataWithTimestamp);
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -137,7 +166,6 @@ function MainUsers() {
             }
         })
             .then((response) => {
-                console.log(response.data);
                 setIsEditModalOpen(false);
             })
             .catch((error) => {
@@ -172,6 +200,7 @@ function MainUsers() {
         []
     );
 
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -185,6 +214,7 @@ function MainUsers() {
         canNextPage,
         previousPage,
         nextPage,
+        setFilter,
     } = useTable(
         {
             columns,
@@ -194,6 +224,73 @@ function MainUsers() {
         useFilters,
         usePagination
     );
+
+    const TableMobile = () => {
+        const {
+            getTableProps,
+            getTableBodyProps,
+            headerGroups,
+            page,
+            prepareRow,
+            gotoPage,
+            pageCount,
+            state: {pageIndex},
+            canPreviousPage,
+            canNextPage,
+            previousPage,
+            nextPage,
+            setFilter,
+        } = useTable(
+            {
+                columns,
+                data: filteredData,
+                initialState: {pageIndex: 0, filters: [], pageSize: 1},
+            },
+            useFilters,
+            usePagination
+        );
+
+        return (
+            <>
+                <table className="table" {...getTableProps()}>
+                    <thead className="table__header-wrap">
+                    {headerGroups.map(headerGroup => (
+                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th className="table__headers" {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                    {page.map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr className="table__body" {...row.getRowProps()}
+                                onClick={() => openViewModal(row.original)}>
+                                {row.cells.map((cell, index) => (
+                                    <div className="table__body-cell-wrap">
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    </div>
+                                ))}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+                <div className="pagination__mob-wrap">
+                    <button className="pagination__mob-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        Предыдущая
+                    </button>
+                    <button className="pagination__mob-btn" onClick={() => nextPage()} disabled={!canNextPage}>
+                        Следующая
+                    </button>
+                </div>
+            </>
+        );
+    };
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
@@ -232,13 +329,13 @@ function MainUsers() {
     );
 
     const EditModalContent = editingUserData && (
-        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
             <div className="table__modal-title">
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,]) => (
-                    <div className="table__modal-row" key={key}>
+                {Object.entries(newUserData).map(([key,], index, array) => (
+                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -267,7 +364,7 @@ function MainUsers() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
@@ -334,7 +431,7 @@ function MainUsers() {
                             onChange={e => setFilterInput(e.target.value)}
                             placeholder="Поиск..."
                         />
-                        <button className="table__top-btn" onClick={toggleFilterInput}>
+                        <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
                         <button className="table__top-btn" onClick={openModal}>
@@ -343,32 +440,41 @@ function MainUsers() {
                     </div>
                 </div>
             </div>
-            <table className="table" {...getTableProps()}>
-                <thead className="table__header-wrap">
-                {headerGroups.map(headerGroup => (
-                    <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th className="table__headers" {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                            </th>
+
+
+            {windowWidth >= 800 ? (
+                <>
+                    <table className="table" {...getTableProps()}>
+                        <thead className="table__header-wrap">
+                        {headerGroups.map(headerGroup => (
+                            <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th className="table__headers" {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                {page.map(row => {
-                    prepareRow(row);
-                    return (
-                        <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
-                            {row.cells.map((cell, index) => (
-                                <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                            ))}
-                        </tr>
-                    );
-                })}
-                </tbody>
-            </table>
-            {PageButtons}
+                        </thead>
+                        <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                        {page.map(row => {
+                            prepareRow(row);
+                            return (
+                                <tr className="table__body" {...row.getRowProps()}
+                                    onClick={() => openViewModal(row.original)}>
+                                    {row.cells.map((cell, index) => (
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                    {PageButtons}
+                </>
+            ) : (
+                <TableMobile/>
+            )}
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
