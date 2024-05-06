@@ -144,6 +144,9 @@ function MainUsers() {
             ...newUserData,
             createdAt: createdAt,
             role: selectedOption ? selectedOption.value : null,
+            is_active: true,
+            is_superuser: false,
+            is_verified: false,
         }
 
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
