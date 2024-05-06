@@ -21,18 +21,19 @@ function MainUsers() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        login:"",
+        name:"",
         discord:"",
         email: "",
         funds: "",
+        password:"",
     });
 
     const inputLabels = {
         username: "Имя пользователя",
-        login:"Логин",
+        name:"Логин",
         discord:"Discord",
         email: "Email",
-        funds: "Фонд",
+        password: "Пароль",
     };
 
     useEffect(() => {
@@ -182,7 +183,7 @@ function MainUsers() {
             },
             {
                 Header: 'Логин',
-                accessor: row => row.login,
+                accessor: row => row.name,
             },
             {
                 Header: 'Discord',
@@ -305,8 +306,8 @@ function MainUsers() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                {Object.keys(newUserData).map((key, index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.keys(newUserData).map((key,) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -334,8 +335,8 @@ function MainUsers() {
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,], index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.entries(newUserData).map(([key,],) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
