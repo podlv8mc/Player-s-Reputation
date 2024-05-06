@@ -17,14 +17,14 @@ function SelectRole({ onSelect }) {
     return (
         <div className="table__modal-row">
             <label className="table__modal-cell-title">
-                Фонд
+                Роль
             </label>
             <Select
                 classNamePrefix='select'
                 value={selectedOption}
                 onChange={handleSelectChange}
                 options={options}
-                placeholder="Выбрать фонд"
+                placeholder="Выбрать роль"
             />
         </div>
     );

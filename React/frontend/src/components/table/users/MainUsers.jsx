@@ -143,7 +143,7 @@ function MainUsers() {
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt,
-            fund_id: selectedOption ? selectedOption.value : null,
+            role: selectedOption ? selectedOption.value : null,
         }
 
         axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
