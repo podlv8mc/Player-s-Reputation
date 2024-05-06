@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import SelectSigns from "@/components/table/SelectSigns";
+import SelectRole from "@/components/table/users/SelectRole";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -320,7 +320,7 @@ function MainUsers() {
                         />
                     </div>
                 ))}
-                <SelectSigns onSelect={setSelectedOption}/>
+                <SelectRole onSelect={setSelectedOption}/>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
