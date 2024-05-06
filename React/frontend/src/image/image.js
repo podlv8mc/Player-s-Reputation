@@ -35,6 +35,8 @@ const Images = {
     search: require('./pictures/search.webp'),
     arrow: require('./pictures/arrow.webp'),
     edit: require('./pictures/edit.webp'),
+    eye: require('./pictures/eye.webp'),
+    eyeOff: require('./pictures/eye_close.webp'),
 }
 
 export default Images

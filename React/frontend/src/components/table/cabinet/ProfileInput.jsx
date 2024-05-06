@@ -1,5 +1,5 @@
-// ProfileInput.js
 import React, {useState} from 'react';
+import Images from "@/image/image";
 
 const ProfileInput = ({label, value, onChange, type = 'text', disabled = false}) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +31,7 @@ const ProfileInput = ({label, value, onChange, type = 'text', disabled = false})
                     className="profile__password-toggle"
                     onClick={togglePasswordVisibility}
                 >
-                    {showPassword ? 'Скрыть' : 'Показать'}
+                    <img src={showPassword ? Images.eyeOff : Images.eye} alt="eye" />
                 </button>
             )}
         </div>

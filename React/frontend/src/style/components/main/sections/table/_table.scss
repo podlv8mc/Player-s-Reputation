@@ -315,6 +315,23 @@
         background: #000000;
         border-radius: 8px;
         color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.4s ease;
+
+        img {
+          width: 29px;
+          height: 29px;
+        }
+
+        &:hover {
+          background: rgba(0, 0, 0, .3);
+        }
+
+        &:active {
+          transform: scale(0.8);
+        }
       }
     }
 
@@ -585,6 +602,27 @@
     .profile__form-wrap {
       .profile__form {
         flex-direction: column;
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__wrap {
+    .profile__form-wrap {
+      .profile__form {
+        .profile__password-toggle {
+          transform: translate(-50%, -50%);
+          inset: 140% auto auto 50%;
+
+          &:active {
+            transform: translate(-50%, -50%) scale(0.8);
+          }
+        }
+      }
+
+      .profile__btn {
+        margin: 66px 0px 0px 0px;
       }
     }
   }
