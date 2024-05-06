@@ -149,11 +149,7 @@ function MainUsers() {
             is_verified: false,
         }
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        })
+        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/register", userDataWithTimestamp)
             .catch((error) => {
                 console.error(error);
             });
