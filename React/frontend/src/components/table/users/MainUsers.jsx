@@ -142,7 +142,7 @@ function MainUsers() {
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
-            createdAt: createdAt,
+            created_at: createdAt,
             role: selectedOption ? selectedOption.value : null,
             is_active: true,
             is_superuser: false,
