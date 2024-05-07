@@ -8,14 +8,14 @@ function MainCabinet() {
     const [loading, setLoading] = useState({});
 
     useEffect(() => {
-        axios.get('${domain}users/me', {
+        axios.get(`${domain}users/me`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             setCabinet(data.data)
         }).catch(() => {
-            axios.post("${domain}auth/jwt/refresh", null, {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
@@ -41,7 +41,7 @@ function MainCabinet() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(loading)
-        await axios.patch('${domain}users/me', loading, {
+        await axios.patch(`${domain}users/me`, loading, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
