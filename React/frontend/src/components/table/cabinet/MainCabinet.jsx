@@ -1,20 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import ProfileInput from "@/components/table/cabinet/ProfileInput";
+import domain from "@/domain";
 
 function MainCabinet() {
     const [cabinet, setCabinet] = useState({});
     const [loading, setLoading] = useState({});
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', {
+        axios.get('${domain}users/me', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             setCabinet(data.data)
         }).catch(() => {
-            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
+            axios.post("${domain}auth/jwt/refresh", null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
@@ -40,7 +41,7 @@ function MainCabinet() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(loading)
-        await axios.patch('http://213-134-31-78.netherlands.vps.ac/api/v1/users/me', loading, {
+        await axios.patch('${domain}users/me', loading, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
