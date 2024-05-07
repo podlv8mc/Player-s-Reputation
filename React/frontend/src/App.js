@@ -11,7 +11,7 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log('Component App mounted'); // Лог при монтировании компонента
+        console.log('Component App mounted');
 
         const handleLoad = () => {
             console.log('Window loaded'); // Лог при полной загрузке страницы

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import domain from "@/domain";
 
 const Title = ({handleModalOpen}) => {
     const [bodyClass, setBodyClass] = useState('');
@@ -18,7 +19,7 @@ const Title = ({handleModalOpen}) => {
     }, [bodyClass]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+        axios.get(`${domain}records`, {
             headers:{
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }

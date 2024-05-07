@@ -4,6 +4,7 @@ import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
+import domain from "@/domain";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -36,14 +37,14 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
+        axios.get(`${domain}users`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
-            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
@@ -78,7 +79,7 @@ function MainUsers() {
     }, [data, filterInput]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+        axios.get(`${domain}funds`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -149,7 +150,7 @@ function MainUsers() {
             is_verified: false,
         }
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/register", userDataWithTimestamp)
+        axios.post(`${domain}register`, userDataWithTimestamp)
             .catch((error) => {
                 console.error(error);
             });
@@ -159,7 +160,7 @@ function MainUsers() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/users/${editingUserData.id}`, editingUserData, {
+        axios.patch(`${domain}users/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }

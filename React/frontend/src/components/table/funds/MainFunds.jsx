@@ -4,6 +4,7 @@ import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
 import SelectSigns from "@/components/table/SelectSigns";
+import domain from "@/domain";
 
 function MainFunds() {
     const [data, setData] = useState([]);
@@ -32,14 +33,14 @@ function MainFunds() {
     };
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+        axios.get(`${domain}funds`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
-            axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/refresh", null, {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
@@ -74,7 +75,7 @@ function MainFunds() {
     }, [data, filterInput]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/funds', {
+        axios.get(`${domain}funds`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -142,7 +143,7 @@ function MainFunds() {
             fund_id: selectedOption ? selectedOption.value : null,
         }
 
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/funds", userDataWithTimestamp, {
+        axios.post(`${domain}funds`, userDataWithTimestamp, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -156,7 +157,7 @@ function MainFunds() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/funds/${editingUserData.id}`, editingUserData, {
+        axios.patch(`${domain}funds/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }

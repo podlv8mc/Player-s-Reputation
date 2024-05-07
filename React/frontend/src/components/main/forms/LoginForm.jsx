@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Images from "@/image/image";
 import axios from 'axios';
+import domain from "@/domain";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const LoginForm = () => {
         const formData = new FormData()
         formData.append('username', email)
         formData.append('password', password)
-        axios.post('http://213-134-31-78.netherlands.vps.ac/api/v1/auth/jwt/login', formData)
+        axios.post(`${domain}auth/jwt/login`, formData)
             .then(data => {
                 localStorage.setItem("access_token", data.data.access_token)
                 localStorage.setItem("refresh_token", data.data.refresh_token)
