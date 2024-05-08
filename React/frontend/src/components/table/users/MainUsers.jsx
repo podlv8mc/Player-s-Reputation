@@ -17,7 +17,6 @@ function MainUsers() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
 
@@ -76,7 +75,7 @@ function MainUsers() {
     } = useTable(
         {
             columns,
-            data: filteredData,
+            data: data,
             initialState: {pageIndex: 0, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total / 10),
@@ -139,14 +138,6 @@ function MainUsers() {
 
         })
     }, []);
-
-    useEffect(() => {
-        if (filterValue) {
-            setFilteredData(data.filter(row => row.fund.name === filterValue));
-        } else {
-            setFilteredData(data);
-        }
-    }, [data, filterValue]);
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
