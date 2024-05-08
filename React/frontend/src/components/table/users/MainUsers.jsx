@@ -19,6 +19,7 @@ function MainUsers() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
+    const [nullifaer] = useState(0)
 
     const columns = React.useMemo(
         () => [
@@ -75,7 +76,7 @@ function MainUsers() {
     } = useTable(
         {
             columns,
-            data: filteredData,
+            data: data,
             initialState: {pageIndex: 0, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total / 10),
@@ -198,6 +199,8 @@ function MainUsers() {
 
         setIsModalOpen(false);
     };
+
+    console.log(filteredData)
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
