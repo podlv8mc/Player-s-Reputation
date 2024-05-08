@@ -226,6 +226,8 @@ function MainUsers() {
             columns,
             data: filteredData,
             initialState: {pageIndex: 0, filters: [],},
+            manualPagination: true,
+            pageCount: Math.ceil(total / 10),
         },
         useFilters,
         usePagination
