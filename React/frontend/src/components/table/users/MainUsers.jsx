@@ -37,7 +37,7 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get(`${domain}users`, {
+        axios.get(`${domain}users/?page=&size=10`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -215,7 +215,7 @@ function MainUsers() {
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            initialState: {pageIndex: 0, filters: [],},
         },
         useFilters,
         usePagination
@@ -415,6 +415,7 @@ function MainUsers() {
             </div>
         </div>
     );
+    console.log(pageIndex)
 
     return (
         <main id="main" className="main">

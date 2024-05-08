@@ -14,6 +14,7 @@ function MainCabinet() {
             }
         }).then((data) => {
             setCabinet(data.data)
+            setLoading(data.data)
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
