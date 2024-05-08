@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import ProfileInput from "@/components/table/cabinet/ProfileInput";
+import ProfileInput from "@/components/table/components/ProfileInput";
 import domain from "@/domain";
 
 function MainCabinet() {

@@ -91,7 +91,6 @@ function MainUsers() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data)
             setTotal(data.data.total)
 
         }).catch(() => {
@@ -199,8 +198,6 @@ function MainUsers() {
 
         setIsModalOpen(false);
     };
-
-    console.log(filteredData)
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
@@ -415,7 +412,6 @@ function MainUsers() {
             </div>
         </div>
     );
-    console.log(pageIndex)
 
     return (
         <main id="main" className="main">
@@ -439,7 +435,6 @@ function MainUsers() {
                     </div>
                 </div>
             </div>
-
 
             {windowWidth >= 800 ? (
                 <>

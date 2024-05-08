@@ -3,7 +3,7 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import SelectSigns from "@/components/table/SelectSigns";
+import SelectSigns from "@/components/table/components/SelectSigns";
 import domain from "@/domain";
 
 function MainFunds() {

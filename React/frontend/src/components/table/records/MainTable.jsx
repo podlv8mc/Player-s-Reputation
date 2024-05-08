@@ -3,8 +3,8 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import TableFilter from "@/components/table/FundsFilter";
-import SelectSigns from "@/components/table/SelectSigns";
+import TableFilter from "@/components/table/components/FundsFilter";
+import SelectSigns from "@/components/table/components/SelectSigns";
 import domain from "@/domain";
 
 function MainTable() {
