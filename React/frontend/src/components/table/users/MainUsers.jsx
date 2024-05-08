@@ -19,6 +19,7 @@ function MainUsers() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [total, setTotal] = useState(0)
 
     const [newUserData, setNewUserData] = useState({
         username: "",
@@ -37,11 +38,12 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=1&size=10`, {
+        axios.get(`${domain}users/?page=${Number(pageIndex) + 1}&size=10`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
+            console.log(data)
             setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
