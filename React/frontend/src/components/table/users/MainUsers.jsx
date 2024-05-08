@@ -59,31 +59,33 @@ function MainUsers() {
         password: "Пароль",
     };
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        page,
-        prepareRow,
-        gotoPage,
-        pageCount,
-        state: {pageIndex},
-        canPreviousPage,
-        canNextPage,
-        previousPage,
-        nextPage,
-        setFilter,
-    } = useTable(
-        {
-            columns,
-            data: filteredData,
-            initialState: {pageIndex: 0, filters: [],},
-            manualPagination: true,
-            pageCount: Math.ceil(total / 10),
-        },
-        useFilters,
-        usePagination
-    );
+    useEffect(() => {
+        const {
+            getTableProps,
+            getTableBodyProps,
+            headerGroups,
+            page,
+            prepareRow,
+            gotoPage,
+            pageCount,
+            state: {pageIndex},
+            canPreviousPage,
+            canNextPage,
+            previousPage,
+            nextPage,
+            setFilter,
+        } = useTable(
+            {
+                columns,
+                data: filteredData,
+                initialState: {pageIndex: 0, filters: [],},
+                manualPagination: true,
+                pageCount: Math.ceil(total / 10),
+            },
+            useFilters,
+            usePagination
+        );
+    }, []);
 
     useEffect(() => {
         axios.get(`${domain}users`, {
