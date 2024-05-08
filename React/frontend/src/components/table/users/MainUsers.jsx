@@ -37,7 +37,7 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=&size=10`, {
+        axios.get(`${domain}users/?page=1&size=10`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
