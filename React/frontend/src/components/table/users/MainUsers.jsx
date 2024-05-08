@@ -5,6 +5,7 @@ import Images from '@/image/image';
 import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
 import domain from "@/domain";
+import useFetchTable from "@/components/table/components/useFetchTable";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -85,37 +86,9 @@ function MainUsers() {
         usePagination
     );
 
-    useEffect(() => {
-        axios.get(`${domain}users`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data) => {
-            setTotal(data.data.total)
+    const continuation = 'users';
 
-        }).catch(() => {
-            axios.post(`${domain}auth/jwt/refresh`, null, {
-                headers: {
-                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", data.data.access_token)
-                    localStorage.setItem("refresh_token", data.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
-
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
-        })
-    }, []);
+    useFetchTable(setTotal, continuation);
 
     useEffect(() => {
         axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
