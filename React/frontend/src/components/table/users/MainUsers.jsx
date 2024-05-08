@@ -90,7 +90,7 @@ function MainUsers() {
 
     const continuation = 'users';
 
-    useFetchData(setData, setTotal, continuation);
+    useFetchData(setTotal, continuation);
 
     //=== /useEffect ===//
 

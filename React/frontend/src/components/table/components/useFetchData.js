@@ -24,7 +24,7 @@ function useFetchData(setData, setTotal, continuation) {
                         localStorage.setItem("access_token", refreshResponse.data.access_token);
                         localStorage.setItem("refresh_token", refreshResponse.data.refresh_token);
                         await fetchData(); // Повторный вызов fetchData после успешного обновления токена
-                    } catch (refreshError) {
+                    } catch (error) {
 
                         const errorMessage = document.createElement('div');
                         errorMessage.className = 'authorization__wrap';
