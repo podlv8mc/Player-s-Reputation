@@ -19,7 +19,7 @@ function MainUsers() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
-    const [nullifaer] = useState(0)
+    const [nullifaer , setNullifaer] = useState(0)
 
     const columns = React.useMemo(
         () => [
@@ -77,7 +77,7 @@ function MainUsers() {
         {
             columns,
             data: data,
-            initialState: {pageIndex: 10, filters: [],},
+            initialState: {pageIndex: nullifaer, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total / 10),
         },
@@ -402,7 +402,10 @@ function MainUsers() {
                 {Array.from({length: pageCount}, (_, i) => (
                     <button
                         key={i}
-                        onClick={() => gotoPage(i)}
+                        onClick={() => {
+                            gotoPage(i)
+                            setNullifaer(i)
+                        }}
                         className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
                     >
                         {i + 1}
