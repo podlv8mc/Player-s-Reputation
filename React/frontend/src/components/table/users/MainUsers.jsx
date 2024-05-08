@@ -5,7 +5,7 @@ import Images from '@/image/image';
 import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
 import domain from "@/domain";
-import useFetchTable from "@/components/table/components/useFetchTable";
+import useFetchData from "@/components/table/components/useFetchData";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -86,9 +86,13 @@ function MainUsers() {
         usePagination
     );
 
+    //=== useEffect ===//
+
     const continuation = 'users';
 
-    useFetchTable(setTotal, continuation);
+    useFetchData(setData, setTotal, continuation);
+
+    //=== /useEffect ===//
 
     useEffect(() => {
         axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
@@ -99,6 +103,8 @@ function MainUsers() {
             setData(Array.isArray(data1.data.items) ? data1.data.items : []);
         })
     }, [pageIndex]);
+
+
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
