@@ -93,14 +93,7 @@ function MainUsers() {
         }).then((data) => {
             console.log(data)
             setTotal(data.data.total)
-            axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
-            })
-                .then((data1) => {
-                    setData(Array.isArray(data1.data.items) ? data1.data.items : []);
-                })
+
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
@@ -126,6 +119,17 @@ function MainUsers() {
     }, [
         pageIndex
     ]);
+
+    useEffect(() =>{
+        axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then((data1) => {
+                setData(Array.isArray(data1.data.items) ? data1.data.items : []);
+            })
+    })
 
 
     useEffect(() => {
