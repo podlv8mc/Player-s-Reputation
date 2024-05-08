@@ -116,32 +116,17 @@ function MainUsers() {
                     }, 2000);
                 })
         })
-    }, [
-    ]);
+    }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
         axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
+        }).then((data1) => {
+            setData(Array.isArray(data1.data.items) ? data1.data.items : []);
         })
-            .then((data1) => {
-                setData(Array.isArray(data1.data.items) ? data1.data.items : []);
-            })
-    }, [
-        pageIndex
-    ]);
-
-
-    useEffect(() => {
-        setFilteredData(
-            data.filter(item =>
-                Object.values(item).some(value =>
-                    value && value.toString().toLowerCase().includes(filterInput.toLowerCase())
-                )
-            )
-        );
-    }, [data, filterInput]);
+    }, [pageIndex]);
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
@@ -285,7 +270,7 @@ function MainUsers() {
                             <tr className="table__body" {...row.getRowProps()}
                                 onClick={() => openViewModal(row.original)}>
                                 {row.cells.map((cell, index) => (
-                                    <td key={Math.random()} className="table__body-cell-wrap">
+                                    <td key={index} className="table__body-cell-wrap">
                                         <div key={index} className="table__body-cell truncate">
                                             {cell.render('Cell')}
                                         </div>
