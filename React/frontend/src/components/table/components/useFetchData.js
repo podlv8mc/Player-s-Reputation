@@ -25,7 +25,7 @@ function useFetchData(setData, setTotal, continuation) {
                         localStorage.setItem("refresh_token", refreshResponse.data.refresh_token);
                         await fetchData(); // Повторный вызов fetchData после успешного обновления токена
                     } catch (refreshError) {
-                        console.error(refreshError);
+
                         const errorMessage = document.createElement('div');
                         errorMessage.className = 'authorization__wrap';
                         errorMessage.textContent = 'Авторизируйтесь!';
@@ -36,7 +36,7 @@ function useFetchData(setData, setTotal, continuation) {
                         }, 2000);
                     }
                 } else {
-                    console.error(error);
+
                 }
             }
         };
