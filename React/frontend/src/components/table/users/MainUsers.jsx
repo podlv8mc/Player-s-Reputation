@@ -117,7 +117,6 @@ function MainUsers() {
                 })
         })
     }, [
-        pageIndex
     ]);
 
     useEffect(() =>{
@@ -129,7 +128,9 @@ function MainUsers() {
             .then((data1) => {
                 setData(Array.isArray(data1.data.items) ? data1.data.items : []);
             })
-    })
+    }, [
+        pageIndex
+    ]);
 
 
     useEffect(() => {
