@@ -21,6 +21,28 @@ function MainUsers() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
 
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Имя пользователя',
+                accessor: row => row.username,
+            },
+            {
+                Header: 'Логин',
+                accessor: row => row.name,
+            },
+            {
+                Header: 'Discord',
+                accessor: row => row.discord,
+            },
+            {
+                Header: 'Email',
+                accessor: row => row.email,
+            },
+        ],
+        []
+    );
+
     const [newUserData, setNewUserData] = useState({
         username: "",
         name:"",
@@ -36,6 +58,32 @@ function MainUsers() {
         email: "Email",
         password: "Пароль",
     };
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        prepareRow,
+        gotoPage,
+        pageCount,
+        state: {pageIndex},
+        canPreviousPage,
+        canNextPage,
+        previousPage,
+        nextPage,
+        setFilter,
+    } = useTable(
+        {
+            columns,
+            data: filteredData,
+            initialState: {pageIndex: 0, filters: [],},
+            manualPagination: true,
+            pageCount: Math.ceil(total / 10),
+        },
+        useFilters,
+        usePagination
+    );
 
     useEffect(() => {
         axios.get(`${domain}users`, {
@@ -75,7 +123,9 @@ function MainUsers() {
                     }, 2000);
                 })
         })
-    }, []);
+    }, [
+        pageIndex
+    ]);
 
 
     useEffect(() => {
@@ -183,55 +233,6 @@ function MainUsers() {
             })
 
     };
-
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Имя пользователя',
-                accessor: row => row.username,
-            },
-            {
-                Header: 'Логин',
-                accessor: row => row.name,
-            },
-            {
-                Header: 'Discord',
-                accessor: row => row.discord,
-            },
-            {
-                Header: 'Email',
-                accessor: row => row.email,
-            },
-        ],
-        []
-    );
-
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        page,
-        prepareRow,
-        gotoPage,
-        pageCount,
-        state: {pageIndex},
-        canPreviousPage,
-        canNextPage,
-        previousPage,
-        nextPage,
-        setFilter,
-    } = useTable(
-        {
-            columns,
-            data: filteredData,
-            initialState: {pageIndex: 0, filters: [],},
-            manualPagination: true,
-            pageCount: Math.ceil(total / 10),
-        },
-        useFilters,
-        usePagination
-    );
 
     const TableMobile = () => {
         const {
