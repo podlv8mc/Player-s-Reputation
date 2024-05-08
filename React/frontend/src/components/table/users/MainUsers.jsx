@@ -76,7 +76,7 @@ function MainUsers() {
         {
             columns,
             data: filteredData,
-            initialState: {filters: [],},
+            initialState: {pageIndex: 10, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total / 10),
         },
