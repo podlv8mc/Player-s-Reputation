@@ -38,13 +38,21 @@ function MainUsers() {
     };
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=${Number(pageIndex) + 1}&size=10`, {
+        axios.get(`${domain}users`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
             console.log(data)
-            setData(Array.isArray(data.data.items) ? data.data.items : []);
+            setTotal(data.data.total)
+            axios.get(`${domain}users/?page=1&size=${total}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            })
+                .then((data1) => {
+                    setData(Array.isArray(data1.data.items) ? data1.data.items : []);
+                })
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
@@ -269,7 +277,7 @@ function MainUsers() {
                             <tr className="table__body" {...row.getRowProps()}
                                 onClick={() => openViewModal(row.original)}>
                                 {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell-wrap">
+                                    <td key={Math.random()} className="table__body-cell-wrap">
                                         <div key={index} className="table__body-cell truncate">
                                             {cell.render('Cell')}
                                         </div>
