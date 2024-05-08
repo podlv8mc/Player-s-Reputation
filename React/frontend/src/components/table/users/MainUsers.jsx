@@ -75,7 +75,7 @@ function MainUsers() {
     } = useTable(
         {
             columns,
-            data: data,
+            data: filteredData,
             initialState: {pageIndex: 0, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total / 10),
@@ -126,6 +126,10 @@ function MainUsers() {
             setData(Array.isArray(data1.data.items) ? data1.data.items : []);
         })
     }, [pageIndex]);
+
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data]);
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
