@@ -115,13 +115,8 @@ function MobTable({columns, openViewModal, url}) {
             <PaginationButtons
                 pageIndex={pageIndex}
                 pageCount={pageCount}
-                previousPage={previousPage}
-                nextPage={nextPage}
                 gotoPage={gotoPage}
                 setNullifaer={setNullifaer}
-                canPreviousPage={canPreviousPage}
-                canNextPage={canNextPage}
-                nullifaer={nullifaer}
             />
         </>
     );

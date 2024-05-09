@@ -371,13 +371,8 @@ function MainUsers() {
                     <PaginationButtons
                         pageIndex={pageIndex}
                         pageCount={pageCount}
-                        previousPage={previousPage}
-                        nextPage={nextPage}
                         gotoPage={gotoPage}
-                        nullifaer={nullifaer}
                         setNullifaer={setNullifaer}
-                        canPreviousPage={canPreviousPage}
-                        canNextPage={canNextPage}
                     />
                 </>
             ) : (

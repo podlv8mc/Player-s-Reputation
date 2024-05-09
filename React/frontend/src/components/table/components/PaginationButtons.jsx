@@ -11,10 +11,10 @@ const PaginationButtons = ({ pageIndex, pageCount, gotoPage, setNullifaer }) => 
                 setNullifaer(selected);
             }}
             pageRangeDisplayed={2} // Количество отображаемых страниц
-            marginPagesDisplayed={1} // Количество видимых страниц в начале и в конце
-            previousLabel={<img src={Images.arrow} alt="arrow" />} // Заменяет текст на изображение
-            nextLabel={<img src={Images.arrow} alt="arrow" />} // Заменяет текст на изображение
-            breakLabel={'...'} // Заменяет многоточие
+            marginPagesDisplayed={3} // Количество видимых страниц в начале и в конце
+            previousLabel={<img src={Images.arrow} alt="arrow" />}
+            nextLabel={<img src={Images.arrow} alt="arrow" />}
+            breakLabel={'...'}
             containerClassName={'pagination__box'}
             activeClassName={'active'}
             pageClassName={'pagination__btn-op'}
