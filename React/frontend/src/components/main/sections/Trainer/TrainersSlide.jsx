@@ -13,8 +13,18 @@ function TrainersSlide ({ slides }) {
         setActiveSlideIndex(index);
     };
 
+    const textRef = useRef(null);
+
+
     const toggleClass = (index) => {
-        setExpandedSlideIndex((prevIndex) => (prevIndex === index ? null : index));
+        setExpandedSlideIndex((prevIndex) => {
+            if (prevIndex === index) {
+                textRef.current.scrollTop = 0;
+                return null;
+            } else {
+                return index;
+            }
+        });
     };
 
     const next = () => {
@@ -88,7 +98,7 @@ function TrainersSlide ({ slides }) {
                         <div className="slide-trainer-wrap">
                             <div className="slide__text-wrap">
                                 <div className="slide__text-title">{slide.title}</div>
-                                <div className="slide__text">{slide.content}</div>
+                                <div ref={textRef} className="slide__text">{slide.content}</div>
                             </div>
                             <button
                                 className={`slide__btn ${expandedSlideIndex === index ? "expanded" : ""}`}
