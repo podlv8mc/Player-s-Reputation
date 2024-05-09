@@ -222,89 +222,10 @@ function MainUsers() {
 
     };
 
-    const TableMobile = () => {
-        const {
-            getTableProps,
-            getTableBodyProps,
-            headerGroups,
-            page,
-            prepareRow,
-            gotoPage,
-            pageCount,
-            state: {pageIndex},
-            canPreviousPage,
-            canNextPage,
-            previousPage,
-            nextPage,
-            setFilter,
-        } = useTable(
-            {
-                columns,
-                data: data,
-                initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
-                manualPagination: true,
-                pageCount: Math.ceil(total / 10),
-            },
-            useFilters,
-            usePagination
-        );
-
-        return (
-            <>
-                <table className="table" {...getTableProps()}>
-                    <thead className="table__header-wrap">
-                    {headerGroups.map(headerGroup => (
-                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th className="table__headers" {...column.getHeaderProps()}>
-                                    {column.render('Header')}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                    </thead>
-                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.map(row => {
-                        prepareRow(row);
-                        return (
-                            <tr className="table__body" {...row.getRowProps()}
-                                onClick={() => openViewModal(row.original)}>
-                                {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell-wrap">
-                                        <div key={index} className="table__body-cell truncate">
-                                            {cell.render('Cell')}
-                                        </div>
-                                    </td>
-                                ))}
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
-                <div className="pagination__mob-wrap">
-                    <button className="pagination__mob-btn" onClick={() => {
-                        previousPage()
-                        setNullifaer()
-                    }} disabled={!canPreviousPage}
-                    >
-                        Предыдущая
-                    </button>
-                    <button className="pagination__mob-btn" onClick={() => {
-                        nextPage()
-                        setNullifaer()
-                    }} disabled={!canNextPage}>
-                        Следующая
-                    </button>
-                </div>
-            </>
-        );
-    };
-
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
         setFilterInput('');
     };
-
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -394,39 +315,6 @@ function MainUsers() {
             </div>
 
         </Modal>
-    );
-
-    const PreviousPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const NextPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const PageButtons = (
-        <div className="pagination__wrap">
-            <div className="pagination__box">
-                <PreviousPageButton onClick={previousPage} disabled={!canPreviousPage}/>
-                {Array.from({length: pageCount}, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => {
-                            gotoPage(i)
-                            setNullifaer(i)
-                        }}
-                        className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-                <NextPageButton onClick={nextPage} disabled={!canNextPage}/>
-            </div>
-        </div>
     );
 
     return (
