@@ -240,7 +240,7 @@ function MainUsers() {
             {
                 columns,
                 data: filteredData,
-                initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
+                initialState: {pageIndex: nullifaer, filters: []},
                 manualPagination: true,
                 pageCount: Math.ceil(total / 10),
             },
