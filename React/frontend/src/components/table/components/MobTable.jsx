@@ -28,7 +28,7 @@ function MobTable({columns, openViewModal, url}) {
             data: data,
             initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
             manualPagination: true,
-            pageCount: Math.ceil(total / 10),
+            pageCount: Math.ceil(total),
         },
         useFilters,
         usePagination

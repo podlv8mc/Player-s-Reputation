@@ -6,6 +6,7 @@ import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
 import domain from "@/domain";
 import MobTable from "@/components/table/components/MobTable";
+import PaginationButtons from "@/components/table/components/PaginationButtons";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -73,6 +74,7 @@ function MainUsers() {
         canNextPage,
         previousPage,
         nextPage,
+        setFilter,
     } = useTable(
         {
             columns,
@@ -478,7 +480,16 @@ function MainUsers() {
                         })}
                         </tbody>
                     </table>
-                    {PageButtons}
+                    <PaginationButtons
+                        pageIndex={pageIndex}
+                        pageCount={pageCount}
+                        previousPage={previousPage}
+                        nextPage={nextPage}
+                        gotoPage={gotoPage}
+                        setNullifaer={setNullifaer}
+                        canPreviousPage={canPreviousPage}
+                        canNextPage={canNextPage}
+                    />
                 </>
             ) : (
                 <MobTable
