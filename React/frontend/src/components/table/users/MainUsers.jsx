@@ -93,6 +93,7 @@ function MainUsers() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
+            console.log(data)
             setTotal(data.data.total)
 
         }).catch(() => {
@@ -247,8 +248,6 @@ function MainUsers() {
             usePagination
         );
 
-        console.log(pageIndex);
-
         return (
             <>
                 <table className="table" {...getTableProps()}>
@@ -284,13 +283,15 @@ function MainUsers() {
                 <div className="pagination__mob-wrap">
                     <button className="pagination__mob-btn" onClick={() => {
                         previousPage()
-                        setNullifaer(undefined)
-                    }} 
-                            disabled={!canPreviousPage}
+                        setNullifaer()
+                    }} disabled={!canPreviousPage}
                     >
                         Предыдущая
                     </button>
-                    <button className="pagination__mob-btn" onClick={() => nextPage()} disabled={!canNextPage}>
+                    <button className="pagination__mob-btn" onClick={() => {
+                        nextPage()
+                        setNullifaer()
+                    }} disabled={!canNextPage}>
                         Следующая
                     </button>
                 </div>
