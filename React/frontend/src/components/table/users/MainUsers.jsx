@@ -79,7 +79,7 @@ function MainUsers() {
             data: data,
             initialState: {pageIndex: nullifaer, filters: [],},
             manualPagination: true,
-            pageCount: Math.ceil(total),
+            pageCount: Math.ceil(total / 10),
         },
         useFilters,
         usePagination
@@ -238,8 +238,8 @@ function MainUsers() {
         } = useTable(
             {
                 columns,
-                data: filteredData,
-                initialState: {pageIndex: nullifaer, filters: []},
+                data: data,
+                initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
                 manualPagination: true,
                 pageCount: Math.ceil(total / 10),
             },
