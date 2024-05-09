@@ -86,8 +86,6 @@ function MainUsers() {
         usePagination
     );
 
-    //=== useEffect ===//
-
     useEffect(() => {
         axios.get(`${domain}users`, {
             headers: {
@@ -120,8 +118,6 @@ function MainUsers() {
         })
     }, []);
 
-    //=== /useEffect ===//
-
     useEffect(() => {
         axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
             headers: {
@@ -131,7 +127,6 @@ function MainUsers() {
             setData(Array.isArray(data1.data.items) ? data1.data.items : []);
         })
     }, [pageIndex]);
-
 
     useEffect(() => {
         axios.get(`${domain}funds`, {

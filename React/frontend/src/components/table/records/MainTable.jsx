@@ -6,6 +6,8 @@ import axios from "axios";
 import TableFilter from "@/components/table/components/FundsFilter";
 import SelectSigns from "@/components/table/components/SelectSigns";
 import domain from "@/domain";
+import PaginationButtons from "@/components/table/components/PaginationButtons";
+import MobTable from "@/components/table/components/MobTable";
 
 function MainTable() {
     const [data, setData] = useState([]);
@@ -20,205 +22,8 @@ function MainTable() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    const [newUserData, setNewUserData] = useState({
-        nicknameOld: "",
-        room_name: "",
-        first_name: "",
-        last_name: "",
-        middlename: "",
-        description: "",
-        amount: "",
-        gipsyteam: "",
-        neteller: "",
-        pokerstrategy: "",
-        mail: "",
-        vk: "",
-        google: "",
-        skrill: "",
-        wallets: "",
-        country: "",
-        town: "",
-        address: "",
-        facebook: "",
-        blog: "",
-        forum: "",
-        instagram: "",
-        ecopayz: "",
-        webmoney_id: "",
-        comments: "",
-        old: true, //old всегда должен быть последним
-    });
-
-    const inputLabels = {
-
-
-        nicknameOld: "Ники",
-        last_name: "Фамилия",
-        first_name: "Имя",
-        room_name: "Дисциплина",
-        middlename: "Отчество",
-        description: "Описание",
-        amount: "Ущерб",
-        google: "Google",
-        skrill: "Skrill",
-        wallets: "Wallets",
-        old: "Old",
-        country: "Страна",
-        town: "Город",
-        address: "Адрес",
-        gipsyteam: "Gipsy team",
-        neteller: "Neteller",
-        pokerstrategy: "Poker strategy",
-        mail: "E-mail",
-        vk: "Вконтекте",
-        facebook: "Facebook",
-        blog: "Блог",
-        forum: "Форум",
-        instagram: "Instagram",
-        ecopayz: "Ecopayz",
-        webmoney_id: "Webmoney",
-        comments: "Комментарии",
-    };
-
-    useEffect(() => {
-        axios.get(`${domain}records`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data) => {
-            setData(Array.isArray(data.data.items) ? data.data.items : []);
-        }).catch(() => {
-            axios.post(`${domain}auth/jwt/refresh`, null, {
-                headers: {
-                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", data.data.access_token)
-                    localStorage.setItem("refresh_token", data.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
-
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
-        })
-    }, []);
-
-
-    useEffect(() => {
-        setFilteredData(
-            data.filter(item =>
-                Object.values(item).some(value =>
-                    value && value.toString().toLowerCase().includes(filterInput.toLowerCase())
-                )
-            )
-        );
-    }, [data, filterInput]);
-
-    useEffect(() => {
-        axios.get(`${domain}funds`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data) => {
-            setfundSelect(data);
-        }).catch(() => {
-
-        })
-    }, []);
-
-    useEffect(() => {
-        if (filterValue) {
-            setFilteredData(data.filter(row => row.fund.name === filterValue));
-        } else {
-            setFilteredData(data);
-        }
-    }, [data, filterValue]);
-
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-    };
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const openViewModal = (user) => {
-        setSelectedUser(user);
-    };
-
-    const closeViewModal = () => {
-        setSelectedUser(null);
-    };
-
-    const openEditModal = (user) => {
-        setEditingUserData(user);
-        setIsEditModalOpen(true);
-    };
-
-    const closeEditModal = () => {
-        setIsEditModalOpen(false);
-    };
-
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setNewUserData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const createdAt = new Date().toISOString()
-        const userDataWithTimestamp = {
-            ...newUserData,
-            createdAt: createdAt,
-            fund_id: selectedOption ? selectedOption.value : null,
-        }
-
-        axios.post(`${domain}records`, userDataWithTimestamp, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        })
-            .catch((error) => {
-                console.error(error);
-            });
-
-        setIsModalOpen(false);
-    };
-
-    const handleEditSubmit = async (e) => {
-        e.preventDefault()
-        axios.patch(`${domain}records/${editingUserData.id}`, editingUserData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        })
-            .then((response) => {
-                setIsEditModalOpen(false);
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-
-    };
+    const [total, setTotal] = useState(0)
+    const [nullifaer, setNullifaer] = useState(0)
 
     const columns = React.useMemo(
         () => [
@@ -339,6 +144,64 @@ function MainTable() {
         []
     );
 
+    const [newUserData, setNewUserData] = useState({
+        nicknameOld: "",
+        room_name: "",
+        first_name: "",
+        last_name: "",
+        middlename: "",
+        description: "",
+        amount: "",
+        gipsyteam: "",
+        neteller: "",
+        pokerstrategy: "",
+        mail: "",
+        vk: "",
+        google: "",
+        skrill: "",
+        wallets: "",
+        country: "",
+        town: "",
+        address: "",
+        facebook: "",
+        blog: "",
+        forum: "",
+        instagram: "",
+        ecopayz: "",
+        webmoney_id: "",
+        comments: "",
+        old: true, //old всегда должен быть последним
+    });
+
+    const inputLabels = {
+        nicknameOld: "Ники",
+        last_name: "Фамилия",
+        first_name: "Имя",
+        room_name: "Дисциплина",
+        middlename: "Отчество",
+        description: "Описание",
+        amount: "Ущерб",
+        google: "Google",
+        skrill: "Skrill",
+        wallets: "Wallets",
+        old: "Old",
+        country: "Страна",
+        town: "Город",
+        address: "Адрес",
+        gipsyteam: "Gipsy team",
+        neteller: "Neteller",
+        pokerstrategy: "Poker strategy",
+        mail: "E-mail",
+        vk: "Вконтекте",
+        facebook: "Facebook",
+        blog: "Блог",
+        forum: "Форум",
+        instagram: "Instagram",
+        ecopayz: "Ecopayz",
+        webmoney_id: "Webmoney",
+        comments: "Комментарии",
+    };
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -356,82 +219,163 @@ function MainTable() {
     } = useTable(
         {
             columns,
-            data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            data: data,
+            initialState: {pageIndex: nullifaer, filters: [],},
+            manualPagination: true,
+            pageCount: Math.ceil(total / 10),
         },
         useFilters,
         usePagination
     );
 
-    const TableMobile = () => {
-        const {
-            getTableProps,
-            getTableBodyProps,
-            headerGroups,
-            page,
-            prepareRow,
-            gotoPage,
-            pageCount,
-            state: {pageIndex},
-            canPreviousPage,
-            canNextPage,
-            previousPage,
-            nextPage,
-            setFilter,
-        } = useTable(
-            {
-                columns,
-                data: filteredData,
-                initialState: {pageIndex: 0, filters: [], pageSize: 1},
-            },
-            useFilters,
-            usePagination
-        );
+    useEffect(() => {
+        axios.get(`${domain}records`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            setTotal(data.data.total)
 
-        return (
-            <>
-                <table className="table" {...getTableProps()}>
-                    <thead className="table__header-wrap">
-                    {headerGroups.map(headerGroup => (
-                        <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th className="table__headers" {...column.getHeaderProps()}>
-                                    {column.render('Header')}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                    </thead>
-                    <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                    {page.map(row => {
-                        prepareRow(row);
-                        return (
-                            <tr className="table__body" {...row.getRowProps()}
-                                onClick={() => openViewModal(row.original)}>
-                                {row.cells.map((cell, index) => (
-                                    <td key={index} className="table__body-cell-wrap">
-                                        <div key={index} className="table__body-cell truncate">
-                                            {cell.render('Cell')}
-                                        </div>
-                                    </td>
-                                ))}
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
-                <div className="pagination__mob-wrap">
-                    <button className="pagination__mob-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        Предыдущая
-                    </button>
-                    <button className="pagination__mob-btn" onClick={() => nextPage()} disabled={!canNextPage}>
-                        Следующая
-                    </button>
-                </div>
-            </>
+        }).catch(() => {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
+                headers: {
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            })
+                .then((response) => {
+                    localStorage.setItem("access_token", data.data.access_token)
+                    localStorage.setItem("refresh_token", data.data.refresh_token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                })
+        })
+    }, []);
+
+    useEffect(() => {
+        axios.get(`${domain}records/?page=${pageIndex + 1}&size=10`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data1) => {
+            setData(Array.isArray(data1.data.items) ? data1.data.items : []);
+        })
+    }, [pageIndex]);
+
+    useEffect(() => {
+        setFilteredData(
+            data.filter(item =>
+                Object.values(item).some(value =>
+                    value && value.toString().toLowerCase().includes(filterInput.toLowerCase())
+                )
+            )
         );
+    }, [data, filterInput]);
+
+    useEffect(() => {
+        axios.get(`${domain}funds`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            setfundSelect(data);
+        }).catch(() => {
+
+        })
+    }, []);
+
+    useEffect(() => {
+        if (filterValue) {
+            setFilteredData(data.filter(row => row.fund.name === filterValue));
+        } else {
+            setFilteredData(data);
+        }
+    }, [data, filterValue]);
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const openViewModal = (user) => {
+        setSelectedUser(user);
+    };
+
+    const closeViewModal = () => {
+        setSelectedUser(null);
+    };
+
+    const openEditModal = (user) => {
+        setEditingUserData(user);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+        setNewUserData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const createdAt = new Date().toISOString()
+        const userDataWithTimestamp = {
+            ...newUserData,
+            createdAt: createdAt,
+            fund_id: selectedOption ? selectedOption.value : null,
+        }
+
+        axios.post(`${domain}records`, userDataWithTimestamp, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        setIsModalOpen(false);
+    };
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault()
+        axios.patch(`${domain}records/${editingUserData.id}`, editingUserData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then((response) => {
+                setIsEditModalOpen(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    };
 
     const handleFilterChange = (selectedOption) => {
         setFilterValue(selectedOption ? selectedOption.value : null);
@@ -534,36 +478,6 @@ function MainTable() {
         </Modal>
     );
 
-    const PreviousPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const NextPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const PageButtons = (
-        <div className="pagination__wrap">
-            <div className="pagination__box">
-                <PreviousPageButton onClick={previousPage} disabled={!canPreviousPage}/>
-                {Array.from({length: pageCount}, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => gotoPage(i)}
-                        className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-                <NextPageButton onClick={nextPage} disabled={!canNextPage}/>
-            </div>
-        </div>
-    );
-
     return (
         <main id="main" className="main">
             <div className="table__top-wrap">
@@ -617,10 +531,19 @@ function MainTable() {
                         })}
                         </tbody>
                     </table>
-                    {PageButtons}
+                    <PaginationButtons
+                        pageIndex={pageIndex}
+                        pageCount={pageCount}
+                        gotoPage={gotoPage}
+                        setNullifaer={setNullifaer}
+                    />
                 </>
             ) : (
-                <TableMobile/>
+                <MobTable
+                    columns={columns}
+                    openViewModal={openViewModal}
+                    url="records"
+                />
             )}
             {EditModalContent}
             {ModalContent}
