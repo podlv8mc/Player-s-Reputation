@@ -121,6 +121,7 @@ function MobTable({columns, openViewModal, url}) {
                 setNullifaer={setNullifaer}
                 canPreviousPage={canPreviousPage}
                 canNextPage={canNextPage}
+                nullifaer={nullifaer}
             />
         </>
     );

@@ -1,34 +1,25 @@
 import React from 'react';
 import Images from '@/image/image';
+import ReactPaginate from 'react-paginate';
 
-const PreviousPageButton = ({onClick, disabled}) => (
-    <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-        <img src={Images.arrow} alt="arrow"/>
-    </button>
-);
-
-const NextPageButton = ({onClick, disabled}) => (
-    <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-        <img src={Images.arrow} alt="arrow"/>
-    </button>
-);
-
-const PaginationButtons = ({pageIndex, pageCount, previousPage, nextPage, gotoPage, nullifaer, setNullifaer, canPreviousPage, canNextPage}) => (
-    <div className="pagination__wrap">
-        <div className="pagination__box">
-            <PreviousPageButton onClick={() => { previousPage(); setNullifaer(nullifaer - 1); }} disabled={!canPreviousPage}/>
-            {Array.from({length: pageCount}, (_, i) => (
-                <button
-                    key={i}
-                    onClick={() => { gotoPage(i); setNullifaer(i); }}
-                    className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
-                >
-                    {i + 1}
-                </button>
-            ))}
-            <NextPageButton onClick={() => { nextPage(); setNullifaer(nullifaer + 1); }} disabled={!canNextPage}/>
-        </div>
-    </div>
+const PaginationButtons = ({ pageIndex, pageCount, gotoPage, setNullifaer }) => (
+    <ReactPaginate
+        pageCount={pageCount}
+        onPageChange={({ selected }) => {
+            gotoPage(selected);
+            setNullifaer(selected);
+        }}
+        pageRangeDisplayed={2} // Количество отображаемых страниц
+        marginPagesDisplayed={1} // Количество видимых страниц в начале и в конце
+        previousLabel={<img src={Images.arrow} alt="arrow" />} // Заменяет текст на изображение
+        nextLabel={<img src={Images.arrow} alt="arrow" />} // Заменяет текст на изображение
+        breakLabel={'...'} // Заменяет многоточие
+        containerClassName={'pagination__wrap'}
+        activeClassName={'active'}
+        pageClassName={'pagination__btn-op'}
+        previousClassName={`pagination__btn ${!pageIndex ? 'disabled' : ''}`}
+        nextClassName={`pagination__btn ${pageIndex === pageCount - 1 ? 'disabled' : ''}`}
+    />
 );
 
 export default PaginationButtons;
