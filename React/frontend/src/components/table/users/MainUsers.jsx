@@ -5,6 +5,7 @@ import Images from '@/image/image';
 import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
 import domain from "@/domain";
+import useFetchData from "@/components/table/components/useFetchData";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -87,38 +88,9 @@ function MainUsers() {
 
     //=== useEffect ===//
 
-    useEffect(() => {
-        axios.get(`${domain}users`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data) => {
-            console.log(data)
-            setTotal(data.data.total)
+    const continuation = 'users';
 
-        }).catch(() => {
-            axios.post(`${domain}auth/jwt/refresh`, null, {
-                headers: {
-                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", data.data.access_token)
-                    localStorage.setItem("refresh_token", data.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
-
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
-        })
-    }, []);
+    useFetchData(setTotal, continuation);
 
     //=== /useEffect ===//
 
