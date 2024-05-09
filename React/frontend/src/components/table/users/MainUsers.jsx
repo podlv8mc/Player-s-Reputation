@@ -3,14 +3,13 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import SelectRole from "@/components/table/users/SelectRole";
+import SelectRole from "@/components/table/components/SelectRole";
 import domain from "@/domain";
 import MobTable from "@/components/table/components/MobTable";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 
 function MainUsers() {
     const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingUserData, setEditingUserData] = useState(null);
