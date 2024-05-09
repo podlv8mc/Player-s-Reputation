@@ -26,7 +26,7 @@ function MobTable({columns, openViewModal, url}) {
         {
             columns,
             data: data,
-            initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
+            initialState: {pageIndex: nullifaer, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(total),
         },
@@ -122,22 +122,6 @@ function MobTable({columns, openViewModal, url}) {
                 canPreviousPage={canPreviousPage}
                 canNextPage={canNextPage}
             />
-
-            {/*<div className="pagination__mob-wrap">
-                <button className="pagination__mob-btn" onClick={() => {
-                    previousPage()
-                    setNullifaer()
-                }} disabled={!canPreviousPage}
-                >
-                    Предыдущая
-                </button>
-                <button className="pagination__mob-btn" onClick={() => {
-                    nextPage()
-                    setNullifaer()
-                }} disabled={!canNextPage}>
-                    Следующая
-                </button>
-            </div>*/}
         </>
     );
 }
