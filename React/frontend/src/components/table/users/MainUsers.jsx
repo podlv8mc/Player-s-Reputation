@@ -79,7 +79,7 @@ function MainUsers() {
             data: data,
             initialState: {pageIndex: nullifaer, filters: [],},
             manualPagination: true,
-            pageCount: Math.ceil(total / 10),
+            pageCount: Math.ceil(total),
         },
         useFilters,
         usePagination
@@ -93,7 +93,6 @@ function MainUsers() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data)
             setTotal(data.data.total)
 
         }).catch(() => {
