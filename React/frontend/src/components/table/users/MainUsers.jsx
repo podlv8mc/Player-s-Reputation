@@ -248,6 +248,8 @@ function MainUsers() {
             usePagination
         );
 
+        console.log(pageIndex);
+
         return (
             <>
                 <table className="table" {...getTableProps()}>
