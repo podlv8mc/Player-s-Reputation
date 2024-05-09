@@ -93,7 +93,6 @@ function MainUsers() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data)
             setTotal(data.data.total)
 
         }).catch(() => {
@@ -123,7 +122,7 @@ function MainUsers() {
     //=== /useEffect ===//
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
+        axios.get(`${domain}users/?page=${pageIndex + 1}&size=1`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
