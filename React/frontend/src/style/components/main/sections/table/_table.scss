@@ -412,6 +412,7 @@
 .pagination__wrap {
   width: 100%;
   position: relative;
+  padding: 0px 0px 15px 0px;
 
   .pagination__box {
     width: 100vw;
@@ -430,11 +431,34 @@
       font-size: 20px;
       background: transparent;
       color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s ease;
+      border-radius: 4px;
+
+      &:hover {
+        background: #000;
+        color: #fee100;
+        opacity: .4;
+      }
+    }
+
+    .break {
+      width: 40px;
+      height: 40px;
+      @include Montserrat-500;
+      font-size: 20px;
+      background: transparent;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0px 0px 4px 0px;
     }
 
     .active {
       background: #000;
-      border-radius: 4px;
       color: #fee100;
     }
 
