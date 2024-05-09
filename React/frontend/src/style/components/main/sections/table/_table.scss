@@ -442,11 +442,18 @@
         align-items: center;
       }
 
-      &:hover {
-        background: #000;
-        color: #fee100;
-        opacity: .4;
+      &:not(.active) {
+        &:hover {
+          background: #000;
+          color: #fee100;
+          opacity: .4;
+        }
       }
+    }
+
+    .active {
+      background: #000;
+      color: #fee100;
     }
 
     .break {
@@ -460,11 +467,6 @@
       justify-content: center;
       align-items: flex-end;
       padding: 0px 0px 4px 0px;
-    }
-
-    .active {
-      background: #000;
-      color: #fee100;
     }
 
     .pagination__btn {
