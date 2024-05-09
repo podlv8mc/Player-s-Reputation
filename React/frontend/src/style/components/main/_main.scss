@@ -340,6 +340,7 @@
     .modal__content {
       display: block !important;
       height: fit-content !important;
+      min-height: 100%;
 
       .table__modal-form-wrap {
         .table__modal-row {

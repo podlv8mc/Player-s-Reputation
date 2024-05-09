@@ -19,7 +19,7 @@ function MainUsers() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
-    const [nullifaer , setNullifaer] = useState(0)
+    const [nullifaer, setNullifaer] = useState(0)
 
     const columns = React.useMemo(
         () => [
@@ -45,16 +45,16 @@ function MainUsers() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        name:"",
-        discord:"",
+        name: "",
+        discord: "",
         email: "",
-        password:"",
+        password: "",
     });
 
     const inputLabels = {
         username: "Имя пользователя",
-        name:"Логин",
-        discord:"Discord",
+        name: "Логин",
+        discord: "Discord",
         email: "Email",
         password: "Пароль",
     };
@@ -131,7 +131,6 @@ function MainUsers() {
             setData(Array.isArray(data1.data.items) ? data1.data.items : []);
         })
     }, [pageIndex]);
-
 
 
     useEffect(() => {
@@ -241,7 +240,9 @@ function MainUsers() {
             {
                 columns,
                 data: filteredData,
-                initialState: {pageIndex: 0, filters: [], pageSize: 1},
+                initialState: {pageIndex: nullifaer, filters: [], pageSize: 1},
+                manualPagination: true,
+                pageCount: Math.ceil(total / 10),
             },
             useFilters,
             usePagination
@@ -280,7 +281,12 @@ function MainUsers() {
                     </tbody>
                 </table>
                 <div className="pagination__mob-wrap">
-                    <button className="pagination__mob-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+                    <button className="pagination__mob-btn" onClick={() => {
+                        previousPage()
+                        setNullifaer(undefined)
+                    }} 
+                            disabled={!canPreviousPage}
+                    >
                         Предыдущая
                     </button>
                     <button className="pagination__mob-btn" onClick={() => nextPage()} disabled={!canNextPage}>
