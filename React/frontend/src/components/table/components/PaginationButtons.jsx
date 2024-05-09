@@ -13,10 +13,10 @@ const NextPageButton = ({onClick, disabled}) => (
     </button>
 );
 
-const PaginationButtons = ({pageIndex, pageCount, previousPage, nextPage, gotoPage, setNullifaer, canPreviousPage, canNextPage}) => (
+const PaginationButtons = ({pageIndex, pageCount, previousPage, nextPage, gotoPage, nullifaer, setNullifaer, canPreviousPage, canNextPage}) => (
     <div className="pagination__wrap">
         <div className="pagination__box">
-            <PreviousPageButton onClick={() => { previousPage(); setNullifaer(); }} disabled={!canPreviousPage}/>
+            <PreviousPageButton onClick={() => { previousPage(); setNullifaer(nullifaer - 1); }} disabled={!canPreviousPage}/>
             {Array.from({length: pageCount}, (_, i) => (
                 <button
                     key={i}
@@ -26,7 +26,7 @@ const PaginationButtons = ({pageIndex, pageCount, previousPage, nextPage, gotoPa
                     {i + 1}
                 </button>
             ))}
-            <NextPageButton onClick={() => { nextPage(); setNullifaer(); }} disabled={!canNextPage}/>
+            <NextPageButton onClick={() => { nextPage(); setNullifaer(nullifaer + 1); }} disabled={!canNextPage}/>
         </div>
     </div>
 );

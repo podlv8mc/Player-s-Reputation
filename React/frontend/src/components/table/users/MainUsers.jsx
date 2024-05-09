@@ -374,6 +374,7 @@ function MainUsers() {
                         previousPage={previousPage}
                         nextPage={nextPage}
                         gotoPage={gotoPage}
+                        nullifaer={nullifaer}
                         setNullifaer={setNullifaer}
                         canPreviousPage={canPreviousPage}
                         canNextPage={canNextPage}
