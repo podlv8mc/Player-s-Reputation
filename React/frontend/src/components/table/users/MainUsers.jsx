@@ -482,7 +482,11 @@ function MainUsers() {
                     {PageButtons}
                 </>
             ) : (
-                <MobTable />
+                <MobTable
+                    columns={columns}
+                    openViewModal={openViewModal}
+                    url="users"
+                />
             )}
             {EditModalContent}
             {ModalContent}

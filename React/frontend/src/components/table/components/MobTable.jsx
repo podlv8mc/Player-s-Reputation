@@ -3,42 +3,10 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import axios from "axios";
 import domain from "@/domain";
 
-function MobTable() {
+function MobTable({columns, openViewModal, url}) {
     const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [filterInput, setFilterInput] = useState('');
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [editingUserData, setEditingUserData] = useState(null);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [filterInputVisible, setFilterInputVisible] = useState(false);
-    const [fundSelect, setfundSelect] = useState();
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
     const [nullifaer, setNullifaer] = useState(0)
-
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Имя пользователя',
-                accessor: row => row.username,
-            },
-            {
-                Header: 'Логин',
-                accessor: row => row.name,
-            },
-            {
-                Header: 'Discord',
-                accessor: row => row.discord,
-            },
-            {
-                Header: 'Email',
-                accessor: row => row.email,
-            },
-        ],
-        []
-    );
 
     const {
         getTableProps,
@@ -64,7 +32,7 @@ function MobTable() {
     );
 
     useEffect(() => {
-        axios.get(`${domain}users`, {
+        axios.get(`${domain}${url}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
