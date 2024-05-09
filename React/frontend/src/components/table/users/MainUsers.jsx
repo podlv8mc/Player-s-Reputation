@@ -5,6 +5,7 @@ import Images from '@/image/image';
 import axios from "axios";
 import SelectRole from "@/components/table/users/SelectRole";
 import domain from "@/domain";
+import MobTable from "@/components/table/components/MobTable";
 
 function MainUsers() {
     const [data, setData] = useState([]);
@@ -481,7 +482,7 @@ function MainUsers() {
                     {PageButtons}
                 </>
             ) : (
-                <TableMobile/>
+                <MobTable />
             )}
             {EditModalContent}
             {ModalContent}
