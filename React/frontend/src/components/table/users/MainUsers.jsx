@@ -122,7 +122,7 @@ function MainUsers() {
     //=== /useEffect ===//
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=${pageIndex + 1}&size=1`, {
+        axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
