@@ -73,7 +73,6 @@ function MainUsers() {
         canNextPage,
         previousPage,
         nextPage,
-        setFilter,
     } = useTable(
         {
             columns,

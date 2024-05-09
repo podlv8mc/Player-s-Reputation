@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useTable, usePagination, useFilters} from 'react-table';
 import axios from "axios";
 import domain from "@/domain";
+import PaginationButtons from "@/components/table/components/PaginationButtons";
 
 function MobTable({columns, openViewModal, url}) {
     const [data, setData] = useState([]);
@@ -14,6 +15,8 @@ function MobTable({columns, openViewModal, url}) {
         headerGroups,
         page,
         prepareRow,
+        gotoPage,
+        pageCount,
         state: {pageIndex},
         canPreviousPage,
         canNextPage,
@@ -66,7 +69,7 @@ function MobTable({columns, openViewModal, url}) {
     //=== /useEffect ===//
 
     useEffect(() => {
-        axios.get(`${domain}users/?page=${pageIndex + 1}&size=1`, {
+        axios.get(`${domain}${url}/?page=${pageIndex + 1}&size=1`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -108,7 +111,19 @@ function MobTable({columns, openViewModal, url}) {
                 })}
                 </tbody>
             </table>
-            <div className="pagination__mob-wrap">
+
+            <PaginationButtons
+                pageIndex={pageIndex}
+                pageCount={pageCount}
+                previousPage={previousPage}
+                nextPage={nextPage}
+                gotoPage={gotoPage}
+                setNullifaer={setNullifaer}
+                canPreviousPage={canPreviousPage}
+                canNextPage={canNextPage}
+            />
+
+            {/*<div className="pagination__mob-wrap">
                 <button className="pagination__mob-btn" onClick={() => {
                     previousPage()
                     setNullifaer()
@@ -122,7 +137,7 @@ function MobTable({columns, openViewModal, url}) {
                 }} disabled={!canNextPage}>
                     Следующая
                 </button>
-            </div>
+            </div>*/}
         </>
     );
 }
