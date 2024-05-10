@@ -241,7 +241,7 @@ function MainTable() {
             const totalPages = Math.ceil(Number(response.data.total) / 100);
             console.log("Total pages:", totalPages);
             setN(totalPages);
-            if (n > 1) {
+            if (totalPages > 1) {
                 for (let im = 0; im < totalPages; im++) {
                     axios.get(`${domain}records/?page=${im + 1}&size=100`, {
                         headers: {
@@ -264,7 +264,7 @@ function MainTable() {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }).then((data1) => {
-                    setTot([...tot, ...data1.data.items]);
+                    setTot(data1.data.items);
                     setData(tot);
                     console.log("Page 1 data:", tot);
                 }).catch((error) => {
