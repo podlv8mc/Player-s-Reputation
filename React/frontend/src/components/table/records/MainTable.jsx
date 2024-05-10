@@ -253,7 +253,17 @@ function MainTable() {
                 console.log(tot)
             }else {
                 console.log(tot)
-                setData(Array.isArray(response.data.items) ? response.data.items : []);
+                axios.get(`${domain}?page=${im+1}&size=100`,  {
+                    headers:{
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }).then((data1) => {
+                    setTot([...tot, ...data1.data.items])
+                    setData(tot)
+                    console.log(tot)
+                }).catch((error) => {
+                    console.log(error)
+                })
             }
 
         })

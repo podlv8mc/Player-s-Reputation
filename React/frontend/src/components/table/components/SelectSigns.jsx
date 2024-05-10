@@ -14,7 +14,6 @@ function SelectSigns({ onSelect }) {
             }
         })
             .then((data) => {
-            console.log(data.data.items);
             setfundSelect(data.data.items.map(function(obj) {
                 return {'value': obj.id, 'label': obj.name};
             }));
