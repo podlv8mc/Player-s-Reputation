@@ -531,6 +531,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     columns={columns}
                     apiLink={apiLink}
                     openViewModal={openViewModal}
+                    data={data}
+                    filteredData={filteredData}
+                    tot={tot}
+                    n={n}
                 />
             )}
             {EditModalContent}
