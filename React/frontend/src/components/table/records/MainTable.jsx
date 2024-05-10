@@ -242,26 +242,25 @@ function MainTable() {
             console.log("Total pages:", totalPages);
             setN(totalPages);
             if (totalPages > 1) {
+                const requests = [];
                 for (let im = 0; im < totalPages; im++) {
-                    axios.get(`${domain}records/?page=${im + 1}&size=100`, {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                        }
-                    }).then((data1) => {
-                        console.log("Page", im + 1, "data:", data1.data);
-                        console.log(2, data1.data.items);
-                        setData(()=>{
-                            let bkb = [...data, ...data1.data.items]
-                            return bkb;
+                    requests.push(
+                        axios.get(`${domain}records/?page=${im + 1}&size=100`, {
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                            }
                         })
-                        console.log(data)
-                        setTot([...tot, ...data1.data.items]);
-                        console.log(tot)
-                    }).catch((error) => {
-                        console.log("Error fetching page", im + 1, "data:", error);
-                    });
+                    );
                 }
-            } else {
+                Promise.all(requests)
+                    .then((responses) => {
+                        const newData = responses.flatMap(response => response.data.items);
+                        setData(newData);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching pages data:", error);
+                    });
+            }  else {
                 console.log("Total data:", tot);
                 axios.get(`${domain}records/?page=1&size=100`, {
                     headers: {
