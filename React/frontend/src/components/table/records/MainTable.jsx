@@ -230,66 +230,63 @@ function MainTable() {
     );
 
     useEffect(() => {
-        axios.get(`${domain}records`,  {
-            headers:{
+        axios.get(`${domain}records`, {
+            headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            setN(Math.ceil(Number(response.data.total)/ 100))
-            console.log(n)
-            if (n > 1){
-                for (let im = 0; im<n; im++){
-                    axios.get(`${domain}records/?page=${im+1}&size=100`,  {
-                        headers:{
+            setN(Math.ceil(Number(response.data.total) / 100));
+            console.log("Total pages:", n);
+            if (n > 1) {
+                for (let im = 0; im < n; im++) {
+                    axios.get(`${domain}records/?page=${im + 1}&size=100`, {
+                        headers: {
                             'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                         }
                     }).then((data1) => {
-                        console.log(data1.data)
-                        setTot([...tot, ...data1.data.items])
+                        console.log("Page", im + 1, "data:", data1.data);
+                        setTot([...tot, ...data1.data.items]);
                     }).catch((error) => {
-                        console.log(error)
-                    })
+                        console.log("Error fetching page", im + 1, "data:", error);
+                    });
                 }
                 setData(tot);
-                console.log(tot)
-            }else {
-                console.log(tot)
-                axios.get(`${domain}records/?page=1&size=100`,  {
-                    headers:{
+                console.log("All data:", tot);
+            } else {
+                console.log("Total data:", tot);
+                axios.get(`${domain}records/?page=1&size=100`, {
+                    headers: {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }).then((data1) => {
-                    setTot([...tot, ...data1.data.items])
-                    setData(tot)
-                    console.log(tot)
+                    setTot([...tot, ...data1.data.items]);
+                    setData(tot);
+                    console.log("Page 1 data:", tot);
                 }).catch((error) => {
-                    console.log(error)
-                })
+                    console.log("Error fetching page 1 data:", error);
+                });
             }
 
-        })
-            .catch(() => {
-                axios.post(`${domain}auth/jwt/refresh`, null, {
-                    headers: {
-                        'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                    }
-                })
-                    .then((response) => {
-                        localStorage.setItem("access_token", data.data.access_token)
-                        localStorage.setItem("refresh_token", data.data.refresh_token)
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                        const errorMessage = document.createElement('div');
-                        errorMessage.className = 'authorization__wrap';
-                        errorMessage.textContent = 'Авторизируйтесь!';
-                        document.body.appendChild(errorMessage);
+        }).catch(() => {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
+                headers: {
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            }).then((response) => {
+                localStorage.setItem("access_token", data.data.access_token);
+                localStorage.setItem("refresh_token", data.data.refresh_token);
+            }).catch((error) => {
+                console.error("Refresh token error:", error);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'authorization__wrap';
+                errorMessage.textContent = 'Авторизируйтесь!';
+                document.body.appendChild(errorMessage);
 
-                        setTimeout(() => {
-                            window.location.href = "/";
-                        }, 2000);
-                    })
-            })
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+            });
+        });
     }, []);
 
     useEffect(() => {
