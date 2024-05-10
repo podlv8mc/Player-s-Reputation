@@ -25,6 +25,9 @@ function MainTable() {
     const [total, setTotal] = useState(0)
     const [nullifaer, setNullifaer] = useState(0)
 
+    const [tot, setTot] = useState([]);
+    const [n, setN] = useState(0);
+
     const columns = React.useMemo(
         () => [
             {
@@ -227,34 +230,55 @@ function MainTable() {
     );
 
     useEffect(() => {
-        axios.get(`${domain}records`, {
-            headers: {
+        axios.get(`${domain}records`,  {
+            headers:{
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        }).then((data) => {
-            setData(Array.isArray(data.data.items) ? data.data.items : []);
-        }).catch(() => {
-            axios.post(`${domain}auth/jwt/refresh`, null, {
-                headers: {
-                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", data.data.access_token)
-                    localStorage.setItem("refresh_token", data.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
+        }).then((response) => {
+            setN(Math.ceil(response.data.total / 100))
+            if (n > 1){
+                for (let im = 0; im<n; im++){
+                    axios.get(`${domain}?page=${im+1}&size=100`,  {
+                        headers:{
+                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }).then((data1) => {
 
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
+                        setTot([...tot, ...data1.data.items])
+                        console.log(tot)
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                }
+                setData(tot);
+
+            }else {
+                setData(Array.isArray(response.data.items) ? response.data.items : []);
+            }
+
         })
+            .catch(() => {
+                axios.post(`${domain}auth/jwt/refresh`, null, {
+                    headers: {
+                        'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                    }
+                })
+                    .then((response) => {
+                        localStorage.setItem("access_token", data.data.access_token)
+                        localStorage.setItem("refresh_token", data.data.refresh_token)
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'authorization__wrap';
+                        errorMessage.textContent = 'Авторизируйтесь!';
+                        document.body.appendChild(errorMessage);
+
+                        setTimeout(() => {
+                            window.location.href = "/";
+                        }, 2000);
+                    })
+            })
     }, []);
 
     useEffect(() => {
