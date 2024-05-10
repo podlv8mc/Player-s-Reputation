@@ -174,20 +174,15 @@ function MainFunds() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const createdAt = new Date().toISOString()
-        const userDataWithTimestamp = {
-            ...newUserData,
-            createdAt: createdAt,
-        }
 
-        axios.post(`${domain}funds`, userDataWithTimestamp, {
+        axios.post(`${domain}funds`, newUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
             .catch((error) => {
                 console.error(error);
-                console.log(userDataWithTimestamp)
+                console.log(newUserData)
             });
 
         setIsModalOpen(false);

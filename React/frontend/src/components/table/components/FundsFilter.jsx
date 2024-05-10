@@ -23,6 +23,7 @@ const TableFilter = ({ data, onChange }) => {
 
     const handleChange = (selectedOption) => {
         onChange(selectedOption);
+        console.log(selectedOption);
     };
 
     const handleMenuOpen = () => {
