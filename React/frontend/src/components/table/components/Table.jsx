@@ -26,7 +26,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
 
-
     //===----- Table -----===//
 
     const {
@@ -472,7 +471,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-
+                        {apiLink === "records" ? (
+                            <TableFilter data={data} onChange={handleFilterChange}/>
+                        ): null}
                     </div>
                     <div className="table__top">
                         <input

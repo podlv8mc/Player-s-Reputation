@@ -24,7 +24,7 @@ function MobTable({columns, openViewModal, apiLink, tot, setN, data, filteredDat
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            initialState: {pageIndex: 0, filters: [], pageSize: 1},
         },
         useFilters,
         usePagination
