@@ -139,6 +139,17 @@ function MainFunds() {
         };
     }, []);
 
+
+
+
+
+
+
+
+
+
+
+
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
     };

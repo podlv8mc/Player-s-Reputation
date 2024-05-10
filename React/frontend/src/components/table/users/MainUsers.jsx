@@ -25,11 +25,11 @@ function MainUsers() {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Имя пользователя',
+                Header: 'Логин',
                 accessor: row => row.username,
             },
             {
-                Header: 'Логин',
+                Header: 'Имя пользователя',
                 accessor: row => row.name,
             },
             {
@@ -46,15 +46,15 @@ function MainUsers() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        //name: "",
+        name: "",
         discord: "",
         email: "",
         password: "",
     });
 
     const inputLabels = {
-        username: "Имя пользователя",
-        name: "Логин",
+        username: "Логин",
+        name: "Имя пользователя",
         discord: "Discord",
         email: "Email",
         password: "Пароль",
@@ -146,6 +146,17 @@ function MainUsers() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+
+
+
+
+
+
+
+
+
+
 
     const handleResize = () => {
         setWindowWidth(window.innerWidth);

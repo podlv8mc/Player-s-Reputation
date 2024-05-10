@@ -338,6 +338,11 @@ function MainTable() {
         setWindowWidth(window.innerWidth);
     };
 
+
+
+
+
+
     const openModal = () => {
         setIsModalOpen(true);
     };

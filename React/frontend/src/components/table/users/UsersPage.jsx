@@ -10,10 +10,10 @@ function UsersPage() {
                 Header: 'Имя пользователя',
                 accessor: row => row.username,
             },
-            {
-                Header: 'Логин',
-                accessor: row => row.name,
-            },
+            //{
+              //  Header: 'Логин',
+                //accessor: row => row.name,
+            //},
             {
                 Header: 'Discord',
                 accessor: row => row.discord,
@@ -36,7 +36,7 @@ function UsersPage() {
 
     const inputLabels = {
         username: "Имя пользователя",
-        name: "Логин",
+        //name: "Логин",
         discord: "Discord",
         email: "Email",
         password: "Пароль",
