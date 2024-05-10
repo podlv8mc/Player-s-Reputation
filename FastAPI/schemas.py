@@ -45,6 +45,7 @@ class CreateUpdateDictModel(BaseModel):
 class UserRead(users_schemas.BaseUser):
     id: int
     username: str
+    name: Optional[str | None] = None
     role: Roles
     email: Optional[str | None] = None
     discord: Optional[str | None] = None
@@ -59,6 +60,7 @@ class UserReadfund(CreateUpdateDictModel):
 
 class UserCreate(users_schemas.BaseUserCreate):
     username: str
+    name: Optional[str | None] = None
     password: str
     role: Roles
     email: Optional[str | None] = None
@@ -68,6 +70,7 @@ class UserCreate(users_schemas.BaseUserCreate):
 
 class UserUpdate(users_schemas.BaseUserUpdate):
     email: Optional[str | None] = None
+    name: Optional[str | None] = None
     role: Roles
 
 
