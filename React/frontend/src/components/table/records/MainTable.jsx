@@ -250,7 +250,7 @@ function MainTable() {
                     }).then((data1) => {
                         console.log("Page", im + 1, "data:", data1.data);
                         console.log(2, data1.data.items);
-                        setData([...tot, ...data1.data.items])
+                        setData([...data, ...data1.data.items])
                         console.log(data)
                         setTot([...tot, ...data1.data.items]);
                         console.log(tot)
