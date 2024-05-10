@@ -177,6 +177,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
 
     //===----- Modal Window -----===//
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
     const openViewModal = (user) => {
         setSelectedUser(user);
     };
