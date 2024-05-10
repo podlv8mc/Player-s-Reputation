@@ -249,7 +249,7 @@ function MainTable() {
                         }
                     }).then((data1) => {
                         console.log("Page", im + 1, "data:", data1.data);
-                        console.log(2, data1.data);
+                        console.log(2, data1.data.items);
                         setData([...tot, ...data1.data.items])
                         console.log(data)
                         setTot([...tot, ...data1.data.items]);
@@ -258,8 +258,6 @@ function MainTable() {
                         console.log("Error fetching page", im + 1, "data:", error);
                     });
                 }
-                setData(tot);
-                console.log("All data:", tot);
             } else {
                 console.log("Total data:", tot);
                 axios.get(`${domain}records/?page=1&size=100`, {
