@@ -245,14 +245,14 @@ function MainTable() {
                     }).then((data1) => {
 
                         setTot([...tot, ...data1.data.items])
-                        console.log(tot)
                     }).catch((error) => {
                         console.log(error)
                     })
                 }
                 setData(tot);
-
+                console.log(tot)
             }else {
+                console.log(tot)
                 setData(Array.isArray(response.data.items) ? response.data.items : []);
             }
 
