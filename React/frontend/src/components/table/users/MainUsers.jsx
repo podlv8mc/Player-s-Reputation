@@ -319,7 +319,6 @@ function MainUsers() {
                     </div>
                 ))}
             </div>
-
         </Modal>
     );
 

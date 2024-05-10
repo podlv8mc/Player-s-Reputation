@@ -66,14 +66,14 @@ function MainCabinet() {
             </h2>
             <form onSubmit={handleSubmit} className="profile__form-wrap">
                 <ProfileInput
-                    label="Имя пользователя"
-                    value={cabinet.name || ''}
-                    onChange={(e) => handleChange('name', e.target.value)}
-                />
-                <ProfileInput
                     label="Логин"
                     value={cabinet.username || ''}
                     onChange={(e) => handleChange('username', e.target.value)}
+                />
+                <ProfileInput
+                    label="Имя пользователя"
+                    value={cabinet.name || ''}
+                    onChange={(e) => handleChange('name', e.target.value)}
                 />
                 <ProfileInput
                     label="Ник в Discord"

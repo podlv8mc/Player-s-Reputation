@@ -6,7 +6,7 @@ import UsersPage from "@/components/table/users/UsersPage";
 function Users() {
     return (
         <TableStructure>
-            <MainUsers />
+            <UsersPage />
         </TableStructure>
     );
 }

@@ -6,8 +6,10 @@ import Images from '@/image/image';
 import Modal from '@/components/main/modal/Modal';
 import TableFilter from "@/components/table/components/FundsFilter";
 import SelectSigns from "@/components/table/components/SelectSigns";
+import SelectRole from "@/components/table/components/SelectRole";
+import PaginationButtons from "@/components/table/components/PaginationButtons";
 
-function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
+function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [filterInput, setFilterInput] = useState('');
@@ -20,15 +22,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [total, setTotal] = useState(0)
-    const [nullifaer, setNullifaer] = useState(0)
-
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
-
-
-
-
 
 
     //===----- Table -----===//
@@ -92,15 +87,14 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
                     .catch((error) => {
                         console.error("Error fetching pages data:", error);
                     });
-            }  else {
+            } else {
                 console.log("Total data:", tot);
                 axios.get(`${domain}${apiLink}/?page=1&size=100`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }).then((data1) => {
-                    setTot(data1.data.items);
-                    setData(tot);
+                    setData(data1.data.items);
                     console.log("Page 1 data:", tot);
                 }).catch((error) => {
                     console.log("Error fetching page 1 data:", error);
@@ -183,7 +177,274 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
 
     //===----- Modal Window -----===//
 
+    const openViewModal = (user) => {
+        setSelectedUser(user);
+    };
 
+    const closeViewModal = () => {
+        setSelectedUser(null);
+    };
+
+    const openEditModal = (user) => {
+        setEditingUserData(user);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+        setNewUserData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        let requestPromise;
+        let requestUrl;
+
+        const createdAt = new Date().toISOString();
+        const commonData = {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        };
+
+        if (apiLink === "records") {
+            const userDataWithTimestamp = {
+                ...newUserData,
+                createdAt: createdAt,
+                fund_id: selectedOption ? selectedOption.value : null,
+            };
+            requestUrl = `${domain}records`;
+            requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
+        } else if (apiLink === "funds") {
+            requestUrl = `${domain}funds`;
+            requestPromise = axios.post(requestUrl, newUserData, commonData);
+        } else if (apiLink === "users") {
+            const userDataWithTimestamp = {
+                ...newUserData,
+                created_at: createdAt,
+                role: selectedOption ? selectedOption.value : null,
+                is_active: true,
+                is_superuser: false,
+                is_verified: false,
+            };
+            requestUrl = `${domain}register`;
+            requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
+        } else {
+            console.error("Invalid apiLink:", apiLink);
+            return; // Прерывание выполнения в случае неверного apiLink
+        }
+
+        requestPromise
+            .then(response => {
+                // Обработка успешного выполнения запроса
+                console.log("Request successful:", response);
+                // Дополнительные действия при успешной отправке данных на сервер
+            })
+            .catch(error => {
+                // Обработка ошибок
+                console.error("Request error:", error);
+                // Дополнительные действия в случае возникновения ошибки
+            })
+            .finally(() => {
+                setIsModalOpen(false); // Закрытие модального окна независимо от результата запроса
+            });
+    };
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault()
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then((response) => {
+                setIsEditModalOpen(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    };
+
+    const ModalContent = (
+        <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
+            <button className="modal__btn-close" onClick={() => setIsModalOpen(false)} />
+            <div className="table__modal-title">
+                Добавить пользователя
+            </div>
+            <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
+                {apiLink === "records" ? (
+                    <>
+                        {Object.keys(newUserData).map((key, index, array) => (
+                            <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    name={key}
+                                    value={newUserData[key]}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                        <SelectSigns onSelect={setSelectedOption}/>
+                    </>
+                ) : apiLink === "funds" ? (
+                    <>
+                        {Object.keys(newUserData).map((key) => (
+                            <div className="table__modal-row">
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    name={key}
+                                    value={newUserData[key]}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                    </>
+                ) : apiLink === "users" ? (
+                    <>
+                        {Object.keys(newUserData).map((key,) => (
+                            <div className="table__modal-row">
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    name={key}
+                                    value={newUserData[key]}
+                                    onChange={handleChange}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                        <SelectRole onSelect={setSelectedOption}/>
+                    </>
+                ) : null}
+                <button className="btn-hover table__btn" type="submit">
+                    Добавить
+                </button>
+            </form>
+        </Modal>
+    );
+
+    const EditModalContent = editingUserData && (
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
+            <div className="table__modal-title">
+                Редактировать пользователя
+            </div>
+            <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
+                {apiLink === "records" ? (
+                    <>
+                        {Object.entries(newUserData).map(([key,], index, array) => (
+                            <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    type="text"
+                                    name={key}
+                                    value={editingUserData[key]}
+                                    onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                    </>
+                ) : apiLink === "funds" ? (
+                    <>
+                        {Object.entries(newUserData).map(([key,]) => (
+                            <div className="table__modal-row">
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    type="text"
+                                    name={key}
+                                    value={editingUserData[key]}
+                                    onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                    </>
+                ) : apiLink === "users" ? (
+                    <>
+                        {Object.entries(newUserData).map(([key,],) => (
+                            <div className="table__modal-row">
+                                <label className="table__modal-cell-title" htmlFor={key}>
+                                    {inputLabels[key]}
+                                </label>
+                                <input
+                                    className="table__modal-cell"
+                                    id={key}
+                                    type="text"
+                                    name={key}
+                                    value={editingUserData[key]}
+                                    onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                    autoComplete="off"
+                                />
+                            </div>
+                        ))}
+                    </>
+                ) : null}
+                <div className="table__btn-row">
+                    <button className="btn-hover table__btn" onClick={closeEditModal}>
+                        Отменить
+                    </button>
+                    <button className="btn-hover table__btn" type="submit">
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </Modal>
+    );
+
+    const ViewModalContent = selectedUser && (
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
+            <button className="modal__btn-close" onClick={closeViewModal}/>
+            <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
+                <img src={Images.edit} alt="edit"/>
+            </button>
+            <div className="table__modal-title">
+                Информация о пользователе
+            </div>
+            <div className="table__modal-form-wrap">
+                {columns.map(column => (
+                    <div className="table__modal-row" key={column.accessor}>
+                        <div className="table__modal-cell-title">
+                            {column.Header}
+                        </div>
+                        <div className="table__modal-cell">
+                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+        </Modal>
+    );
 
     //===----- / Modal Window -----===//
 
@@ -196,18 +457,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
 
     //===----- / Buttons -----===//
 
+    //===----- Filter -----===//
+
+    const handleFilterChange = (selectedOption) => {
+        setFilterValue(selectedOption ? selectedOption.value : null);
+    };
+
+    //===----- / Filter -----===//
 
 
 
 
 
 
-
-
-
-
-    //===----- Inputs -----===//
-    //===----- / Inputs -----===//
     //===----- Inputs -----===//
     //===----- / Inputs -----===//
     //===----- Inputs -----===//
@@ -239,14 +501,47 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
 
 
             {windowWidth >= 800 ? (
-                <h1 className="">
-                    1
-                </h1>
+                <>
+                    <table className="table" {...getTableProps()}>
+                        <thead className="table__header-wrap">
+                        {headerGroups.map(headerGroup => (
+                            <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th className="table__headers" {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                        </thead>
+                        <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                        {page.map(row => {
+                            prepareRow(row);
+                            return (
+                                <tr className="table__body" {...row.getRowProps()}
+                                    onClick={() => openViewModal(row.original)}>
+                                    {row.cells.map((cell, index) => (
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                    <PaginationButtons
+                        pageIndex={pageIndex}
+                        pageCount={pageCount}
+                        gotoPage={gotoPage}
+                    />
+                </>
             ) : (
                 <h1 className="">
                     2
                 </h1>
             )}
+            {EditModalContent}
+            {ModalContent}
+            {ViewModalContent}
         </>
     );
 }

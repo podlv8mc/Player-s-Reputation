@@ -306,7 +306,6 @@ function MainFunds() {
                     </div>
                 ))}
             </div>
-
         </Modal>
     );
 

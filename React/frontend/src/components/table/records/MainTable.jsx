@@ -384,10 +384,9 @@ function MainTable() {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        })
-            .catch((error) => {
+        }).catch((error) => {
                 console.error(error);
-            });
+        });
 
         setIsModalOpen(false);
     };
