@@ -534,7 +534,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     data={data}
                     filteredData={filteredData}
                     tot={tot}
-                    n={n}
+                    setN={setN}
                 />
             )}
             {EditModalContent}

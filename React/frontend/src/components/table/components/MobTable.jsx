@@ -4,7 +4,7 @@ import axios from "axios";
 import domain from "@/domain";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 
-function MobTable({columns, openViewModal, apiLink, tot, n, data, filteredData}) {
+function MobTable({columns, openViewModal, apiLink, tot, setN, data, filteredData}) {
 
     const {
         getTableProps,
