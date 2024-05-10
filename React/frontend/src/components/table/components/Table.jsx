@@ -1,7 +1,31 @@
 import React, {useEffect, useState} from 'react';
 
-function Table({apiLink, }) {
+function Table({apiLink, columns, inputLabels, newUserData, setNewUserData }) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    console.log(inputLabels)
+    console.log(newUserData)
+    console.log(setNewUserData)
+
+
+
+
+    //===----- Columns -----===//
+
+
+
+    у
+
+
+
+    //===----- / Columns -----===//
+
+    //===----- Inputs -----===//
+    //===----- / Inputs -----===//
+
+    //===----- Resize -----===//
+
+
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -14,7 +38,9 @@ function Table({apiLink, }) {
         setWindowWidth(window.innerWidth);
     };
 
-    console.log(apiLink);
+
+
+    //===----- / Resize -----===//
 
     return (
         <>

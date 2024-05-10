@@ -22,8 +22,6 @@ function MainUsers() {
     const [total, setTotal] = useState(0)
     const [nullifaer, setNullifaer] = useState(0)
 
-    const apiLink = "users"
-
     const columns = React.useMemo(
         () => [
             {
@@ -376,7 +374,7 @@ function MainUsers() {
                 <MobTable
                     columns={columns}
                     openViewModal={openViewModal}
-                    url={apiLink}
+                    url="users"
                 />
             )}
             {EditModalContent}
