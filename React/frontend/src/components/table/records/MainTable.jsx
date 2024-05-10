@@ -238,8 +238,9 @@ function MainTable() {
             console.log(response.data);
             console.log(response.data.total);
             console.log(typeof response.data.total);
-            setN(Math.ceil(Number(response.data.total) / 100));
-            console.log("Total pages:", n);
+            const totalPages = Math.ceil(Number(response.data.total) / 100);
+            console.log("Total pages:", totalPages);
+            setN(totalPages);
             if (n > 1) {
                 for (let im = 0; im < n; im++) {
                     axios.get(`${domain}records/?page=${im + 1}&size=100`, {
