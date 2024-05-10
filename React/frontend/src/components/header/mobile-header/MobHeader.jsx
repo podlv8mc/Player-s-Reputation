@@ -3,6 +3,7 @@ import MobHeaderList from "@/components/header/mobile-header/MobHeaderList";
 import Images from "@/image/image";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
+import domain from "@/domain";
 
 const MobHeader = ({handleModalOpen}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ const MobHeader = ({handleModalOpen}) => {
     const [authorization, setAuthorization] = useState(false);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/records', {
+        axios.get(`${domain}records`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }

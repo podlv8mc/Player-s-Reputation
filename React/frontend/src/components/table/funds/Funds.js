@@ -1,13 +1,12 @@
 import React from 'react';
-import ResizableHeader from "@/components/ResizableHeader";
 import MainFunds from "@/components/table/funds/MainFunds";
+import TableStructure from "@/components/table/components/TableStructure";
 
 function Users() {
     return (
-        <div className="App app__table">
-            <ResizableHeader />
+        <TableStructure>
             <MainFunds />
-        </div>
+        </TableStructure>
     );
 }
 

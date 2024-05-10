@@ -6,6 +6,18 @@
 
 /* === Styles === */
 
+.authorization__wrap {
+  position: fixed;
+  inset: 0;
+  background: #101117;
+  color: #FFFFFF;
+  @include Montserrat-600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+}
+
 .app__table {
   max-width: none !important;
   padding: 0px !important;
@@ -128,9 +140,9 @@
       .table__body-cell {
         min-width: 150px;
         height: 60px;
-        text-align: center;
         font-size: 15px;
         align-content: center;
+        text-align: center;
       }
 
       &:hover {
@@ -249,6 +261,95 @@
   }
 }
 
+.profile__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  padding: 60px 0px 0px 0px;
+
+  .profile__title {
+    padding: 0px 20px;
+    font-size: 35px;
+  }
+
+  .profile__form-wrap {
+    max-width: 470px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    .profile__form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      position: relative;
+
+      .profile__form-title {
+        @include Montserrat-500;
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      .profile__form-input {
+        width: 265px;
+        min-height: 49px;
+        text-align: center;
+        background: #000000;
+        border-radius: 8px;
+        @include Montserrat-500;
+        font-size: 15px;
+        color: #FFFFFF;
+        padding: 5px 20px;
+      }
+
+      .profile__password-toggle {
+        width: 49px;
+        height: 49px;
+        position: absolute;
+        right: -59px;
+        bottom: 0px;
+        background: #000000;
+        border-radius: 8px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.4s ease;
+
+        img {
+          width: 29px;
+          height: 29px;
+        }
+
+        &:hover {
+          background: rgba(0, 0, 0, .3);
+        }
+
+        &:active {
+          transform: scale(0.8);
+        }
+      }
+    }
+
+    .profile__btn {
+      background: #000;
+      margin: 20px 0px 0px 0px;
+      border: 2px solid #fdb401;
+      border-radius: 100px;
+      color: #fff;
+      font-family: Montserrat-600, sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      width: fit-content;
+      padding: 12px 64px;
+    }
+  }
+}
+
 .modal__btn-new {
   position: absolute;
   top: 15px;
@@ -311,6 +412,7 @@
 .pagination__wrap {
   width: 100%;
   position: relative;
+  padding: 0px 0px 15px 0px;
 
   .pagination__box {
     width: 100vw;
@@ -329,12 +431,42 @@
       font-size: 20px;
       background: transparent;
       color: #ffffff;
+      transition: all 0.4s ease;
+      border-radius: 4px;
+
+      a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:not(.active) {
+        &:hover {
+          background: #000;
+          color: #fee100;
+          opacity: .4;
+        }
+      }
     }
 
     .active {
       background: #000;
-      border-radius: 4px;
       color: #fee100;
+    }
+
+    .break {
+      width: 40px;
+      height: 40px;
+      @include Montserrat-500;
+      font-size: 20px;
+      background: transparent;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0px 0px 4px 0px;
     }
 
     .pagination__btn {
@@ -386,7 +518,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 800px) {
   .app__table {
     .mob-header__btn {
       right: 27px;
@@ -412,6 +544,7 @@
 
       .table__top-select {
         padding: 0px;
+        min-height: 48px;
       }
 
       .table__top {
@@ -494,6 +627,39 @@
   .select {
     &__control {
       width: 250px !important;
+    }
+
+    &__menu {
+      width: 250px !important;
+    }
+  }
+
+  .profile__wrap {
+    .profile__form-wrap {
+      .profile__form {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__wrap {
+    .profile__form-wrap {
+      .profile__form {
+        .profile__password-toggle {
+          transform: translate(-50%, -50%);
+          inset: 140% auto auto 50%;
+
+          &:active {
+            transform: translate(-50%, -50%) scale(0.8);
+          }
+        }
+      }
+
+      .profile__btn {
+        margin: 66px 0px 0px 0px;
+      }
     }
   }
 }

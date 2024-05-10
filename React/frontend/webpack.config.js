@@ -109,6 +109,7 @@ module.exports = {
             patterns: [
                 { from: "public/site.webmanifest", to: "" },
                 { from: "public/manifest.json", to: "" },
+                { from: "public/favicon.ico", to: "" },
             ],
         }),
         new CleanWebpackPlugin(

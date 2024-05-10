@@ -3,11 +3,13 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import SelectSigns from "@/components/table/SelectSigns";
+import SelectRole from "@/components/table/components/SelectRole";
+import domain from "@/domain";
+import MobTable from "@/components/table/components/MobTable";
+import PaginationButtons from "@/components/table/components/PaginationButtons";
 
 function MainUsers() {
     const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
     const [filterInput, setFilterInput] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingUserData, setEditingUserData] = useState(null);
@@ -16,54 +18,122 @@ function MainUsers() {
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [filterValue, setFilterValue] = useState(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [total, setTotal] = useState(0)
+    const [nullifaer, setNullifaer] = useState(0)
+
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Имя пользователя',
+                accessor: row => row.username,
+            },
+            {
+                Header: 'Логин',
+                accessor: row => row.name,
+            },
+            {
+                Header: 'Discord',
+                accessor: row => row.discord,
+            },
+            {
+                Header: 'Email',
+                accessor: row => row.email,
+            },
+        ],
+        []
+    );
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        login:"",
-        discord:"",
+        //name: "",
+        discord: "",
         email: "",
-        funds: "",
+        password: "",
     });
 
     const inputLabels = {
         username: "Имя пользователя",
-        login:"Логин",
-        discord:"Discord",
+        name: "Логин",
+        discord: "Discord",
         email: "Email",
-        funds: "Фонд",
+        password: "Пароль",
     };
 
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        prepareRow,
+        gotoPage,
+        pageCount,
+        state: {pageIndex},
+        canPreviousPage,
+        canNextPage,
+        previousPage,
+        nextPage,
+        setFilter,
+    } = useTable(
+        {
+            columns,
+            data: data,
+            initialState: {pageIndex: nullifaer, filters: [],},
+            manualPagination: true,
+            pageCount: Math.ceil(total / 10),
+        },
+        useFilters,
+        usePagination
+    );
+
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
+        axios.get(`${domain}users`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            setData(Array.isArray(data.data.items) ? data.data.items : []);
+            setTotal(data.data.total)
+
         }).catch(() => {
-            alert("Авторизируйтесь!")
-            window.location.href = "/"
+            axios.post(`${domain}auth/jwt/refresh`, null, {
+                headers: {
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            })
+                .then((response) => {
+                    localStorage.setItem("access_token", data.data.access_token)
+                    localStorage.setItem("refresh_token", data.data.refresh_token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                })
         })
     }, []);
 
     useEffect(() => {
-        setFilteredData(
-            data.filter(item =>
-                Object.values(item).some(value =>
-                    value && value.toString().toLowerCase().includes(filterInput.toLowerCase())
-                )
-            )
-        );
-    }, [data, filterInput]);
+        axios.get(`${domain}users/?page=${pageIndex + 1}&size=10`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data1) => {
+            setData(Array.isArray(data1.data.items) ? data1.data.items : []);
+        })
+    }, [pageIndex]);
 
     useEffect(() => {
-        axios.get('http://213-134-31-78.netherlands.vps.ac/api/v1/users', {
+        axios.get(`${domain}funds`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            console.log(data);
             setfundSelect(data);
         }).catch(() => {
 
@@ -71,12 +141,15 @@ function MainUsers() {
     }, []);
 
     useEffect(() => {
-        if (filterValue) {
-            setFilteredData(data.filter(row => row.fund.name === filterValue));
-        } else {
-            setFilteredData(data);
-        }
-    }, [data, filterValue]);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -112,16 +185,14 @@ function MainUsers() {
         const createdAt = new Date().toISOString()
         const userDataWithTimestamp = {
             ...newUserData,
-            createdAt: createdAt,
-            fund_id: selectedOption ? selectedOption.value : null,
+            created_at: createdAt,
+            role: selectedOption ? selectedOption.value : null,
+            is_active: true,
+            is_superuser: false,
+            is_verified: false,
         }
 
-        console.log(userDataWithTimestamp);
-        axios.post("http://213-134-31-78.netherlands.vps.ac/api/v1/users", userDataWithTimestamp, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        })
+        axios.post(`${domain}register`, userDataWithTimestamp)
             .catch((error) => {
                 console.error(error);
             });
@@ -131,75 +202,25 @@ function MainUsers() {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
-        axios.patch(`http://213-134-31-78.netherlands.vps.ac/api/v1/users/${editingUserData.id}`, editingUserData, {
+        axios.patch(`${domain}users/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         })
             .then((response) => {
-                console.log(response.data);
                 setIsEditModalOpen(false);
+                console.log(editingUserData)
             })
             .catch((error) => {
                 console.error(error);
+                console.log(editingUserData)
             })
-
     };
-
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Имя пользователя',
-                accessor: row => row.username,
-            },
-            {
-                Header: 'Логин',
-                accessor: row => row.login,
-            },
-            {
-                Header: 'Discord',
-                accessor: row => row.discord,
-            },
-            {
-                Header: 'Email',
-                accessor: row => row.email,
-            },
-            {
-                Header: 'Фонд',
-                accessor: row => row.funds,
-            },
-        ],
-        []
-    );
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        page,
-        prepareRow,
-        gotoPage,
-        pageCount,
-        state: {pageIndex},
-        canPreviousPage,
-        canNextPage,
-        previousPage,
-        nextPage,
-    } = useTable(
-        {
-            columns,
-            data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
-        },
-        useFilters,
-        usePagination
-    );
 
     const toggleFilterInput = () => {
         setFilterInputVisible(!filterInputVisible);
         setFilterInput('');
     };
-
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -208,8 +229,8 @@ function MainUsers() {
                 Добавить пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                {Object.keys(newUserData).map((key, index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.keys(newUserData).map((key,) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -223,7 +244,7 @@ function MainUsers() {
                         />
                     </div>
                 ))}
-                <SelectSigns onSelect={setSelectedOption}/>
+                <SelectRole onSelect={setSelectedOption}/>
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
@@ -232,13 +253,13 @@ function MainUsers() {
     );
 
     const EditModalContent = editingUserData && (
-        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll">
+        <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
             <div className="table__modal-title">
                 Редактировать пользователя
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,]) => (
-                    <div className="table__modal-row" key={key}>
+                {Object.entries(newUserData).map(([key,],) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -267,7 +288,7 @@ function MainUsers() {
 
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                 <img src={Images.edit} alt="edit"/>
@@ -291,38 +312,8 @@ function MainUsers() {
         </Modal>
     );
 
-    const PreviousPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const NextPageButton = ({onClick, disabled}) => (
-        <button className={`pagination__btn ${disabled ? 'disabled' : ''}`} onClick={onClick} disabled={disabled}>
-            <img src={Images.arrow} alt="arrow"/>
-        </button>
-    );
-
-    const PageButtons = (
-        <div className="pagination__wrap">
-            <div className="pagination__box">
-                <PreviousPageButton onClick={previousPage} disabled={!canPreviousPage}/>
-                {Array.from({length: pageCount}, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => gotoPage(i)}
-                        className={`pagination__btn-op ${pageIndex === i ? 'active' : ''}`}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-                <NextPageButton onClick={nextPage} disabled={!canNextPage}/>
-            </div>
-        </div>
-    );
-
     return (
-        <main id="main" className="main">
+        <>
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
@@ -334,7 +325,7 @@ function MainUsers() {
                             onChange={e => setFilterInput(e.target.value)}
                             placeholder="Поиск..."
                         />
-                        <button className="table__top-btn" onClick={toggleFilterInput}>
+                        <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
                         <button className="table__top-btn" onClick={openModal}>
@@ -343,36 +334,53 @@ function MainUsers() {
                     </div>
                 </div>
             </div>
-            <table className="table" {...getTableProps()}>
-                <thead className="table__header-wrap">
-                {headerGroups.map(headerGroup => (
-                    <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th className="table__headers" {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                            </th>
+
+            {windowWidth >= 800 ? (
+                <>
+                    <table className="table" {...getTableProps()}>
+                        <thead className="table__header-wrap">
+                        {headerGroups.map(headerGroup => (
+                            <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th className="table__headers" {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody className="table__body-wrap" {...getTableBodyProps()}>
-                {page.map(row => {
-                    prepareRow(row);
-                    return (
-                        <tr className="table__body" {...row.getRowProps()} onClick={() => openViewModal(row.original)}>
-                            {row.cells.map((cell, index) => (
-                                <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
-                            ))}
-                        </tr>
-                    );
-                })}
-                </tbody>
-            </table>
-            {PageButtons}
+                        </thead>
+                        <tbody className="table__body-wrap" {...getTableBodyProps()}>
+                        {page.map(row => {
+                            prepareRow(row);
+                            return (
+                                <tr className="table__body" {...row.getRowProps()}
+                                    onClick={() => openViewModal(row.original)}>
+                                    {row.cells.map((cell, index) => (
+                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                    <PaginationButtons
+                        pageIndex={pageIndex}
+                        pageCount={pageCount}
+                        gotoPage={gotoPage}
+                        setNullifaer={setNullifaer}
+                    />
+                </>
+            ) : (
+                <MobTable
+                    columns={columns}
+                    openViewModal={openViewModal}
+                    url="users"
+                />
+            )}
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
-        </main>
+        </>
     );
 }
 

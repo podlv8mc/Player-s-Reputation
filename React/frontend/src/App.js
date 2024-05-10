@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import HomePage from "@/components/HomePage";
-import Table from "@/components/table/Table";
+import Table from "@/components/table/records/Table";
 import Users from "@/components/table/users/Users";
 import Funds from "@/components/table/funds/Funds";
 import Cabinet from "@/components/table/cabinet/Cabinet";
@@ -11,7 +11,7 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log('Component App mounted'); // Лог при монтировании компонента
+        console.log('Component App mounted');
 
         const handleLoad = () => {
             console.log('Window loaded'); // Лог при полной загрузке страницы

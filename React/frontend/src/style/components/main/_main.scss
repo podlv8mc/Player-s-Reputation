@@ -256,7 +256,7 @@
   pointer-events: all;
   opacity: 1;
   visibility: visible;
-  z-index: 3000;
+  z-index: 4500;
 
   .modal__content {
     transform: scale(1);
@@ -264,7 +264,7 @@
 }
 
 .modal.active.edit-modal {
-  z-index: 3000;
+  z-index: 4600;
 }
 
 .modal-scroll {
@@ -340,6 +340,7 @@
     .modal__content {
       display: block !important;
       height: fit-content !important;
+      min-height: 100%;
 
       .table__modal-form-wrap {
         .table__modal-row {
@@ -350,6 +351,16 @@
             max-width: 500px;
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .modal__mob {
+    .modal__content {
+      .table__modal-title {
+        padding: 68px 0px 25px 0px;
       }
     }
   }
