@@ -530,6 +530,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 <MobTable
                     columns={columns}
                     apiLink={apiLink}
+                    openViewModal={openViewModal}
                 />
             )}
             {EditModalContent}
