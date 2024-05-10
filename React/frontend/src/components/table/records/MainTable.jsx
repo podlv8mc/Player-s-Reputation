@@ -219,10 +219,8 @@ function MainTable() {
     } = useTable(
         {
             columns,
-            data: data,
-            initialState: {pageIndex: nullifaer, filters: [],},
-            manualPagination: true,
-            pageCount: Math.ceil(total / 10),
+            data: filteredData,
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
@@ -234,8 +232,7 @@ function MainTable() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((data) => {
-            setTotal(data.data.total)
-
+            setData(Array.isArray(data.data.items) ? data.data.items : []);
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
@@ -259,16 +256,6 @@ function MainTable() {
                 })
         })
     }, []);
-
-    useEffect(() => {
-        axios.get(`${domain}records/?page=${pageIndex + 1}&size=10`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data1) => {
-            setData(Array.isArray(data1.data.items) ? data1.data.items : []);
-        })
-    }, [pageIndex]);
 
     useEffect(() => {
         setFilteredData(
