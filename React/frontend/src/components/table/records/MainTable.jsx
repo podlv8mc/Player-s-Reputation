@@ -253,7 +253,7 @@ function MainTable() {
                 console.log(tot)
             }else {
                 console.log(tot)
-                axios.get(`${domain}?page=${im+1}&size=100`,  {
+                axios.get(`${domain}?page=1&size=100`,  {
                     headers:{
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
