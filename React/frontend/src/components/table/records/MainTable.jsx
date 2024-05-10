@@ -242,13 +242,14 @@ function MainTable() {
             console.log("Total pages:", totalPages);
             setN(totalPages);
             if (n > 1) {
-                for (let im = 0; im < n; im++) {
+                for (let im = 0; im < totalPages; im++) {
                     axios.get(`${domain}records/?page=${im + 1}&size=100`, {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                         }
                     }).then((data1) => {
                         console.log("Page", im + 1, "data:", data1.data);
+                        console.log(2, data1.data);
                         setTot([...tot, ...data1.data.items]);
                     }).catch((error) => {
                         console.log("Error fetching page", im + 1, "data:", error);
