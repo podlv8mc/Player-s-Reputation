@@ -8,8 +8,9 @@ import TableFilter from "@/components/table/components/FundsFilter";
 import SelectSigns from "@/components/table/components/SelectSigns";
 import SelectRole from "@/components/table/components/SelectRole";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
+import MobTable from "@/components/table/components/MobTable";
 
-function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
+function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, modalTitle, modalHeader}) {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [filterInput, setFilterInput] = useState('');
@@ -243,22 +244,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else {
             console.error("Invalid apiLink:", apiLink);
-            return; // Прерывание выполнения в случае неверного apiLink
+            return;
         }
 
         requestPromise
             .then(response => {
-                // Обработка успешного выполнения запроса
                 console.log("Request successful:", response);
-                // Дополнительные действия при успешной отправке данных на сервер
             })
             .catch(error => {
-                // Обработка ошибок
                 console.error("Request error:", error);
-                // Дополнительные действия в случае возникновения ошибки
             })
             .finally(() => {
-                setIsModalOpen(false); // Закрытие модального окна независимо от результата запроса
+                setIsModalOpen(false);
+                window.location.reload();
             });
     };
 
@@ -271,18 +269,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
         })
             .then((response) => {
                 setIsEditModalOpen(false);
+                window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
             })
-
     };
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)} />
             <div className="table__modal-title">
-                Добавить пользователя
+                Добавить {modalTitle}
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
                 {apiLink === "records" ? (
@@ -352,7 +350,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
     const EditModalContent = editingUserData && (
         <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
             <div className="table__modal-title">
-                Редактировать пользователя
+                Редактировать {modalTitle}
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
                 {apiLink === "records" ? (
@@ -432,7 +430,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
                 <img src={Images.edit} alt="edit"/>
             </button>
             <div className="table__modal-title">
-                Информация о пользователе
+                Информация о {modalHeader}
             </div>
             <div className="table__modal-form-wrap">
                 {columns.map(column => (
@@ -468,16 +466,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
     };
 
     //===----- / Filter -----===//
-
-
-
-
-
-
-    //===----- Inputs -----===//
-    //===----- / Inputs -----===//
-    //===----- Inputs -----===//
-    //===----- / Inputs -----===//
 
     return (
         <>
@@ -539,9 +527,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData}) {
                     />
                 </>
             ) : (
-                <h1 className="">
-                    2
-                </h1>
+                <MobTable
+                    columns={columns}
+                    apiLink={apiLink}
+                />
             )}
             {EditModalContent}
             {ModalContent}

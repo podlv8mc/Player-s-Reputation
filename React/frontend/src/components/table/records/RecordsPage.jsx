@@ -189,6 +189,8 @@ function RecordsPage() {
                 inputLabels={inputLabels}
                 newUserData={newUserData}
                 setNewUserData={setNewUserData}
+                modalTitle="пользователя"
+                modalHeader="пользователе"
             />
         </>
     );

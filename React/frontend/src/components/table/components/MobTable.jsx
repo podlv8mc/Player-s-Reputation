@@ -4,10 +4,10 @@ import axios from "axios";
 import domain from "@/domain";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 
-function MobTable({columns, openViewModal, url}) {
+function MobTable({columns, openViewModal, apiLink}) {
     const [data, setData] = useState([]);
-    const [total, setTotal] = useState(0)
-    const [nullifaer, setNullifaer] = useState(0)
+    const [tot, setTot] = useState([]);
+    const [n, setN] = useState(0);
 
     const {
         getTableProps,
@@ -22,62 +22,83 @@ function MobTable({columns, openViewModal, url}) {
         canNextPage,
         previousPage,
         nextPage,
+        setFilter,
     } = useTable(
         {
             columns,
-            data: data,
-            initialState: {pageIndex: nullifaer, filters: [],},
-            manualPagination: true,
-            pageCount: Math.ceil(total),
+            data: filteredData,
+            initialState: {pageIndex: 0, filters: []},
         },
         useFilters,
         usePagination
     );
 
     useEffect(() => {
-        axios.get(`${domain}${url}`, {
+        axios.get(`${domain}${apiLink}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        }).then((data) => {
-            setTotal(data.data.total)
+        }).then((response) => {
+            console.log(response.data);
+            console.log(response.data.total);
+            console.log(typeof response.data.total);
+            const totalPages = Math.ceil(Number(response.data.total) / 100);
+            console.log("Total pages:", totalPages);
+            setN(totalPages);
+            if (totalPages > 1) {
+                const requests = [];
+                for (let im = 0; im < totalPages; im++) {
+                    requests.push(
+                        axios.get(`${domain}${apiLink}/?page=${im + 1}&size=100`, {
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                            }
+                        })
+                    );
+                }
+                Promise.all(requests)
+                    .then((responses) => {
+                        const newData = responses.flatMap(response => response.data.items);
+                        setData(newData);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching pages data:", error);
+                    });
+            } else {
+                console.log("Total data:", tot);
+                axios.get(`${domain}${apiLink}/?page=1&size=100`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }).then((data1) => {
+                    setData(data1.data.items);
+                    console.log("Page 1 data:", tot);
+                }).catch((error) => {
+                    console.log("Error fetching page 1 data:", error);
+                });
+            }
 
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
                 headers: {
                     'refresh-token': `${localStorage.getItem("refresh_token")}`,
                 }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", data.data.access_token)
-                    localStorage.setItem("refresh_token", data.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
+            }).then((response) => {
+                localStorage.setItem("access_token", data.data.access_token);
+                localStorage.setItem("refresh_token", data.data.refresh_token);
+            }).catch((error) => {
+                console.error("Refresh token error:", error);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'authorization__wrap';
+                errorMessage.textContent = 'Авторизируйтесь!';
+                document.body.appendChild(errorMessage);
 
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
-        })
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 2000);
+            });
+        });
     }, []);
-
-    //=== /useEffect ===//
-
-    useEffect(() => {
-        axios.get(`${domain}${url}/?page=${pageIndex + 1}&size=1`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data1) => {
-            setData(Array.isArray(data1.data.items) ? data1.data.items : []);
-        })
-    }, [pageIndex]);
-
 
     return (
         <>
@@ -116,7 +137,6 @@ function MobTable({columns, openViewModal, url}) {
                 pageIndex={pageIndex}
                 pageCount={pageCount}
                 gotoPage={gotoPage}
-                setNullifaer={setNullifaer}
             />
         </>
     );
