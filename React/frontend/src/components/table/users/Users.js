@@ -1,12 +1,12 @@
 import React from 'react';
 import TableStructure from "@/components/table/components/TableStructure";
+import MainUsers from "@/components/table/users/MainUsers";
+import UsersPage from "@/components/table/users/UsersPage";
 
 function Users() {
     return (
         <TableStructure>
-            <h1>
-                Hello Users!
-            </h1>
+            <MainUsers />
         </TableStructure>
     );
 }
