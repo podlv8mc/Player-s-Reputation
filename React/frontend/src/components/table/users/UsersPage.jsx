@@ -7,13 +7,13 @@ function UsersPage() {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Имя пользователя',
+                Header: 'Логин',
                 accessor: row => row.username,
             },
-            //{
-              //  Header: 'Логин',
-                //accessor: row => row.name,
-            //},
+            {
+                Header: 'Имя пользователя',
+                accessor: row => row.name,
+            },
             {
                 Header: 'Discord',
                 accessor: row => row.discord,
@@ -28,15 +28,15 @@ function UsersPage() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        //name: "",
+        name: "",
         discord: "",
         email: "",
         password: "",
     });
 
     const inputLabels = {
-        username: "Имя пользователя",
-        //name: "Логин",
+        username: "Логин",
+        name: "Имя пользователя",
         discord: "Discord",
         email: "Email",
         password: "Пароль",

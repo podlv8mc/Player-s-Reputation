@@ -267,8 +267,7 @@ function MainTable() {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }).then((data1) => {
-                    setTot(data1.data.items);
-                    setData(tot);
+                    setData(data1.data.items);
                     console.log("Page 1 data:", tot);
                 }).catch((error) => {
                     console.log("Error fetching page 1 data:", error);
