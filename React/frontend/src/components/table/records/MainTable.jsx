@@ -238,7 +238,7 @@ function MainTable() {
             setN(Math.ceil(response.data.total / 100))
             if (n > 1){
                 for (let im = 0; im<n; im++){
-                    axios.get(`${domain}?page=${im+1}&size=100`,  {
+                    axios.get(`${domain}records/?page=${im+1}&size=100`,  {
                         headers:{
                             'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                         }
@@ -253,7 +253,7 @@ function MainTable() {
                 console.log(tot)
             }else {
                 console.log(tot)
-                axios.get(`${domain}?page=1&size=100`,  {
+                axios.get(`${domain}records/?page=1&size=100`,  {
                     headers:{
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
