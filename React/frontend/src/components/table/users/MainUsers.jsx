@@ -313,7 +313,7 @@ function MainUsers() {
     );
 
     return (
-        <main id="main" className="main">
+        <>
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
@@ -380,7 +380,7 @@ function MainUsers() {
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
-        </main>
+        </>
     );
 }
 
