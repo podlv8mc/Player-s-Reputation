@@ -8,7 +8,6 @@ const PaginationButtons = ({ pageIndex, pageCount, gotoPage, setNullifaer }) => 
             pageCount={pageCount}
             onPageChange={({ selected }) => {
                 gotoPage(selected);
-                setNullifaer(selected);
             }}
             pageRangeDisplayed={2} // Количество отображаемых страниц
             marginPagesDisplayed={3} // Количество видимых страниц в начале и в конце

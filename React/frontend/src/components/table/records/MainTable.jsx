@@ -235,7 +235,8 @@ function MainTable() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            setN(Math.ceil(response.data.total / 100))
+            setN(Math.ceil(Number(response.data.total)/ 100))
+            console.log(n)
             if (n > 1){
                 for (let im = 0; im<n; im++){
                     axios.get(`${domain}records/?page=${im+1}&size=100`,  {
@@ -243,7 +244,7 @@ function MainTable() {
                             'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                         }
                     }).then((data1) => {
-
+                        console.log(data1.data)
                         setTot([...tot, ...data1.data.items])
                     }).catch((error) => {
                         console.log(error)
