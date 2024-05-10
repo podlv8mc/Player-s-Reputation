@@ -3,7 +3,6 @@ import {useTable, usePagination, useFilters} from 'react-table';
 import Modal from '@/components/main/modal/Modal';
 import Images from '@/image/image';
 import axios from "axios";
-import SelectSigns from "@/components/table/components/SelectSigns";
 import domain from "@/domain";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 import MobTable from "@/components/table/components/MobTable";
@@ -17,7 +16,6 @@ function MainFunds() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
-    const [selectedOption, setSelectedOption] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [total, setTotal] = useState(0)
     const [nullifaer, setNullifaer] = useState(0)
@@ -44,12 +42,14 @@ function MainFunds() {
         name: "",
         discord: "",
         link: "",
+        //email: "",
     });
 
     const inputLabels = {
         name: "Название",
         discord: "Discord",
         link: "Сайт",
+        //email: "Email",
     };
 
     const {
@@ -178,7 +178,6 @@ function MainFunds() {
         const userDataWithTimestamp = {
             ...newUserData,
             createdAt: createdAt,
-            fund_id: selectedOption ? selectedOption.value : null,
         }
 
         axios.post(`${domain}funds`, userDataWithTimestamp, {
@@ -188,6 +187,7 @@ function MainFunds() {
         })
             .catch((error) => {
                 console.error(error);
+                console.log(userDataWithTimestamp)
             });
 
         setIsModalOpen(false);
@@ -219,11 +219,11 @@ function MainFunds() {
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
             <div className="table__modal-title">
-                Добавить пользователя
+                Добавить Фонд
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleSubmit}>
-                {Object.keys(newUserData).map((key, index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.keys(newUserData).map((key) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -237,7 +237,7 @@ function MainFunds() {
                         />
                     </div>
                 ))}
-                <SelectSigns onSelect={setSelectedOption}/>
+
                 <button className="btn-hover table__btn" type="submit">
                     Добавить
                 </button>
@@ -248,11 +248,11 @@ function MainFunds() {
     const EditModalContent = editingUserData && (
         <Modal active={isEditModalOpen} setActive={setIsEditModalOpen} className="edit-modal modal-scroll modal-bg">
             <div className="table__modal-title">
-                Редактировать пользователя
+                Редактировать Фонд
             </div>
             <form className="table__modal-form-wrap" onSubmit={handleEditSubmit}>
-                {Object.entries(newUserData).map(([key,], index, array) => (
-                    <div className={`table__modal-row${index === array.length - 1 ? ' hidden' : ''}`} key={key}>
+                {Object.entries(newUserData).map(([key,]) => (
+                    <div className="table__modal-row">
                         <label className="table__modal-cell-title" htmlFor={key}>
                             {inputLabels[key]}
                         </label>
@@ -286,7 +286,7 @@ function MainFunds() {
                 <img src={Images.edit} alt="edit"/>
             </button>
             <div className="table__modal-title">
-                Информация о пользователе
+                Информация о Фонде
             </div>
             <div className="table__modal-form-wrap">
                 {columns.map(column => (

@@ -46,7 +46,7 @@ function MainUsers() {
 
     const [newUserData, setNewUserData] = useState({
         username: "",
-        name: "",
+        //name: "",
         discord: "",
         email: "",
         password: "",
@@ -209,11 +209,12 @@ function MainUsers() {
         })
             .then((response) => {
                 setIsEditModalOpen(false);
+                console.log(editingUserData)
             })
             .catch((error) => {
                 console.error(error);
+                console.log(editingUserData)
             })
-
     };
 
     const toggleFilterInput = () => {

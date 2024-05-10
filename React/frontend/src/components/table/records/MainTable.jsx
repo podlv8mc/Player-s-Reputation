@@ -192,7 +192,7 @@ function MainTable() {
         neteller: "Neteller",
         pokerstrategy: "Poker strategy",
         mail: "E-mail",
-        vk: "Вконтекте",
+        vk: "Вконтакте",
         facebook: "Facebook",
         blog: "Блог",
         forum: "Форум",
