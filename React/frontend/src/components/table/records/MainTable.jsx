@@ -235,6 +235,9 @@ function MainTable() {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
+            console.log(response.data);
+            console.log(response.data.total);
+            console.log(typeof response.data.total);
             setN(Math.ceil(Number(response.data.total) / 100));
             console.log("Total pages:", n);
             if (n > 1) {
