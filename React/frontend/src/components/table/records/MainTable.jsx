@@ -250,7 +250,10 @@ function MainTable() {
                     }).then((data1) => {
                         console.log("Page", im + 1, "data:", data1.data);
                         console.log(2, data1.data);
+                        setData([...tot, ...data1.data.items])
+                        console.log(data)
                         setTot([...tot, ...data1.data.items]);
+                        console.log(tot)
                     }).catch((error) => {
                         console.log("Error fetching page", im + 1, "data:", error);
                     });
