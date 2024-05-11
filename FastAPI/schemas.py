@@ -72,6 +72,7 @@ class UserUpdate(users_schemas.BaseUserUpdate):
     email: Optional[str | None] = None
     name: Optional[str | None] = None
     role: Roles
+    discord: Optional[str | None] = None
 
 
 class FundBase(CreateUpdateDictModel):

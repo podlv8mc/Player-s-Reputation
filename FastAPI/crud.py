@@ -34,13 +34,14 @@ async def get_fund_by_id(
     if not fund:
         raise ObjectNotfund
 
-    if current_user.role == models.Roles.MANAGER and current_user not in fund.managers:
-        raise Forbidden
+    if current_user:
+        if current_user.role == models.Roles.MANAGER and current_user not in fund.managers:
+            raise Forbidden
 
-    if current_user.role == models.Roles.ADMIN or (
-        current_user.role == models.Roles.MANAGER and current_user in fund.managers
-    ):
-        return fund
+        if current_user.role == models.Roles.ADMIN or (
+            current_user.role == models.Roles.MANAGER and current_user in fund.managers
+        ):
+            return fund
 
 
 async def update_fund_by_id(
