@@ -3,7 +3,6 @@ import Modal from "@/components/main/modal/Modal";
 import Sections from "@/components/headers/Sections";
 import Form from "@/components/main/forms/Form";
 
-
 const ContactLink = (props) => {
     const [modalActive, setModalActive] = useState(false);
 
@@ -29,6 +28,5 @@ const ContactLink = (props) => {
         </div>
     );
 };
-
 
 export default ContactLink

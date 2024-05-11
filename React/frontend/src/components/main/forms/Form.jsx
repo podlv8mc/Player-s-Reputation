@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Images from "@/image/image";
 import axios from "axios";
+import domain from "@/domain";
 
 const Form = ({ id }) => {
-    const [recommendation, setRecommendation] = useState('');
+    const [recommendation, setRecommendation] = useState(id);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
@@ -27,7 +28,7 @@ const Form = ({ id }) => {
         e.preventDefault();
         console.log('Submitted!', recommendation, name, email, subject, message);
 
-        axios.post("httpil", {
+        axios.post(`${domain}send_email`, {
             user_choice: recommendation,
             name: name,
             email: email,
