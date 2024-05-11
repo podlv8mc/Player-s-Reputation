@@ -194,7 +194,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setIsEditModalOpen(true);
     };
 
-    const closeEditModal = () => {
+    const closeEditModal = (e) => {
+        e.preventDefault();
         setIsEditModalOpen(false);
     };
 
@@ -267,7 +268,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         })
             .then((response) => {
-                setIsEditModalOpen(false);
+                //setIsEditModalOpen(false);
                 window.location.reload();
             })
             .catch((error) => {
@@ -405,6 +406,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     value={editingUserData[key]}
                                     onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
                                     autoComplete="off"
+                                    disabled={key === "username"}
                                 />
                             </div>
                         ))}

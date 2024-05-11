@@ -69,6 +69,7 @@ function MainCabinet() {
                     label="Логин"
                     value={cabinet.username || ''}
                     onChange={(e) => handleChange('username', e.target.value)}
+                    disabled
                 />
                 <ProfileInput
                     label="Имя пользователя"
