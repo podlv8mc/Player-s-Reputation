@@ -26,6 +26,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
 
+    document.querySelector(".table__modal-row-disabled #username").disabled = true;
+
     //===----- Table -----===//
 
     const {
@@ -194,7 +196,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setIsEditModalOpen(true);
     };
 
-    const closeEditModal = () => {
+    const closeEditModal = (e) => {
+        e.preventDefault();
         setIsEditModalOpen(false);
     };
 
@@ -267,7 +270,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         })
             .then((response) => {
-                setIsEditModalOpen(false);
+                //setIsEditModalOpen(false);
                 window.location.reload();
             })
             .catch((error) => {
@@ -393,7 +396,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ) : apiLink === "users" ? (
                     <>
                         {Object.entries(newUserData).map(([key,],) => (
-                            <div className="table__modal-row">
+                            <div className="table__modal-row table__modal-row-disabled">
                                 <label className="table__modal-cell-title" htmlFor={key}>
                                     {inputLabels[key]}
                                 </label>
