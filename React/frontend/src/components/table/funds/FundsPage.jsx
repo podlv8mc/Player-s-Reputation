@@ -1,17 +1,13 @@
 import React, {useState} from 'react';
 import Table from "@/components/table/components/Table";
 
-function UsersPage() {
-    const apiLink = "users";
+function FundsPage() {
+    const apiLink = "funds";
 
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Логин',
-                accessor: row => row.username,
-            },
-            {
-                Header: 'Имя пользователя',
+                Header: 'Название',
                 accessor: row => row.name,
             },
             {
@@ -19,27 +15,25 @@ function UsersPage() {
                 accessor: row => row.discord,
             },
             {
-                Header: 'Email',
-                accessor: row => row.email,
+                Header: 'Сайт',
+                accessor: row => row.link,
             },
         ],
         []
     );
 
     const [newUserData, setNewUserData] = useState({
-        username: "",
         name: "",
         discord: "",
-        email: "",
-        password: "",
+        link: "",
+        //email: "",
     });
 
     const inputLabels = {
-        username: "Логин",
-        name: "Имя пользователя",
+        name: "Название",
         discord: "Discord",
-        email: "Email",
-        password: "Пароль",
+        link: "Сайт",
+        //email: "Email",
     };
 
     return (
@@ -50,11 +44,11 @@ function UsersPage() {
                 inputLabels={inputLabels}
                 newUserData={newUserData}
                 setNewUserData={setNewUserData}
-                modalTitle="пользователя"
-                modalHeader="пользователе"
+                modalTitle="Фонд"
+                modalHeader="Фонде"
             />
         </>
     );
 }
 
-export default UsersPage;
+export default FundsPage;

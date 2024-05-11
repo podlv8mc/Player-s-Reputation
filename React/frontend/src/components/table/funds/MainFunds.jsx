@@ -139,6 +139,17 @@ function MainFunds() {
         };
     }, []);
 
+
+
+
+
+
+
+
+
+
+
+
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
     };
@@ -295,7 +306,6 @@ function MainFunds() {
                     </div>
                 ))}
             </div>
-
         </Modal>
     );
 

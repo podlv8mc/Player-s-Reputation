@@ -2,7 +2,7 @@ import React from 'react';
 import Images from '@/image/image';
 import ReactPaginate from 'react-paginate';
 
-const PaginationButtons = ({ pageIndex, pageCount, gotoPage, setNullifaer }) => (
+const PaginationButtons = ({ pageIndex, pageCount, gotoPage }) => (
     <nav className="pagination__wrap">
         <ReactPaginate
             pageCount={pageCount}
