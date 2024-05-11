@@ -42,6 +42,8 @@ async def get_fund_by_id(
             current_user.role == models.Roles.MANAGER and current_user in fund.managers
         ):
             return fund
+    
+    return fund
 
 
 async def update_fund_by_id(
