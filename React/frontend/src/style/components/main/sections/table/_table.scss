@@ -208,6 +208,10 @@
     color: #ffffff !important;
   }
 
+  &__placeholder {
+    @include Montserrat-500;
+  }
+
   &__indicator-separator {
     display: none !important;
   }

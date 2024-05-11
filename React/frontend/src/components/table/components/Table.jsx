@@ -296,7 +296,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
-                                    placeholder={inputLabels[key]}
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     name={key}
                                     value={newUserData[key]}
@@ -316,6 +316,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     name={key}
                                     value={newUserData[key]}
@@ -334,6 +335,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     name={key}
                                     value={newUserData[key]}
@@ -367,6 +369,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     type="text"
                                     name={key}
@@ -386,6 +389,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     type="text"
                                     name={key}
@@ -405,6 +409,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 </label>
                                 <input
                                     className="table__modal-cell"
+                                    placeholder={`${inputLabels[key]}...`}
                                     id={key}
                                     type="text"
                                     name={key}
