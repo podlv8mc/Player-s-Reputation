@@ -26,8 +26,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
 
-    document.querySelector(".table__modal-row-disabled #username").disabled = true;
-
     //===----- Table -----===//
 
     const {
@@ -396,7 +394,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ) : apiLink === "users" ? (
                     <>
                         {Object.entries(newUserData).map(([key,],) => (
-                            <div className="table__modal-row table__modal-row-disabled">
+                            <div className="table__modal-row">
                                 <label className="table__modal-cell-title" htmlFor={key}>
                                     {inputLabels[key]}
                                 </label>
@@ -408,6 +406,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     value={editingUserData[key]}
                                     onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
                                     autoComplete="off"
+                                    disabled={key === "username"}
                                 />
                             </div>
                         ))}
