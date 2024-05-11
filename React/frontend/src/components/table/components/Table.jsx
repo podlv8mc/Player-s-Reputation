@@ -229,8 +229,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             requestUrl = `${domain}records`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else if (apiLink === "funds") {
+            const userDataWithTimestamp = {
+                ...newUserData,
+                email: "string@gmail.com",
+            };
             requestUrl = `${domain}funds`;
-            requestPromise = axios.post(requestUrl, newUserData, commonData);
+            requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else if (apiLink === "users") {
             const userDataWithTimestamp = {
                 ...newUserData,
