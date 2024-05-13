@@ -265,9 +265,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
                 }
             })
-            .finally(() => {
-                setIsModalOpen(false);
-            });
     };
 
     const handleEditSubmit = async (e) => {
