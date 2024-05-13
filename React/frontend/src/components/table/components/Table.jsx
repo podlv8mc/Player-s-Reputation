@@ -25,6 +25,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
+    const [error, setError] = useState(null);
 
     //===----- Table -----===//
 
@@ -253,19 +254,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
         requestPromise
             .then(response => {
-                console.log("Request successful:", response);
+                setIsModalOpen(false);
+                window.location.reload()
             })
             .catch(error => {
                 console.error("Request error:", error);
                 if (error.response && error.response.status === 500) { // Проверка на код ошибки 409 (Conflict)
-                    console.warn("Username already exists. Please choose a different one."); // Предупреждение пользователю
+                    setError("Такой пользователь уже существует"); // Предупреждение пользователю
                 } else {
-                    console.error("Unhandled error:", error); // Если ошибка не связана с именем пользователя, выведите в консоль
+
                 }
             })
             .finally(() => {
                 setIsModalOpen(false);
-
             });
     };
 
@@ -350,6 +351,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             </div>
                         ))}
                         <SelectRole onSelect={setSelectedOption}/>
+                        {error && <div className="massage__error">{error}</div> }
                     </>
                 ) : null}
                 <button className="btn-hover table__btn" type="submit">
