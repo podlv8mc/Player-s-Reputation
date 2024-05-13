@@ -257,10 +257,15 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
             .catch(error => {
                 console.error("Request error:", error);
+                if (error.response && error.response.status === 500) { // Проверка на код ошибки 409 (Conflict)
+                    console.warn("Username already exists. Please choose a different one."); // Предупреждение пользователю
+                } else {
+                    console.error("Unhandled error:", error); // Если ошибка не связана с именем пользователя, выведите в консоль
+                }
             })
             .finally(() => {
                 setIsModalOpen(false);
-                window.location.reload();
+
             });
     };
 
