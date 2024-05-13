@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 
-const MobHeaderList = ({ className, name, alt, text, onClick, linkTo }) => {
-
+const MobHeaderList = ({ className, name, alt, text, linkTo, onCloseMenu }) => {
 
     const renderLink = () => {
         if (!linkTo) return null;
@@ -23,7 +22,7 @@ const MobHeaderList = ({ className, name, alt, text, onClick, linkTo }) => {
                     smooth={true}
                     offset={0}
                     duration={0}
-                    onClick={onClick}
+                    onClick={onCloseMenu}
                 >
                     {renderContent()}
                 </Link>

@@ -26,18 +26,22 @@ const MobHeader = ({handleModalOpen}) => {
         setIsOpen(!isOpen);
     };
 
+    const handleCloseMenu = () => {
+        setIsOpen(false);
+    };
+
     const renderLists = () => {
         if (location.pathname === "/") {
             return (
                 <>
                     <MobHeaderList linkTo="home" className="globalnav" name={Images.home} alt="home" spanClass="globalnav__text"
-                          text="Главная" isOpen={isOpen}/>
+                          text="Главная" isOpen={isOpen} onCloseMenu={handleCloseMenu}/>
                     <MobHeaderList linkTo="about" className="globalnav" name={Images.about} alt="about"
-                          spanClass="globalnav__text" text="О нас" isOpen={isOpen}/>
+                          spanClass="globalnav__text" text="О нас" isOpen={isOpen} onCloseMenu={handleCloseMenu}/>
                     <MobHeaderList linkTo="funds" className="globalnav" name={Images.funds} alt="funds"
-                          spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
+                          spanClass="globalnav__text" text="Фонды" isOpen={isOpen} onCloseMenu={handleCloseMenu}/>
                     <MobHeaderList linkTo="trainers" className="globalnav" name={Images.trainer} alt="trainer"
-                          spanClass="globalnav__text" text="Тренера" isOpen={isOpen}/>
+                          spanClass="globalnav__text" text="Тренера" isOpen={isOpen} onCloseMenu={handleCloseMenu}/>
                 </>
             );
         } else {

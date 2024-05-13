@@ -411,6 +411,12 @@
     justify-content: center;
     gap: 20px;
   }
+
+  .massage__error {
+    max-width: none;
+    font-size: 24px;
+    padding: 17px 0px 0px 0px;
+  }
 }
 
 .pagination__wrap {
