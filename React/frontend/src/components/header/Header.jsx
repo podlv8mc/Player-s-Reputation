@@ -3,7 +3,7 @@ import StickyBox from "react-sticky-box";
 import Navigation from "@/components/header/Navigation";
 
 const Header = ({ handleModalOpen }) => {
-    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(true);
 
     const handleButtonClick = () => {
         setIsButtonClicked(prevState => !prevState);

@@ -6,7 +6,7 @@ import axios from "axios";
 import domain from "@/domain";
 
 const Navigation = ({onButtonClick, handleModalOpen}) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const location = useLocation();
     const [authorization, setAuthorization] = useState(false);
 
@@ -26,6 +26,8 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
         setIsOpen(!isOpen);
         onButtonClick();
     };
+
+    console.log(isOpen)
 
     const renderLists = () => {
         if (location.pathname === "/") {
