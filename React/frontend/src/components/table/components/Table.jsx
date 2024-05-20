@@ -304,7 +304,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
-            <button className="modal__btn-close" onClick={() => setIsModalOpen(false)} />
+            <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
             <div className="table__modal-title">
                 Добавить {modalTitle}
             </div>
@@ -367,7 +367,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             </div>
                         ))}
                         <SelectRole onSelect={setSelectedOption}/>
-                        {error && <div className="massage__error">{error}</div> }
+                        {error && <div className="massage__error">{error}</div>}
                     </>
                 ) : null}
                 <button className="btn-hover table__btn" type="submit">
@@ -531,7 +531,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     <div className="table__top-select">
                         {apiLink === "records" ? (
                             <TableFilter data={data} onChange={handleFilterChange}/>
-                        ): null}
+                        ) : null}
                     </div>
                     <div className="table__top">
                         <input
@@ -570,7 +570,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             prepareRow(row);
                             return (
                                 <tr className="table__body" {...row.getRowProps()}
-                                    onClick={() => openViewModal(row.original)}>
+                                    onClick={() =>
+                                        {
+                                            openViewModal(row.original)
+                                            console.log(row)
+                                        }
+                                }>
                                     {row.cells.map((cell, index) => (
                                         <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
                                     ))}
