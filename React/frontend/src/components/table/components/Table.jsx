@@ -299,11 +299,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             .then(() => {
                 closeDeleteModal();
                 setData(data.filter(user => user.id !== deleteContent));
-                console.log(deleteContent)
+                window.location.reload();
             })
             .catch(error => {
                 console.error(error);
-                console.log(deleteContent)
             });
     };
 
@@ -486,9 +485,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ))}
             </div>
             <div className="table__btn-row">
-                <button className="btn-hover table__btn"
-                        onClick={openDeleteModal}
-                >
+                <button className="btn-hover table__btn" onClick={openDeleteModal}>
                     Удалить {modalTitle}
                 </button>
             </div>
@@ -580,7 +577,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     onClick={() =>
                                         {
                                             openViewModal(row.original)
-                                            setDeleteContent(row.cells[1].value)
+                                            setDeleteContent(row.cells[0].value)
                                         }
                                 }>
                                     {row.cells.map((cell, index) => (

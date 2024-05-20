@@ -7,12 +7,12 @@ function UsersPage() {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Логин',
-                accessor: row => row.username,
-            },
-            {
                 Header: 'id',
                 accessor: row => row.id,
+            },
+            {
+                Header: 'Логин',
+                accessor: row => row.username,
             },
             {
                 Header: 'Имя пользователя',

@@ -7,6 +7,10 @@ function FundsPage() {
     const columns = React.useMemo(
         () => [
             {
+                Header: 'id',
+                accessor: row => row.id,
+            },
+            {
                 Header: 'Название',
                 accessor: row => row.name,
             },

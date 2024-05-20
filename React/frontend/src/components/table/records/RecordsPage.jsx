@@ -7,12 +7,12 @@ function RecordsPage() {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Фонд',
-                accessor: row => row.fund.name,
+                Header: 'id',
+                accessor: row => row.id,
             },
             {
-                Header: 'record id',
-                accessor: row => row.id,
+                Header: 'Фонд',
+                accessor: row => row.fund.name,
             },
             {
                 Header: 'Создано',
