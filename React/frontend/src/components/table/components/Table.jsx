@@ -298,7 +298,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 setData(data.filter(user => user.id !== deleteContent.id));
             })
             .catch(error => {
-                console.error("Error deleting user:", error);
+                console.error(error);
             });
     };
 

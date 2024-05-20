@@ -27,8 +27,6 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
         onButtonClick();
     };
 
-    console.log(isOpen)
-
     const renderLists = () => {
         if (location.pathname === "/") {
             return (

@@ -22,7 +22,7 @@ function HomePage() {
             <Main handleModalOpen={handleModalOpen}/>
             <Modal active={modalActive} setActive={handleModalClose}>
                 <button className="modal__btn-close" onClick={handleModalClose}></button>
-                <LoginForm/>
+                <LoginForm autoFocus={modalActive}/>
             </Modal>
         </div>
     );

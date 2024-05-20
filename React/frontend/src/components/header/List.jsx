@@ -25,8 +25,10 @@ const List = ({className, name, alt, spanClass, text, isOpen, onClick, linkTo}) 
 
     const handleMouseOut = () => {
         if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.currentTime = 0; // Сброс видео на начало
+            setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 100);
         }
     };
     const renderLink = () => {

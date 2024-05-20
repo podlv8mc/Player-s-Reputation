@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Images from "@/image/image";
 import axios from 'axios';
 import domain from "@/domain";
 
-const LoginForm = () => {
+const LoginForm = ({ autoFocus }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showFigure, setShowFigure] = useState(window.innerWidth <= 650);
     const [error, setError] = useState(null);
+    const emailInputRef = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {
@@ -21,6 +22,14 @@ const LoginForm = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        if (autoFocus) {
+            setTimeout(() => {
+                emailInputRef.current.focus();
+            }, 100);
+        }
+    }, [autoFocus]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +64,7 @@ const LoginForm = () => {
                 </div>
                 <div className="input__wrap">
                     <input
+                        ref={emailInputRef}
                         className="input"
                         type="text"
                         required
