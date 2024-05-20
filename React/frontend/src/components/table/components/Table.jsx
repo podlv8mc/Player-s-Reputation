@@ -573,7 +573,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     onClick={() =>
                                         {
                                             openViewModal(row.original)
-                                            console.log(row)
+                                            console.log(row.cells[1].value)
                                         }
                                 }>
                                     {row.cells.map((cell, index) => (
