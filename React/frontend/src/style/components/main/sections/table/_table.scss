@@ -29,6 +29,28 @@
   }
 }
 
+.app__table-wrap {
+  .main {
+
+    .table__top-wrap {
+      width: 100%;
+      position: relative;
+    }
+
+    .table {
+      width: 100%;
+      min-width: auto;
+    }
+
+    .pagination__wrap {
+      .pagination__box {
+        width: 100%;
+        position: relative;
+      }
+    }
+  }
+}
+
 .table__top-wrap {
   position: relative;
 
@@ -88,11 +110,13 @@
         border-radius: 10px;
         background: #000000;
         transition: all 0.4s ease;
+        opacity: 0;
+        visibility: hidden;
       }
 
       .input__search-op {
-        opacity: 0;
-        visibility: hidden;
+        opacity: 1;
+        visibility: visible;
       }
     }
   }

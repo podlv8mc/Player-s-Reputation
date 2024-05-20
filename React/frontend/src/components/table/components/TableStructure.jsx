@@ -1,11 +1,11 @@
 import React from "react";
 import ResizableHeader from "@/components/ResizableHeader";
 
-const TableStructure = ({children}) => {
+const TableStructure = ({classNames, children, style, styles}) => {
     return (
-        <div className="App app__table">
+        <div className={classNames} style={style}>
             <ResizableHeader/>
-            <main id="main" className="main">
+            <main id="main" className="main" style={styles}>
                 {children}
             </main>
         </div>

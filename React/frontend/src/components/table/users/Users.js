@@ -1,11 +1,10 @@
 import React from 'react';
 import TableStructure from "@/components/table/components/TableStructure";
-import MainUsers from "@/components/table/users/MainUsers";
 import UsersPage from "@/components/table/users/UsersPage";
 
 function Users() {
     return (
-        <TableStructure>
+        <TableStructure classNames={"App app__table app__table-wrap"} style={{maxWidth: "1310px", }}  styles={{overflow: "hidden"}}>
             <UsersPage />
         </TableStructure>
     );

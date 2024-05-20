@@ -1,11 +1,10 @@
 import React from 'react';
-import MainFunds from "@/components/table/funds/MainFunds";
 import TableStructure from "@/components/table/components/TableStructure";
 import FundsPage from "@/components/table/funds/FundsPage";
 
 function Users() {
     return (
-        <TableStructure>
+        <TableStructure classNames={"App app__table app__table-wrap"} style={{maxWidth: "1310px", }}  styles={{overflow: "hidden"}}>
             <FundsPage />
         </TableStructure>
     );
