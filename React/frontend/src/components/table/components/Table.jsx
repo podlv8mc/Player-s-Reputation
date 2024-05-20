@@ -26,7 +26,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
     const [error, setError] = useState(null);
-    const [deleteContent, setDeleteContent] = useState(0);
+    const [deleteContent, setDeleteContent] = useState(null);
+    const [deleteModal, setDeleteModal] = useState(false);
 
     //===----- Table -----===//
 
@@ -198,11 +199,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const openDeleteModal = (user) => {
         console.log("Удаляемый пользователь:", user);
         console.log(deleteContent)
+        setDeleteModal(true)
     };
 
     const closeDeleteModal = () => {
         console.log(deleteContent)
-        setDeleteContent(null)
+        setDeleteModal(false)
     }
 
     const handleChange = e => {
@@ -494,7 +496,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const DeleteModalContent = deleteContent && (
-        <Modal active={!!deleteContent} setActive={closeDeleteModal}>
+        <Modal active={deleteModal} setActive={closeDeleteModal}>
             <h3>
                 Вы уверены что хотите удалить {modalTitle}?
             </h3>
