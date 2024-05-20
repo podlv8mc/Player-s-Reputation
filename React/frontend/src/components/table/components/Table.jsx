@@ -201,10 +201,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setIsEditModalOpen(false);
     };
 
-    const openDeleteModal = (deleteContent) => {
-        setDeleteContent(deleteContent);
+    const openDeleteModal = (user) => {
+        setDeleteContent(user);
     };
-
 
     const closeDeleteModal = () => {
         setDeleteContent(null)
@@ -485,7 +484,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ))}
             </div>
             <div className="table__btn-row">
-                <button className="btn-hover table__btn" onClick={() => openDeleteModal(row)}>
+                <button className="btn-hover table__btn"
+                        onClick={() => openDeleteModal(row)}
+                >
                     Удалить {modalTitle}
                 </button>
             </div>
