@@ -91,6 +91,10 @@ module.exports = {
                 }
             },
             {
+                test: /\.mp4$/,
+                use: 'file-loader?name=video/[name].[contenthash].[ext]',
+            },
+            {
                 test: /\.xml$/i,
                 use: ['xml-loader']
             }

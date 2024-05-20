@@ -52,7 +52,7 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
         <>
             <nav className="globalnav__wrap">
                 <ul className="globalnav__list">
-                    <List linkTo="/" className="globalnav globalnav-logo" name={Images.logo} alt="logo"
+                    <List linkTo="/" className="globalnav globalnav-logo" name={Images.logo}
                           spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen}/>
                     {renderLists()}
                     {
@@ -86,7 +86,8 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                                     }}/>
                                 </>
                             ) : (
-                                <List onClick={handleModalOpen} linkTo="#" className="globalnav" name={Images.login} alt="home" spanClass="globalnav__text" text="Войти" isOpen={isOpen} />
+                                <List onClick={handleModalOpen} linkTo="#" className="globalnav" name={Images.login}
+                                      alt="home" spanClass="globalnav__text" text="Войти" isOpen={isOpen}/>
                             )
                         )
                     }
