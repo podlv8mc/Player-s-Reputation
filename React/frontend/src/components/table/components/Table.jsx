@@ -289,7 +289,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const handleDeleteUser = () => {
-        axios.delete(`${domain}${apiLink}/${deleteContent.id}`, {
+        axios.delete(`${domain}${apiLink}/${deleteContent}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
