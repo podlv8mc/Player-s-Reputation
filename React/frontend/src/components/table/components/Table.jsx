@@ -64,11 +64,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            console.log(response.data);
-            console.log(response.data.total);
-            console.log(typeof response.data.total);
             const totalPages = Math.ceil(Number(response.data.total) / 100);
-            console.log("Total pages:", totalPages);
             setN(totalPages);
             if (totalPages > 1) {
                 const requests = [];
@@ -90,14 +86,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         console.error("Error fetching pages data:", error);
                     });
             } else {
-                console.log("Total data:", tot);
                 axios.get(`${domain}${apiLink}/?page=1&size=100`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
                 }).then((data1) => {
                     setData(data1.data.items);
-                    console.log("Page 1 data:", tot);
                 }).catch((error) => {
                     console.log("Error fetching page 1 data:", error);
                 });
@@ -202,6 +196,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const openDeleteModal = (user) => {
+        console.log("Удаляемый пользователь:", user);
         setDeleteContent(user);
     };
 
@@ -485,7 +480,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             </div>
             <div className="table__btn-row">
                 <button className="btn-hover table__btn"
-                        onClick={() => openDeleteModal(row.original)}
+                        onClick={() => openDeleteModal(user)}
                 >
                     Удалить {modalTitle}
                 </button>
