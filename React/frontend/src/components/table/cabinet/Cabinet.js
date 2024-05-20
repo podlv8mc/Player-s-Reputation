@@ -4,7 +4,10 @@ import TableStructure from "@/components/table/components/TableStructure";
 
 function Users() {
     return (
-        <TableStructure>
+        <TableStructure
+            classNames={"App app__table app__table-wrap"}
+            styles={{overflow: "hidden"}}
+        >
             <MainCabinet />
         </TableStructure>
     );
