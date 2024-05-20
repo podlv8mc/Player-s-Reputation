@@ -1,7 +1,11 @@
 {
-  "name": "frontend",
-  "version": "1.2",
+  "name": "school",
+  "main": "src/index.js",
+  "version": "1.5",
   "description": "Player's Reputation",
+  "author": {
+    "name": "FlexFrame"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
