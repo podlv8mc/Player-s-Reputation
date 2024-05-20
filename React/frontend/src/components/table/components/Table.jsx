@@ -301,6 +301,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             });
     };
 
+    console.log(deleteContent)
+
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
