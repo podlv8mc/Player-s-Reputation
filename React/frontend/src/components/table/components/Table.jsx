@@ -26,7 +26,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
     const [error, setError] = useState(null);
-    const [deleteContent, setDeleteContent] = useState(null);
+    const [deleteContent, setDeleteContent] = useState(0);
 
     //===----- Table -----===//
 

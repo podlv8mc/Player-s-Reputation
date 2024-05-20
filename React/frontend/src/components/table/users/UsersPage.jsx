@@ -11,6 +11,10 @@ function UsersPage() {
                 accessor: row => row.username,
             },
             {
+                Header: 'id',
+                accessor: row => row.id,
+            },
+            {
                 Header: 'Имя пользователя',
                 accessor: row => row.name,
             },
