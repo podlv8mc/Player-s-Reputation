@@ -26,6 +26,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [tot, setTot] = useState([]);
     const [n, setN] = useState(0);
     const [error, setError] = useState(null);
+    const [deleteContent, setDeleteContent] = useState(null);
 
     //===----- Table -----===//
 
@@ -199,6 +200,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         e.preventDefault();
         setIsEditModalOpen(false);
     };
+
+    const closeDeleteModal = () => {
+        setDeleteContent(null)
+    }
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -461,11 +466,27 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             </div>
             <div className="table__btn-row">
                 <button className="btn-hover table__btn" onClick={closeEditModal}>
-                    Удалить {modalHeader}
+                    Удалить {modalTitle}
                 </button>
             </div>
         </Modal>
     );
+
+    const DeleteModalContent = (
+        <Modal active={deleteContent} setActive={closeDeleteModal}>
+            <h2>
+                Вы уверены что хотите удалить {modalTitle}?
+            </h2>
+            <div className="table__btn-row">
+                <button className="btn-hover table__btn" onClick={closeDeleteModal}>
+                    Отменить
+                </button>
+                <button className="btn-hover table__btn" onClick={}>
+                    Удалить {modalTitle}
+                </button>
+            </div>
+        </Modal>
+    )
 
     //===----- / Modal Window -----===//
 
@@ -561,6 +582,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             {EditModalContent}
             {ModalContent}
             {ViewModalContent}
+            {DeleteModalContent}
         </>
     );
 }
