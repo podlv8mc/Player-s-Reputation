@@ -197,7 +197,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     const openDeleteModal = (user) => {
         console.log("Удаляемый пользователь:", user);
-        setDeleteContent(user);
     };
 
     const closeDeleteModal = () => {
@@ -295,7 +294,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         })
             .then(() => {
                 closeDeleteModal();
-                setData(data.filter(user => user.id !== deleteContent.id));
+                setData(data.filter(user => user.id !== deleteContent));
             })
             .catch(error => {
                 console.error(error);
@@ -573,7 +572,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     onClick={() =>
                                         {
                                             openViewModal(row.original)
-                                            console.log(row.cells[1].value)
+                                            setDeleteContent(row.cells[1].value)
                                         }
                                 }>
                                     {row.cells.map((cell, index) => (
