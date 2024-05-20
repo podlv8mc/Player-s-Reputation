@@ -484,7 +484,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ))}
             </div>
             <div className="table__btn-row">
-                <button className="table__top-btn" onClick={() => openDeleteModal(row.original)}>
+                <button className="btn-hover table__btn" onClick={() => openDeleteModal(row.original)}>
                     Удалить {modalTitle}
                 </button>
             </div>
