@@ -11,6 +11,10 @@ function RecordsPage() {
                 accessor: row => row.fund.name,
             },
             {
+                Header: 'record id',
+                accessor: row => row.id,
+            },
+            {
                 Header: 'Создано',
                 accessor: row => {
                     const createdAt = new Date(row.created_at);
