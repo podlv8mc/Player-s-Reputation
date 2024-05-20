@@ -202,7 +202,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const openDeleteModal = (user) => {
-
+        setDeleteContent(user);
     }
 
     const closeDeleteModal = () => {
@@ -484,7 +484,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 ))}
             </div>
             <div className="table__btn-row">
-                <button className="btn-hover table__btn" onClick={() => openDeleteModal(selectedUser)}>
+                <button className="table__top-btn" onClick={() => openDeleteModal(row.original)}>
                     Удалить {modalTitle}
                 </button>
             </div>
@@ -492,7 +492,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const DeleteModalContent = deleteContent && (
-        <Modal active={deleteContent} setActive={closeDeleteModal}>
+        <Modal active={!!deleteContent} setActive={closeDeleteModal}>
             <h3>
                 Вы уверены что хотите удалить {modalTitle}?
             </h3>
@@ -600,8 +600,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             )}
             {EditModalContent}
             {ModalContent}
-            {ViewModalContent}
             {DeleteModalContent}
+            {ViewModalContent}
         </>
     );
 }
