@@ -33,8 +33,11 @@
   .main {
 
     .table__top-wrap {
-      width: 100%;
-      position: relative;
+
+      .table__top-box {
+        width: 100%;
+        position: relative;
+      }
     }
 
     .table {

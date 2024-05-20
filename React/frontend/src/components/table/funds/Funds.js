@@ -4,8 +4,12 @@ import FundsPage from "@/components/table/funds/FundsPage";
 
 function Users() {
     return (
-        <TableStructure classNames={"App app__table app__table-wrap"} style={{maxWidth: "1310px", }}  styles={{overflow: "hidden"}}>
-            <FundsPage />
+        <TableStructure
+            classNames={"App app__table app__table-wrap"}
+            style={{maxWidth: "1310px !important",}}
+            styles={{overflow: "hidden"}}
+        >
+            <FundsPage/>
         </TableStructure>
     );
 }
