@@ -292,6 +292,21 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
+    const handleDeleteUser = () => {
+        axios.delete(`${domain}${apiLink}/${deleteContent.id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
+            .then(() => {
+                closeDeleteModal();
+                setData(data.filter(user => user.id !== deleteContent.id));
+            })
+            .catch(error => {
+                console.error("Error deleting user:", error);
+            });
+    };
+
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)} />
@@ -476,16 +491,16 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         </Modal>
     );
 
-    const DeleteModalContent = (
+    const DeleteModalContent = deleteContent && (
         <Modal active={deleteContent} setActive={closeDeleteModal}>
-            <h2>
+            <h3>
                 Вы уверены что хотите удалить {modalTitle}?
-            </h2>
+            </h3>
             <div className="table__btn-row">
                 <button className="btn-hover table__btn" onClick={closeDeleteModal}>
                     Отменить
                 </button>
-                <button className="btn-hover table__btn">
+                <button className="btn-hover table__btn" onClick={handleDeleteUser}>
                     Удалить {modalTitle}
                 </button>
             </div>
