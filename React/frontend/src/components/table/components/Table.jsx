@@ -120,6 +120,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         });
     }, []);
 
+    //===----- / Connection -----===//
+
+    //===----- Copy -----===//
+
     useEffect(() => {
         const handleCopy = (e) => {
             e.preventDefault();
@@ -132,8 +136,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         };
     }, []);
 
-    //===----- / Connection -----===//
-
+    //===----- / Copy -----===//
 
     //===----- UseEffect -----===//
 
