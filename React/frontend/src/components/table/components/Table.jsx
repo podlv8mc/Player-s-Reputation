@@ -120,6 +120,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         });
     }, []);
 
+    useEffect(() => {
+        const handleCopy = (e) => {
+            e.preventDefault();
+        };
+
+        document.addEventListener('copy', handleCopy);
+
+        return () => {
+            document.removeEventListener('copy', handleCopy);
+        };
+    }, []);
+
     //===----- / Connection -----===//
 
 
