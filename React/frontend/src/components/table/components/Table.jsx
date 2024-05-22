@@ -28,6 +28,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [error, setError] = useState(null);
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [role, setRole] = useState("");
 
     //===----- Table -----===//
 
@@ -169,6 +170,37 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             setFilteredData(data);
         }
     }, [data, filterValue]);
+
+    useEffect(() => {
+        axios.get(`${domain}users/me`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((data) => {
+            setRole(data.data.role)
+        }).catch(() => {
+            axios.post(`${domain}auth/jwt/refresh`, null, {
+                headers: {
+                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
+                }
+            })
+                .then((response) => {
+                    localStorage.setItem("access_token", response.data.access_token)
+                    localStorage.setItem("refresh_token", response.data.refresh_token)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'authorization__wrap';
+                    errorMessage.textContent = 'Авторизируйтесь!';
+                    document.body.appendChild(errorMessage);
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                })
+        })
+    }, []);
 
     //===----- / UseEffect -----===//
 
@@ -562,9 +594,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        <button className="table__top-btn" onClick={openModal}>
-                            <img src={Images.add} alt="add"/>
-                        </button>
+                        {role === "admin" ?
+                            <button className="table__top-btn" onClick={openModal}>
+                                <img src={Images.add} alt="add"/>
+                            </button>
+                            : ""
+                        }
                     </div>
                 </div>
             </div>
@@ -589,12 +624,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             prepareRow(row);
                             return (
                                 <tr className="table__body" {...row.getRowProps()}
-                                    onClick={() =>
-                                        {
-                                            openViewModal(row.original)
-                                            setDeleteContent(row.cells[0].value)
-                                        }
-                                }>
+                                    onClick={() => {
+                                        openViewModal(row.original)
+                                        setDeleteContent(row.cells[0].value)
+                                    }
+                                    }>
                                     {row.cells.map((cell, index) => (
                                         <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
                                     ))}

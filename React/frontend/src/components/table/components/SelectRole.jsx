@@ -7,8 +7,7 @@ function SelectRole({ onSelect }) {
     const options = [
         { value: 'admin', label: 'Админ' },
         { value: 'user', label: 'Пользователь' },
-        { value: 'manager', label: 'Мэнеджер' },
-        { value: 'read_only', label: 'Только для чтения' },
+        //{ value: 'manager', label: 'Мэнеджер' },
     ]
 
     const handleSelectChange = (selectedOption) => {
