@@ -595,8 +595,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <thead className="table__header-wrap">
                         {headerGroups.map(headerGroup => (
                             <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    <th className="table__headers" {...column.getHeaderProps()}>
+                                {headerGroup.headers.map((column, index) => (
+                                    <th
+                                        key={index}
+                                        className={`table__headers ${index === 0 ? 'hidden' : ''}`}
+                                        {...column.getHeaderProps()}>
                                         {column.render('Header')}
                                     </th>
                                 ))}
