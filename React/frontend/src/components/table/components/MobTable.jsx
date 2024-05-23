@@ -103,8 +103,11 @@ function MobTable({columns, openViewModal, apiLink, tot, setN, data, filteredDat
                 <thead className="table__header-wrap">
                 {headerGroups.map(headerGroup => (
                     <tr className="table__header" {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th className="table__headers" {...column.getHeaderProps()}>
+                        {headerGroup.headers.map((column, index) => (
+                            <th
+                                key={index}
+                                className={`table__headers ${index === 0 ? 'hidden' : ''}`}
+                                {...column.getHeaderProps()}>
                                 {column.render('Header')}
                             </th>
                         ))}
@@ -119,7 +122,7 @@ function MobTable({columns, openViewModal, apiLink, tot, setN, data, filteredDat
                             onClick={() => openViewModal(row.original)}>
                             {row.cells.map((cell, index) => (
                                 <td key={index}
-                                    className={`table__body-cell-wrap ${index === 0 ? 'hidden' : ''}`}>
+                                    className={`table__body-cell-wrap ${index === 0 ? 'hidden' : ''}`}
                                 >
                                     <div key={index} className="table__body-cell truncate">
                                         {cell.render('Cell')}
