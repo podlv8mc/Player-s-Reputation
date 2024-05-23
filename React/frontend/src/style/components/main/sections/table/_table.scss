@@ -273,6 +273,16 @@
   &__menu-list {
     padding: 0px !important;
     height: 100px !important;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #23272c;
+      border-radius: 5px;
+    }
   }
 
   &__option {
@@ -602,7 +612,7 @@
 
         .table__top-btn-1 {
           position: absolute;
-          left: 202px;
+          left: 169px;
         }
       }
     }
