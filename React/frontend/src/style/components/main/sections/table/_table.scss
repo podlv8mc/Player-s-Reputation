@@ -649,6 +649,12 @@
     }
   }
 
+  .pagination__wrap {
+    .pagination__box {
+      width: 100%;
+    }
+  }
+
   .pagination__mob-wrap {
     width: 100%;
     padding: 0px 0px 15px 0px;

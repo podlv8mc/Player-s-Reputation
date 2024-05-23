@@ -118,7 +118,9 @@ function MobTable({columns, openViewModal, apiLink, tot, setN, data, filteredDat
                         <tr className="table__body" {...row.getRowProps()}
                             onClick={() => openViewModal(row.original)}>
                             {row.cells.map((cell, index) => (
-                                <td key={index} className="table__body-cell-wrap">
+                                <td key={index}
+                                    className={`table__body-cell-wrap ${index === 0 ? 'hidden' : ''}`}>
+                                >
                                     <div key={index} className="table__body-cell truncate">
                                         {cell.render('Cell')}
                                     </div>
