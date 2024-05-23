@@ -21,6 +21,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [filterInputVisible, setFilterInputVisible] = useState(false);
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedFund, setSelectedFund] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [tot, setTot] = useState([]);
@@ -178,27 +179,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         }).then((data) => {
             setRole(data.data.role)
-        }).catch(() => {
-            axios.post(`${domain}auth/jwt/refresh`, null, {
-                headers: {
-                    'refresh-token': `${localStorage.getItem("refresh_token")}`,
-                }
-            })
-                .then((response) => {
-                    localStorage.setItem("access_token", response.data.access_token)
-                    localStorage.setItem("refresh_token", response.data.refresh_token)
-                })
-                .catch((error) => {
-                    console.error(error);
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'authorization__wrap';
-                    errorMessage.textContent = 'Авторизируйтесь!';
-                    document.body.appendChild(errorMessage);
-
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 2000);
-                })
+        }).catch((error) => {
+            console.log(error)
         })
     }, []);
 
@@ -298,6 +280,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
+                user_fund: selectedFund ? selectedFund.value : null,
             };
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
@@ -419,6 +402,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
+                        <SelectSigns onSelect={setSelectedFund}/>
                         <SelectRole onSelect={setSelectedOption}/>
                         {error && <div className="massage__error">{error}</div>}
                     </>
@@ -513,9 +497,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-            <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
-                <img src={Images.edit} alt="edit"/>
-            </button>
+            {role === "admin" && (
+                <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
+                    <img src={Images.edit} alt="edit"/>
+                </button>
+            )}
             <div className="table__modal-title">
                 Информация о {modalHeader}
             </div>
@@ -531,11 +517,13 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     </div>
                 ))}
             </div>
-            <div className="table__btn-row">
-                <button className="btn-hover table__btn" onClick={openDeleteModal}>
-                    Удалить {modalTitle}
-                </button>
-            </div>
+            {role === "admin" && (
+                <div className="table__btn-row">
+                    <button className="btn-hover table__btn" onClick={openDeleteModal}>
+                        Удалить {modalTitle}
+                    </button>
+                </div>
+            )}
         </Modal>
     );
 
@@ -594,12 +582,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        {role === "admin" ?
+                        {role === "admin" && (
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-                            : ""
-                        }
+                        )}
                     </div>
                 </div>
             </div>
