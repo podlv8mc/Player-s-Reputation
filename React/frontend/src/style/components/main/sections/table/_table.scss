@@ -97,7 +97,8 @@
 
         &__menu {
           width: 280px !important;
-          height: 195px !important;
+          height: fit-content !important;
+          max-height: 195px !important;
           background: #000000 !important;
           z-index: 3000 !important;
         }
@@ -115,7 +116,7 @@
 
       .input__search {
         padding: 0px 0px 0px 10px;
-        width: 250px;
+        width: 203px;
         @include Montserrat-500;
         color: #ffffff;
         border-radius: 10px;
