@@ -172,7 +172,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         }
     }, [data, filterValue]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get(`${domain}users/me`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -183,6 +183,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             console.log(error)
         })
     }, []);
+
+     */
 
     //===----- / UseEffect -----===//
 

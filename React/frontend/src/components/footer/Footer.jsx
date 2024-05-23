@@ -34,7 +34,7 @@ class Footer extends React.Component {
                         ©2024 Player’s Reputation
                     </p>
                     <p>
-                        Powered by FlexFrame
+                        Powered by <a href="https://flexframe.com.ua">FlexFrame</a>
                     </p>
                 </div>
             </footer>
