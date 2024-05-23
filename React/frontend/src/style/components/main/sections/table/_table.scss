@@ -97,14 +97,15 @@
 
         &__menu {
           width: 280px !important;
-          height: fit-content !important;
+          height: auto !important;
           max-height: 195px !important;
           background: #000000 !important;
           z-index: 3000 !important;
         }
 
         &__menu-list {
-          height: 195px !important;
+          height: auto !important;
+          max-height: 195px !important;
         }
       }
     }
