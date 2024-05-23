@@ -336,8 +336,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             });
     };
 
-    console.log(deleteContent)
-
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -543,7 +541,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         </Modal>
     )
 
-
     //===----- / Modal Window -----===//
 
     //===----- Buttons -----===//
@@ -617,7 +614,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     }
                                     }>
                                     {row.cells.map((cell, index) => (
-                                        <td key={index} className="table__body-cell truncate">{cell.render('Cell')}</td>
+                                        <td
+                                            key={index}
+                                            className={`table__body-cell truncate ${index === 0 ? 'hidden' : ''}`}>
+                                            {cell.render('Cell')}
+                                        </td>
                                     ))}
                                 </tr>
                             );
