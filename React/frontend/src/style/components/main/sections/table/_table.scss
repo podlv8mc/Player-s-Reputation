@@ -106,7 +106,7 @@
         &__menu-list {
           height: auto !important;
           max-height: 195px !important;
-          padding: 0px 8px 0px 0px !important;
+          padding: 0px 0px 0px 0px !important;
         }
       }
     }
@@ -274,6 +274,8 @@
   &__menu-list {
     padding: 0px !important;
     height: 100px !important;
+    width: 95% !important;
+    margin: auto;
 
     &::-webkit-scrollbar {
       width: 5px;
@@ -297,7 +299,7 @@
     transition: all 0.4s ease !important;
 
     &:last-child {
-      border-radius: 0px 0px 10px 10px !important;
+      //border-radius: 0px 0px 10px 10px !important;
     }
   }
 
