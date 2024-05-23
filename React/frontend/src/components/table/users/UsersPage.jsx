@@ -23,6 +23,10 @@ function UsersPage() {
                 accessor: row => row.discord,
             },
             {
+                Header: 'Фонд',
+                accessor: row => row.user_fund,
+            },
+            {
                 Header: 'Email',
                 accessor: row => row.email,
             },
