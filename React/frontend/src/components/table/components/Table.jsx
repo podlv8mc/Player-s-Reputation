@@ -9,6 +9,7 @@ import SelectSigns from "@/components/table/components/SelectSigns";
 import SelectRole from "@/components/table/components/SelectRole";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 import MobTable from "@/components/table/components/MobTable";
+import AdminWrapper from "@/components/table/components/AdminWrapper";
 
 function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, modalTitle, modalHeader}) {
     const [data, setData] = useState([]);
@@ -29,7 +30,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [error, setError] = useState(null);
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [role, setRole] = useState("");
 
     //===----- Table -----===//
 
@@ -42,11 +42,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         gotoPage,
         pageCount,
         state: {pageIndex},
-        canPreviousPage,
-        canNextPage,
-        previousPage,
-        nextPage,
-        setFilter,
     } = useTable(
         {
             columns,
@@ -172,18 +167,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         }
     }, [data, filterValue]);
 
-    useEffect(() => {
-        axios.get(`${domain}users/me`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((data) => {
-            setRole(data.data.role)
-        }).catch((error) => {
-            console.log(error)
-        })
-    }, []);
-
     //===----- / UseEffect -----===//
 
     //===----- Resize -----===//
@@ -296,8 +279,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
             .catch(error => {
                 console.error("Request error:", error);
-                if (error.response && error.response.status === 500) { // Проверка на код ошибки 409 (Conflict)
-                    setError("Такой пользователь уже существует"); // Предупреждение пользователю
+                if (error.response && error.response.status === 500) {
+                    setError("Такой пользователь уже существует");
                 } else {
 
                 }
@@ -495,16 +478,16 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-            {role === "admin" && (
+            <AdminWrapper>
                 <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                     <img src={Images.edit} alt="edit"/>
                 </button>
-            )}
+            </AdminWrapper>
             <div className="table__modal-title">
                 Информация о {modalHeader}
             </div>
             <div className="table__modal-form-wrap">
-                {columns.map(column => (
+            {columns.map(column => (
                     <div className="table__modal-row" key={column.accessor}>
                         <div className="table__modal-cell-title">
                             {column.Header}
@@ -515,13 +498,13 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     </div>
                 ))}
             </div>
-            {role === "admin" && (
+            <AdminWrapper>
                 <div className="table__btn-row">
                     <button className="btn-hover table__btn" onClick={openDeleteModal}>
                         Удалить {modalTitle}
                     </button>
                 </div>
-            )}
+            </AdminWrapper>
         </Modal>
     );
 
@@ -579,11 +562,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        {role === "admin" && (
+                        <AdminWrapper>
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-                        )}
+                        </AdminWrapper>
                     </div>
                 </div>
             </div>
