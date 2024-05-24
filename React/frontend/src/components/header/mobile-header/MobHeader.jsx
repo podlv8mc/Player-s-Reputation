@@ -4,6 +4,7 @@ import Images from "@/image/image";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import domain from "@/domain";
+import AdminWrapper from "@/components/table/components/AdminWrapper";
 
 const MobHeader = ({handleModalOpen}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -77,10 +78,12 @@ const MobHeader = ({handleModalOpen}) => {
                                                    spanClass="globalnav__text" text="Player’s Reputation" isOpen={isOpen}/>
                                     <MobHeaderList linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
                                           spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
-                                    <MobHeaderList linkTo="/funds" className="globalnav" name={Images.funds__table}
-                                          alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
-                                    <MobHeaderList linkTo="/users" className="globalnav" name={Images.users} alt="users"
-                                          spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
+                                    <AdminWrapper>
+                                        <MobHeaderList linkTo="/funds" className="globalnav" name={Images.funds__table}
+                                                       alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
+                                        <MobHeaderList linkTo="/users" className="globalnav" name={Images.users} alt="users"
+                                                       spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
+                                    </AdminWrapper>
                                     <MobHeaderList linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
                                       spanClass="globalnav__text" text="Профиль" isOpen={isOpen}/>
                                     <MobHeaderList linkTo="#" className="globalnav" name={Images.exit} alt="exit"
