@@ -27,7 +27,7 @@ const LoginForm = ({ autoFocus }) => {
         if (autoFocus) {
             setTimeout(() => {
                 emailInputRef.current.focus();
-            }, 100);
+            }, 110);
         }
     }, [autoFocus]);
 
