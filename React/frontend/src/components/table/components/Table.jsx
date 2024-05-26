@@ -263,7 +263,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                funds: selectedFund ? selectedFund.value : null,
+                funds: selectedFund ? selectedFund : null,
             };
             console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
