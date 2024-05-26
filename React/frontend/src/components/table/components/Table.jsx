@@ -383,7 +383,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        <SelectSigns onSelect={setSelectedFund}/>
+                        <SelectSigns onSelect={setSelectedFund} isMulti={true}/>
                         <SelectRole onSelect={setSelectedOption}/>
                         {error && <div className="massage__error">{error}</div>}
                     </>

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import axios from "axios";
 import domain from "@/domain";
 
-function SelectSigns({ onSelect }) {
+function SelectSigns({ onSelect, isMulti = false }) {
     const [selectedOption, setSelectedOption] = useState(null);
-    const [fundSelect, setfundSelect] = useState();
+    const [fundSelect, setFundSelect] = useState([]);
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
@@ -14,12 +14,12 @@ function SelectSigns({ onSelect }) {
             }
         })
             .then((data) => {
-            setfundSelect(data.data.items.map(function(obj) {
-                return {'value': obj.id, 'label': obj.name};
-            }));
-        }).catch(() => {
-
-        })
+                setFundSelect(data.data.items.map(function(obj) {
+                    return { value: obj.id, label: obj.name };
+                }));
+            }).catch((error) => {
+            console.error("Error fetching funds:", error);
+        });
     }, []);
 
     const handleSelectChange = (selectedOption) => {
@@ -33,11 +33,12 @@ function SelectSigns({ onSelect }) {
                 Фонд
             </label>
             <Select
-                classNamePrefix='select'
+                classNamePrefix="select"
                 value={selectedOption}
                 onChange={handleSelectChange}
                 options={fundSelect}
                 placeholder="Выбрать фонд"
+                isMulti={isMulti}
             />
         </div>
     );
