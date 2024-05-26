@@ -263,7 +263,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                user_fund: selectedFund ? selectedFund.value : null,
+                funds: selectedFund ? selectedFund.value : null,
             };
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);

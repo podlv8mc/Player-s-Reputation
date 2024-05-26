@@ -24,7 +24,7 @@ function UsersPage() {
             },
             {
                 Header: 'Фонд',
-                accessor: row => row.user_fund,
+                accessor: row => row.funds,
             },
             {
                 Header: 'Email',
