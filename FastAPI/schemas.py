@@ -42,7 +42,7 @@ class CreateUpdateDictModel(BaseModel):
 # class NicknameRead(NicknameBase): ...
 
 
-class UserFund:
+class UserFund(BaseModel):
     id: int
     name: str
 
