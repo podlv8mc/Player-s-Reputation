@@ -221,11 +221,7 @@
 
     &__value-container {
       &____multi-value {
-        &__multi-value__label {
-          @include Montserrat-500;
-          font-size: 14px !important;
-          border-radius: 10px !important;
-        }
+
       }
     }
 
@@ -241,6 +237,12 @@
         transform: rotate(180deg);
       }
     }
+  }
+
+  &__multi-value__label {
+    @include Montserrat-500;
+    font-size: 14px !important;
+    border-radius: 10px !important;
   }
 
   &__value-container {
