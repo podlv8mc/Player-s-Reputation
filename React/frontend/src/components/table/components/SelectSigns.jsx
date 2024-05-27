@@ -28,6 +28,8 @@ function SelectSigns({ onSelect, isMulti = false }) {
         console.log(selectedOption);
     };
 
+    console.log(fundSelect)
+
     return (
         <div className="table__modal-row">
             <label className="table__modal-cell-title">
@@ -39,6 +41,7 @@ function SelectSigns({ onSelect, isMulti = false }) {
                 onChange={handleSelectChange}
                 options={fundSelect}
                 placeholder="Выбрать фонд"
+                closeMenuOnSelect={false}
                 isMulti={isMulti}
                 defaultValue={[fundSelect[1]]}
             />
