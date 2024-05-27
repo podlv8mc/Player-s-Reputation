@@ -256,6 +256,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             requestUrl = `${domain}funds`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else if (apiLink === "users") {
+            setSelectedFund(...selectedFund.map(function(obj) {
+                return { id: obj.value, name: obj.label };
+            }));
             const userDataWithTimestamp = {
                 ...newUserData,
                 created_at: createdAt,
@@ -268,7 +271,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
-        } else {
+        }
+        else {
             console.error("Invalid apiLink:", apiLink);
             return;
         }
