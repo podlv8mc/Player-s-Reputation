@@ -30,6 +30,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [error, setError] = useState(null);
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [fetchingFunds, setFetchingFunds] = useState();
 
     //===----- Table -----===//
 
@@ -256,9 +257,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             requestUrl = `${domain}funds`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else if (apiLink === "users") {
-            setSelectedFund(...selectedFund.map(function(obj) {
+            setFetchingFunds([...selectedFund.map(function(obj) {
                 return { id: obj.value, name: obj.label };
-            }));
+            })]);
             const userDataWithTimestamp = {
                 ...newUserData,
                 created_at: createdAt,
@@ -266,7 +267,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                funds: selectedFund ? selectedFund : null,
+                funds: selectedFund ? fetchingFunds : null,
             };
             console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
