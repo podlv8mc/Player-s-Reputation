@@ -40,6 +40,7 @@ function SelectSigns({ onSelect, isMulti = false }) {
                 options={fundSelect}
                 placeholder="Выбрать фонд"
                 isMulti={isMulti}
+                defaultValue={[fundSelect[1]]}
             />
         </div>
     );
