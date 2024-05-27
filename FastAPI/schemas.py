@@ -42,6 +42,11 @@ class CreateUpdateDictModel(BaseModel):
 # class NicknameRead(NicknameBase): ...
 
 
+class UserFund(BaseModel):
+    id: int
+    name: str
+
+
 class UserRead(users_schemas.BaseUser):
     id: int
     username: str
@@ -50,6 +55,7 @@ class UserRead(users_schemas.BaseUser):
     email: Optional[str | None] = None
     discord: Optional[str | None] = None
     created_at: datetime
+    funds: Optional[List[UserFund] | None] = None
 
 
 class UserReadfund(CreateUpdateDictModel):
