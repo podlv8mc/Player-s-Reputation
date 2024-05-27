@@ -30,7 +30,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [error, setError] = useState(null);
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [fetchingFunds, setFetchingFunds] = useState();
+    const [fetchingFunds, setFetchingFunds] = useState([]);
 
     //===----- Table -----===//
 
@@ -137,6 +137,14 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     //===----- / Copy -----===//
 
     //===----- UseEffect -----===//
+
+    useEffect(() => {
+            setFetchingFunds([...selectedFund.map(function(obj) {
+                return { id: obj.value, name: obj.label };
+            })]);
+        },
+        [selectedFund]
+    )
 
     useEffect(() => {
         setFilteredData(
@@ -257,9 +265,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             requestUrl = `${domain}funds`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else if (apiLink === "users") {
-            setFetchingFunds([...selectedFund.map(function(obj) {
-                return { id: obj.value, name: obj.label };
-            })]);
             const userDataWithTimestamp = {
                 ...newUserData,
                 created_at: createdAt,
@@ -272,8 +277,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
-        }
-        else {
+        } else {
             console.error("Invalid apiLink:", apiLink);
             return;
         }
@@ -493,7 +497,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 Информация о {modalHeader}
             </div>
             <div className="table__modal-form-wrap">
-            {columns.map(column => (
+                {columns.map(column => (
                     <div className="table__modal-row" key={column.accessor}>
                         <div className="table__modal-cell-title">
                             {column.Header}
