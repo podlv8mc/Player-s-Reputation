@@ -43,7 +43,7 @@ function SelectSigns({ onSelect, isMulti = false }) {
                 placeholder="Выбрать фонд"
                 closeMenuOnSelect={false}
                 isMulti={isMulti}
-                defaultValue={[fundSelect[1]]}
+                defaultValue={[fundSelect[1], fundSelect[2]]}
             />
         </div>
     );
