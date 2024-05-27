@@ -139,9 +139,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     //===----- UseEffect -----===//
 
     useEffect(() => {
-            setFetchingFunds([...selectedFund.map(function(obj) {
-                return { id: obj.value, name: obj.label };
-            })]);
+            if (selectedFund.length >= 1) {
+                setFetchingFunds([...selectedFund.map(function(obj) {
+                    return { id: obj.value, name: obj.label };
+                })]);
+            }
         },
         [selectedFund]
     )
