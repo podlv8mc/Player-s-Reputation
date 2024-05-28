@@ -151,14 +151,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     //===----- UseEffect -----===//
 
     useEffect(() => {
-            if (Array.isArray(selectedFund)) {
-                setFetchingFunds([...selectedFund.map(function (obj) {
-                    return {id: obj.value, name: obj.label};
-                })]);
-            }
-        },
-        [selectedFund]
-    )
+        if (Array.isArray(selectedFund)) {
+            const selectedFundIds = selectedFund.map(fund => fund.value);
+            setFetchingFunds(selectedFundIds);
+        }
+    }, [selectedFund]);
 
     useEffect(() => {
         setFilteredData(
@@ -292,7 +289,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                funds: selectedFund ? fetchingFunds.id : null,
+                funds: selectedFund ? fetchingFunds : null,
             };
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
