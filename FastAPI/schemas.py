@@ -72,7 +72,7 @@ class UserCreate(users_schemas.BaseUserCreate):
     email: Optional[str | None] = None
     discord: Optional[str | None] = None
     created_at: datetime
-    funds: Optional[List[UserFund] | None] = None
+    funds: Optional[List[int] | None] = None
 
 
 class UserUpdate(users_schemas.BaseUserUpdate):
@@ -80,7 +80,7 @@ class UserUpdate(users_schemas.BaseUserUpdate):
     name: Optional[str | None] = None
     role: Roles
     discord: Optional[str | None] = None
-    funds: Optional[List[UserFund] | None] = None
+    funds: Optional[List[int] | None] = None
 
 
 class FundBase(CreateUpdateDictModel):
