@@ -79,10 +79,10 @@ class UsersDB(SQLAlchemyUserDatabase):
         for fund in funds:
             user.funds.append(fund)
 
-        await self.session.add(user)
+        self.session.add(user)
 
         await self.session.commit()
-        await self.session.refresh(user)
+        # await self.session.refresh(user)
 
         return user
 
