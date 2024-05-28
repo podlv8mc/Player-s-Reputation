@@ -353,7 +353,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         const newPassword = generateRandomPassword();
 
         const userUpdateUrl = `${domain}users/me`;
-        const emailSendUrl = `${domain}send_email`;
+        //const emailSendUrl = `${domain}send_email`;
 
         try {
             // Обновление пароля пользователя
@@ -364,12 +364,14 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             });
 
             // Отправка нового пароля на почту пользователя
-            const userEmail = "aloshakharytonov@gmail.com"; // Замените на актуальный адрес электронной почты пользователя
+            /*const userEmail = "aloshakharytonov@gmail.com"; // Замените на актуальный адрес электронной почты пользователя
             await axios.post(emailSendUrl, { email: userEmail, newPassword: newPassword }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
             });
+
+             */
 
             alert("Пароль был успешно сброшен и отправлен на почту.");
 
