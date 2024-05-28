@@ -354,7 +354,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         console.log("New password:", newPassword);
 
         const userUpdateUrl = `${domain}users/${selectedUser.id}`;
-        const gg = `${domain}users/${selectedUser.id}`;
+        const gg = `${domain}users/${selectedUser.role}`;
 
         console.log(gg)
 
