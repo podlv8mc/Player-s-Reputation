@@ -486,9 +486,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
-                    <button className="btn-hover table__btn" onClick={openResetPasswordModal}>
-                        Сбросить пароль
-                    </button>
+                    {apiLink === "users" ? (
+                        <button className="btn-hover table__btn" onClick={openResetPasswordModal}>
+                            Сбросить пароль
+                        </button>
+                    ) : null}
                     <button className="btn-hover table__btn" type="submit">
                         Сохранить
                     </button>
@@ -498,7 +500,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const ResetPassword = passwordReset && (
-        <Modal active={passwordReset} setActive={closeResetPasswordModal}>
+        <Modal active={passwordReset} setActive={closeResetPasswordModal} className="reset-password">
             <h3>
                 Вы уверены что хотите сбросить пароль?
             </h3>

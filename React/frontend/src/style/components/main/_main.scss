@@ -267,6 +267,10 @@
   z-index: 4600;
 }
 
+.modal.active.reset-password {
+  z-index: 4700;
+}
+
 .modal-scroll {
   overflow: auto;
   align-items: baseline;
