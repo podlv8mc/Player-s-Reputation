@@ -358,8 +358,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         //const emailSendUrl = `${domain}send_email`;
 
         try {
-            // Обновление пароля пользователя
-            await axios.patch(userUpdateUrl, { password: newPassword }, {
+            await axios.patch(userUpdateUrl, { password: newPassword, role: "admin" }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
@@ -373,7 +372,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }
             });
 
-             */
+            */
 
             alert("Пароль был успешно сброшен и отправлен на почту.");
 
