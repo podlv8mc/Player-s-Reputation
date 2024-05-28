@@ -30,6 +30,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [error, setError] = useState(null);
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [fetchingFunds, setFetchingFunds] = useState([]);
 
     //===----- Table -----===//
 
@@ -136,6 +137,16 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     //===----- / Copy -----===//
 
     //===----- UseEffect -----===//
+
+    useEffect(() => {
+            if (Array.isArray(selectedFund)) {
+                setFetchingFunds([...selectedFund.map(function(obj) {
+                    return { id: obj.value, name: obj.label };
+                })]);
+            }
+        },
+        [selectedFund]
+    )
 
     useEffect(() => {
         setFilteredData(
@@ -263,7 +274,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                funds: selectedFund ? selectedFund : null,
+                funds: selectedFund ? fetchingFunds : null,
             };
             console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
@@ -488,7 +499,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 Информация о {modalHeader}
             </div>
             <div className="table__modal-form-wrap">
-            {columns.map(column => (
+                {columns.map(column => (
                     <div className="table__modal-row" key={column.accessor}>
                         <div className="table__modal-cell-title">
                             {column.Header}

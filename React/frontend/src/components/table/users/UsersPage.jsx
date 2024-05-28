@@ -24,7 +24,7 @@ function UsersPage() {
             },
             {
                 Header: 'Фонд',
-                accessor: row => row.funds,
+                accessor: row => row.funds.map(fund => fund.name).join(', ')
             },
             {
                 Header: 'Email',
