@@ -71,7 +71,7 @@ class UsersDB(SQLAlchemyUserDatabase):
         return all_users
 
     async def create_user_with_funds(self, create_dict: Dict[str, Any]):
-        funds_ids = create_dict.pop("funds_ids", [])
+        funds_ids = create_dict.pop("funds", [])
         user = self.user_table(**create_dict)
         funds_statement = select(models.Fund).where(models.Fund.id.in_(funds_ids))
         funds = await self.session.scalars(funds_statement)
