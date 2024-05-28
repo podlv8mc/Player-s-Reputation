@@ -373,6 +373,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
         console.log("Current user role:", currentRole);
         const newPassword = generateRandomPassword();
+        console.log(newPassword);
 
         const userUpdateUrl = `${domain}users/me`;
         //const emailSendUrl = `${domain}send_email`;
@@ -582,11 +583,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-            <AdminWrapper>
+
                 <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                     <img src={Images.edit} alt="edit"/>
                 </button>
-            </AdminWrapper>
+
             <div className="table__modal-title">
                 Информация о {modalHeader}
             </div>
