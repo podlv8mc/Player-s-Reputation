@@ -220,7 +220,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setIsEditModalOpen(false);
     };
 
-    const openDeleteModal = (user) => {
+    const openDeleteModal = () => {
         setDeleteModal(true)
     };
 
@@ -228,7 +228,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setDeleteModal(false)
     }
 
-    const openResetPasswordModal = (user) => {
+    const openResetPasswordModal = (e) => {
+        e.preventDefault();
         setPasswordReset(true)
     }
 
