@@ -34,8 +34,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [passwordReset, setPasswordReset] = useState(null);
 
 
-    const generateRandomPassword = (length = 12) => {
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+    const generateRandomPassword = (length = 4) => {
+        const charset = "jknfer";
         let password = "";
         for (let i = 0; i < length; i++) {
             const randomIndex = Math.floor(Math.random() * charset.length);
