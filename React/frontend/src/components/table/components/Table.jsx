@@ -33,6 +33,17 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
 
+
+    const generateRandomPassword = (length = 12) => {
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * charset.length);
+            password += charset[randomIndex];
+        }
+        return password;
+    };
+
     //===----- Table -----===//
 
     const {
@@ -338,6 +349,37 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             });
     };
 
+    const handleResetPassword = async () => {
+        const newPassword = generateRandomPassword();
+
+        const userUpdateUrl = `${domain}users/me`;
+        const emailSendUrl = `${domain}send_email`;
+
+        try {
+            // Обновление пароля пользователя
+            await axios.patch(userUpdateUrl, { password: newPassword }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            });
+
+            // Отправка нового пароля на почту пользователя
+            const userEmail = "aloshakharytonov@gmail.com"; // Замените на актуальный адрес электронной почты пользователя
+            await axios.post(emailSendUrl, { email: userEmail, newPassword: newPassword }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            });
+
+            alert("Пароль был успешно сброшен и отправлен на почту.");
+
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            alert("Произошла ошибка при сбросе пароля.");
+        }
+    };
+
+
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
             <button className="modal__btn-close" onClick={() => setIsModalOpen(false)}/>
@@ -504,6 +546,14 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             <h3>
                 Вы уверены что хотите сбросить пароль?
             </h3>
+            <div className="table__btn-row">
+                <button className="btn-hover table__btn" onClick={closeResetPasswordModal}>
+                    Отменить
+                </button>
+                <button className="btn-hover table__btn" onClick={handleResetPassword}>
+                    Сбросить пароль
+                </button>
+            </div>
         </Modal>
     );
 
