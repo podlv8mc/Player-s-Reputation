@@ -350,15 +350,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const handleResetPassword = async () => {
-        if (!selectedUser) {
-            alert("Выбранный пользователь не найден.");
-            return;
-        }
-
         const newPassword = generateRandomPassword();
         console.log("New password:", newPassword);
 
-        const userUpdateUrl = `${domain}users/${selectedUser.id}`; // Используем ID выбранного пользователя
+        const userUpdateUrl = `${domain}users/${selectedUser.id}`;
+
+        console.log(selectedFund.role)
 
         try {
             await axios.patch(userUpdateUrl, { password: newPassword, role: selectedUser.role }, {
@@ -371,7 +368,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             closeResetPasswordModal();
 
         } catch (error) {
-            console.error("Error resetting password:", error);
             alert("Произошла ошибка при сбросе пароля.");
         }
     };
