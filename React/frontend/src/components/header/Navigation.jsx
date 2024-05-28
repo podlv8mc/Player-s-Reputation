@@ -59,12 +59,12 @@ const Navigation = ({onButtonClick, handleModalOpen}) => {
                             <>
                                 <List linkTo="/table" className="globalnav" name={Images.tableNav} alt="table"
                                       spanClass="globalnav__text" text="Таблица" isOpen={isOpen}/>
-
+                                <AdminWrapper>
                                     <List linkTo="/funds" className="globalnav" name={Images.funds__table}
                                           alt="funds__table" spanClass="globalnav__text" text="Фонды" isOpen={isOpen}/>
                                     <List linkTo="/users" className="globalnav" name={Images.users} alt="users"
                                           spanClass="globalnav__text" text="Пользователи" isOpen={isOpen}/>
-
+                                </AdminWrapper>
                                 <List linkTo="/cabinet" className="globalnav" name={Images.cabinet} alt="cabinet"
                                       spanClass="globalnav__text" text="Профиль" isOpen={isOpen}/>
                                 <List linkTo="#" className="globalnav" name={Images.exit} alt="exit"
