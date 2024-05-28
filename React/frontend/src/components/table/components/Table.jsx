@@ -583,11 +583,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const ViewModalContent = selectedUser && (
         <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
-
+            <AdminWrapper>
                 <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
                     <img src={Images.edit} alt="edit"/>
                 </button>
-
+            </AdminWrapper>
             <div className="table__modal-title">
                 Информация о {modalHeader}
             </div>
@@ -667,11 +667,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        <AdminWrapper>
+
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-                        </AdminWrapper>
+
                     </div>
                 </div>
             </div>
