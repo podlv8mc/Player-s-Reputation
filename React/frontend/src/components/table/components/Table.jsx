@@ -31,6 +31,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
+    const [passwordReset, setPasswordReset] = useState(null);
 
     //===----- Table -----===//
 
@@ -140,8 +141,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     useEffect(() => {
             if (Array.isArray(selectedFund)) {
-                setFetchingFunds([...selectedFund.map(function(obj) {
-                    return { id: obj.value, name: obj.label };
+                setFetchingFunds([...selectedFund.map(function (obj) {
+                    return {id: obj.value, name: obj.label};
                 })]);
             }
         },
@@ -220,14 +221,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const openDeleteModal = (user) => {
-        console.log("Удаляемый пользователь:", user);
-        console.log(deleteContent)
         setDeleteModal(true)
     };
 
     const closeDeleteModal = () => {
-        console.log(deleteContent)
         setDeleteModal(false)
+    }
+
+    const openResetPasswordModal = (user) => {
+        setPasswordReset(true)
+    }
+
+    const closeResetPasswordModal = () => {
+        setPasswordReset(false)
     }
 
     const handleChange = e => {
@@ -479,11 +485,22 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
+                    <button className="btn-hover table__btn" onClick={openResetPasswordModal}>
+                        Сбросить пароль
+                    </button>
                     <button className="btn-hover table__btn" type="submit">
                         Сохранить
                     </button>
                 </div>
             </form>
+        </Modal>
+    );
+
+    const ResetPassword = passwordReset && (
+        <Modal active={passwordReset} setActive={closeResetPasswordModal}>
+            <h3>
+                Вы уверены что хотите сбросить пароль?
+            </h3>
         </Modal>
     );
 
@@ -644,6 +661,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             {ModalContent}
             {ViewModalContent}
             {DeleteModalContent}
+            {ResetPassword}
         </>
     );
 }
