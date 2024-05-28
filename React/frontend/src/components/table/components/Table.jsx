@@ -44,23 +44,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         return password;
     };
 
-    const getCurrentUser = async () => {
-        const userInfoUrl = `${domain}users/me`;
-
-        try {
-            const response = await axios.get(userInfoUrl, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
-            });
-            return response.data;  // Предполагаем, что информация о пользователе находится в response.data
-        } catch (error) {
-            console.error("Error fetching current user info:", error);
-            throw error;
-        }
-    };
-
-
     //===----- Table -----===//
 
     const {
@@ -256,10 +239,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setDeleteModal(false)
     }
 
-    const openResetPasswordModal = (e) => {
-        e.preventDefault();
-        setPasswordReset(true)
-    }
+    const openResetPasswordModal = (user) => {
+        setSelectedUser(user);
+        setPasswordReset(true);
+    };
 
     const closeResetPasswordModal = () => {
         setPasswordReset(false)
@@ -367,41 +350,32 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const handleResetPassword = async () => {
+        if (!selectedUser) {
+            alert("Выбранный пользователь не найден.");
+            return;
+        }
 
-        const user = await getCurrentUser();
-        const currentRole = user.role; // Предполагаем, что роль пользователя находится в поле role
-
-        console.log("Current user role:", currentRole);
         const newPassword = generateRandomPassword();
-        console.log(newPassword);
+        console.log("New password:", newPassword);
 
-        const userUpdateUrl = `${domain}users/me`;
-        //const emailSendUrl = `${domain}send_email`;
+        const userUpdateUrl = `${domain}users/${selectedUser.id}`; // Используем ID выбранного пользователя
 
         try {
-            await axios.patch(userUpdateUrl, { password: newPassword, role: currentRole }, {
+            await axios.patch(userUpdateUrl, { password: newPassword, role: selectedUser.role }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
             });
-
-            // Отправка нового пароля на почту пользователя
-            /*const userEmail = "aloshakharytonov@gmail.com"; // Замените на актуальный адрес электронной почты пользователя
-            await axios.post(emailSendUrl, { email: userEmail, newPassword: newPassword }, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                }
-            });
-
-            */
 
             alert("Пароль был успешно сброшен и отправлен на почту.");
+            closeResetPasswordModal();
 
         } catch (error) {
             console.error("Error resetting password:", error);
             alert("Произошла ошибка при сбросе пароля.");
         }
     };
+
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -552,7 +526,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         Отменить
                     </button>
                     {apiLink === "users" ? (
-                        <button className="btn-hover table__btn" onClick={openResetPasswordModal}>
+                        <button className="btn-hover table__btn" onClick={() => openResetPasswordModal(editingUserData)}>
                             Сбросить пароль
                         </button>
                     ) : null}
@@ -667,11 +641,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-
+                        <AdminWrapper>
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-
+                        </AdminWrapper>
                     </div>
                 </div>
             </div>
