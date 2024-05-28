@@ -352,6 +352,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const handleResetPassword = async () => {
         const newPassword = generateRandomPassword();
 
+        console.log(newPassword);
+
         const userUpdateUrl = `${domain}users/me`;
         //const emailSendUrl = `${domain}send_email`;
 
@@ -380,7 +382,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             alert("Произошла ошибка при сбросе пароля.");
         }
     };
-
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
