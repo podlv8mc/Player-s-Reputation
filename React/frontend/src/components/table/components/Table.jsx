@@ -44,6 +44,23 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         return password;
     };
 
+    const getCurrentUser = async () => {
+        const userInfoUrl = `${domain}users/me`;
+
+        try {
+            const response = await axios.get(userInfoUrl, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            });
+            return response.data;  // Предполагаем, что информация о пользователе находится в response.data
+        } catch (error) {
+            console.error("Error fetching current user info:", error);
+            throw error;
+        }
+    };
+
+
     //===----- Table -----===//
 
     const {
@@ -350,15 +367,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     const handleResetPassword = async () => {
-        const newPassword = generateRandomPassword();
 
-        console.log(newPassword);
+        const user = await getCurrentUser();
+        const currentRole = user.role; // Предполагаем, что роль пользователя находится в поле role
+
+        console.log("Current user role:", currentRole);
+        const newPassword = generateRandomPassword();
 
         const userUpdateUrl = `${domain}users/me`;
         //const emailSendUrl = `${domain}send_email`;
 
         try {
-            await axios.patch(userUpdateUrl, { password: newPassword, role: "admin" }, {
+            await axios.patch(userUpdateUrl, { password: newPassword, role: currentRole }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
