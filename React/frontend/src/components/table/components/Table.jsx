@@ -354,8 +354,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         console.log("New password:", newPassword);
 
         const userUpdateUrl = `${domain}users/${selectedUser.id}`;
+        const gg = `${domain}users/${selectedUser.id}`;
 
-        console.log(selectedFund.role)
+        console.log(gg)
+
 
         try {
             await axios.patch(userUpdateUrl, { password: newPassword, role: selectedUser.role }, {
