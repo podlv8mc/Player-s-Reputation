@@ -294,7 +294,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_verified: false,
                 funds: selectedFund ? fetchingFunds : null,
             };
-            console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else {
@@ -316,6 +315,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }
             })
     };
+
+    console.log(selectedFund)
+    console.log(fetchingFunds)
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
