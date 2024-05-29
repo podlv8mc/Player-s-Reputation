@@ -35,6 +35,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
 
+    const [activeModal, setActiveModal] = useState([]);
+
+    const openModals = (id) => {
+        setActiveModal((prevModalStack) => [...prevModalStack, id]);
+    };
+
+    const closeModals = () => {
+        setActiveModal((prevModalStack) => {
+            const newStack = prevModalStack.slice(0, -1);
+            return newStack;
+        });
+    };
+
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
         let password = "";
@@ -565,35 +578,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const ViewModalContent = selectedUser && (
-        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
-            <button className="modal__btn-close" onClick={closeViewModal}/>
-            <AdminWrapper>
-                <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
-                    <img src={Images.edit} alt="edit"/>
-                </button>
-            </AdminWrapper>
-            <div className="table__modal-title">
-                Информация о {modalHeader}
-            </div>
-            <div className="table__modal-form-wrap">
-                {columns.map(column => (
-                    <div className="table__modal-row" key={column.accessor}>
-                        <div className="table__modal-cell-title">
-                            {column.Header}
-                        </div>
-                        <div className="table__modal-cell">
-                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <AdminWrapper>
-                <div className="table__btn-row">
-                    <button className="btn-hover table__btn" onClick={openDeleteModal}>
-                        Удалить {modalTitle}
-                    </button>
-                </div>
-            </AdminWrapper>
+        <Modal id="modal1" activeModal={activeModal[activeModal.length - 1]} setActiveModal={setActiveModal}>
+            <h1>Hello</h1>
         </Modal>
     );
 
@@ -684,7 +670,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             return (
                                 <tr className="table__body" {...row.getRowProps()}
                                     onClick={() => {
-                                        openViewModal(row.original)
+                                        //openViewModal(row.original)
+                                        openModals('modal1')
                                         setDeleteContent(row.cells[0].value)
                                     }
                                     }>

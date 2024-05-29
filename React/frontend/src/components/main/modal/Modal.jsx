@@ -1,45 +1,40 @@
 import React, { useEffect, useState } from "react";
 
-const Modal = ({ active, setActive, children, className }) => {
+const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [modalStack, setModalStack] = useState([]);
 
     useEffect(() => {
-        if (active) {
-            // Добавляем текущее модальное окно в стек
-            setModalStack(prevStack => [...prevStack, true]);
-            setIsVisible(true);
+        let timer;
+        if (activeModal === id) {
+            timer = setTimeout(() => {
+                setIsVisible(true);
+            }, 100);
             window.addEventListener("keydown", handleKeyDown);
         } else {
-            // Удаляем текущее модальное окно из стека
-            setModalStack(prevStack => prevStack.slice(0, -1));
-            // Проверяем, есть ли еще открытые модальные окна
-            const isAnyModalActive = modalStack.length > 1;
-            setIsVisible(isAnyModalActive);
-            window.removeEventListener("keydown", handleKeyDown);
+            setIsVisible(false);
         }
 
         return () => {
+            clearTimeout(timer);
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [active, modalStack]);
+    }, [activeModal, id]);
 
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
-            setActive(false);
+            closeModal();
         }
     };
 
-    // Функция для обработки клика по фону модального окна
-    const handleBackdropClick = () => {
-        if (modalStack.length === 1) {
-            // Закрываем текущее модальное окно только если оно единственное
-            setActive(false);
-        }
+    const closeModal = () => {
+        setActiveModal((prevModalStack) => {
+            const newStack = prevModalStack.slice(0, -1);
+            return newStack.length > 0 ? newStack : null;
+        });
     };
 
     return (
-        <div className={`modal ${isVisible ? 'active' : ''} ${className}`} onClick={handleBackdropClick}>
+        <div className={`modal ${isVisible ? 'active' : ''} ${className}`} onClick={closeModal}>
             <div className={`modal__content ${isVisible ? 'active' : ''}`} onClick={e => e.stopPropagation()}>
                 {children}
             </div>
