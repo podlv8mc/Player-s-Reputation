@@ -14,13 +14,18 @@ function SelectSigns({ onSelect, isMulti = false }) {
             }
         })
             .then((data) => {
-                setFundSelect(data.data.items.map(function(obj) {
-                    return { value: obj.id, label: obj.name };
-                }));
+                const options = data.data.items.map(obj => ({ value: obj.id, label: obj.name }));
+                setFundSelect(options);
+
+                // Установить defaultValue после получения данных
+                if (options.length > 1) {
+                    setSelectedOption([options[1]]);
+                    onSelect([options[1]]);
+                }
             }).catch((error) => {
             console.error("Error fetching funds:", error);
         });
-    }, []);
+    }, [onSelect]);
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
@@ -40,7 +45,6 @@ function SelectSigns({ onSelect, isMulti = false }) {
                 placeholder="Выбрать фонд"
                 closeMenuOnSelect={false}
                 isMulti={isMulti}
-                defaultValue={fundSelect.length > 0 ? fundSelect[1] : ""}
             />
         </div>
     );
