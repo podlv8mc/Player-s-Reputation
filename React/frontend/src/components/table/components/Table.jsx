@@ -326,7 +326,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         };
 
-        let dataToSend = editingUserData;
+        let dataToSend;
 
         if (apiLink === "users") {
             dataToSend = { ...editingUserData, funds: selectedFundEdit };
