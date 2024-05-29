@@ -10,6 +10,7 @@ import SelectRole from "@/components/table/components/SelectRole";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 import MobTable from "@/components/table/components/MobTable";
 import AdminWrapper from "@/components/table/components/AdminWrapper";
+import ChangeSelectSigns from "@/components/table/components/ChangeSelectSigns";
 
 function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, modalTitle, modalHeader}) {
     const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const [selectedFund, setSelectedFund] = useState(null);
+    const [selectedFundEdit, setSelectedFundEdit] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [tot, setTot] = useState([]);
@@ -313,10 +315,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
+    console.log(selectedFundEdit)
+    console.log(setSelectedFundEdit)
+
     const handleEditSubmit = async (e) => {
         e.preventDefault()
         console.log(editingUserData)
-        console.log(setSelectedFund)
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -510,7 +514,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        {/*<SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink} currentUser={selectedUser}/>*/}
+                        <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} selectName={apiLink} currentUser={selectedUser}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">
