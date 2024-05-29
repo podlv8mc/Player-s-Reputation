@@ -4,8 +4,8 @@ import axios from "axios";
 import domain from "@/domain";
 import ModalLine from "@/components/table/components/ModalLine";
 
-function ChangeSelectSigns({ onSelect, isMulti = false }) {
-    const [selectedOption, setSelectedOption] = useState(null);
+function ChangeSelectSigns({ onSelect, isMulti = false, userId, defaultValue }) {
+    const [selectedOption, setSelectedOption] = useState(defaultValue);
     const [fundSelect, setFundSelect] = useState([]);
 
     useEffect(() => {
@@ -15,12 +15,18 @@ function ChangeSelectSigns({ onSelect, isMulti = false }) {
             }
         })
             .then((data) => {
-                setFundSelect(data.data.items.map(obj => ({ value: obj.id, label: obj.name })));
+                const options = data.data.items.map(obj => ({ value: obj.id, label: obj.name }));
+                setFundSelect(options);
+
+                const userFunds = userId.funds.map(fund => options.find(option => option.value === fund.id));
+                setSelectedOption(userFunds);
+                onSelect(userFunds);
+                console.log("Фонды пользователя установлены:", userFunds);
             })
             .catch((error) => {
-                console.error("Error fetching funds:", error);
+                console.error("Ошибка при получении фондов:", error);
             });
-    }, []);
+    }, [onSelect, userId]);
 
     const handleSelectChange = (selectedOption) => {
         const selectedIds = selectedOption.map(option => option.value);

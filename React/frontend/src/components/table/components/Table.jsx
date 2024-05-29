@@ -514,7 +514,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} selectName={apiLink} currentUser={selectedUser}/>
+                        <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} currentUser={selectedUser}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">
