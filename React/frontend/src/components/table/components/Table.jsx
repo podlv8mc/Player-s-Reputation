@@ -205,7 +205,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     //===----- / Resize -----===//
 
-    //===----- Modal Window -----===//
+    //===----- Modal window logic -----===//
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -245,6 +245,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const closeResetPasswordModal = () => {
         setPasswordReset(false)
     }
+
+    //===----- / Modal window logic -----===//
+
+    //===----- Sending -----===//
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -314,8 +318,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
-    console.log(selectedFundEdit)
-
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
@@ -341,8 +343,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 console.error(error);
             });
     };
-
-
 
     const handleDeleteUser = () => {
         axios.delete(`${domain}${apiLink}/${deleteContent}`, {
@@ -380,6 +380,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         }
     };
 
+    //===----- / Sending -----===//
+
+    //===----- Modal Window -----===//
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
