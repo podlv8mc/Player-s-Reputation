@@ -39,7 +39,7 @@ function UsersPage() {
         name: "",
         discord: "",
         email: "",
-        //password: "",
+        password: "",
     });
 
     const inputLabels = {
