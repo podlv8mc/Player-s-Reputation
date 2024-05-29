@@ -330,7 +330,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
         let dataToSend = editingUserData; // По умолчанию отправляем editingUserData
 
-        // Добавляем условие, чтобы объединить editingUserData с userDataWithFunds только для apiLink === "users"
         if (apiLink === "users") {
             const userDataWithFunds = {
                 funds: selectedFundEdit
