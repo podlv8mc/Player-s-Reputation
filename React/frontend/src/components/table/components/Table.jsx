@@ -433,7 +433,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        <SelectSigns onSelect={setSelectedFund} isMulti={true} userId={selectedUser}/>
+                        <SelectSigns onSelect={setSelectedFund} isMulti={true}/>
                         <SelectRole onSelect={setSelectedOption}/>
                         {error && <div className="massage__error">{error}</div>}
                     </>
@@ -511,7 +511,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        <SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink}/>
+                        <SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink} userId={selectedUser}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">
