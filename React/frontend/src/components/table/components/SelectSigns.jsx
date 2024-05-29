@@ -25,10 +25,7 @@ function SelectSigns({ onSelect, isMulti = false }) {
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
         onSelect(selectedOption);
-        console.log(selectedOption);
     };
-
-    console.log(fundSelect)
 
     return (
         <div className="table__modal-row">

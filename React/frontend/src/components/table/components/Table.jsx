@@ -33,6 +33,17 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
 
+
+    const generateRandomPassword = (length = 4) => {
+        const charset = "jknfer";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * charset.length);
+            password += charset[randomIndex];
+        }
+        return password;
+    };
+
     //===----- Table -----===//
 
     const {
@@ -140,14 +151,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     //===----- UseEffect -----===//
 
     useEffect(() => {
-            if (Array.isArray(selectedFund)) {
-                setFetchingFunds([...selectedFund.map(function (obj) {
-                    return {id: obj.value, name: obj.label};
-                })]);
-            }
-        },
-        [selectedFund]
-    )
+        if (Array.isArray(selectedFund)) {
+            const selectedFundIds = selectedFund.map(fund => fund.value);
+            setFetchingFunds(selectedFundIds);
+        }
+    }, [selectedFund]);
 
     useEffect(() => {
         setFilteredData(
@@ -220,7 +228,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         setIsEditModalOpen(false);
     };
 
-    const openDeleteModal = (user) => {
+    const openDeleteModal = () => {
         setDeleteModal(true)
     };
 
@@ -229,8 +237,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     }
 
     const openResetPasswordModal = (user) => {
-        setPasswordReset(true)
-    }
+        setSelectedUser(user);
+        setPasswordReset(true);
+    };
 
     const closeResetPasswordModal = () => {
         setPasswordReset(false)
@@ -282,7 +291,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_verified: false,
                 funds: selectedFund ? fetchingFunds : null,
             };
-            console.log(userDataWithTimestamp);
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
         } else {
@@ -304,6 +312,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }
             })
     };
+
+    console.log(selectedFund)
+    console.log(fetchingFunds)
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
@@ -336,6 +347,32 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 console.error(error);
             });
     };
+
+    const handleResetPassword = async () => {
+        const newPassword = generateRandomPassword();
+        console.log("New password:", newPassword);
+
+        const userUpdateUrl = `${domain}users/${selectedUser.id}`;
+        const gg = `${domain}users/${selectedUser.role}`;
+
+        console.log(gg)
+
+
+        try {
+            await axios.patch(userUpdateUrl, { password: newPassword, role: selectedUser.role }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                }
+            });
+
+            alert("Пароль был успешно сброшен и отправлен на почту.");
+            closeResetPasswordModal();
+
+        } catch (error) {
+            alert("Произошла ошибка при сбросе пароля.");
+        }
+    };
+
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -485,9 +522,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
-                    <button className="btn-hover table__btn" onClick={openResetPasswordModal}>
-                        Сбросить пароль
-                    </button>
+                    {apiLink === "users" ? (
+                        <button className="btn-hover table__btn" onClick={() => openResetPasswordModal(editingUserData)}>
+                            Сбросить пароль
+                        </button>
+                    ) : null}
                     <button className="btn-hover table__btn" type="submit">
                         Сохранить
                     </button>
@@ -497,10 +536,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const ResetPassword = passwordReset && (
-        <Modal active={passwordReset} setActive={closeResetPasswordModal}>
+        <Modal active={passwordReset} setActive={closeResetPasswordModal} className="reset-password">
             <h3>
                 Вы уверены что хотите сбросить пароль?
             </h3>
+            <div className="table__btn-row">
+                <button className="btn-hover table__btn" onClick={closeResetPasswordModal}>
+                    Отменить
+                </button>
+                <button className="btn-hover table__btn" onClick={handleResetPassword}>
+                    Сбросить пароль
+                </button>
+            </div>
         </Modal>
     );
 
@@ -591,11 +638,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        <AdminWrapper>
+
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-                        </AdminWrapper>
+
                     </div>
                 </div>
             </div>
