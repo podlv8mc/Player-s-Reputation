@@ -3,7 +3,7 @@ import Select from "react-select";
 import axios from "axios";
 import domain from "@/domain";
 
-function SelectSigns({ onSelect, isMulti = false, selectName = "" }) {
+function SelectSigns({ onSelect, isMulti = false, selectName = "", userId }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [fundSelect, setFundSelect] = useState([]);
 
@@ -27,6 +27,8 @@ function SelectSigns({ onSelect, isMulti = false, selectName = "" }) {
                 console.error("Error fetching funds:", error);
             });
     }, [onSelect, selectName]);
+
+    console.log(userId);
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
