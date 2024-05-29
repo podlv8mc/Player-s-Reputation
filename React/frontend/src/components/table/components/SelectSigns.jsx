@@ -8,27 +8,43 @@ function SelectSigns({ onSelect, isMulti = false, selectName = "", userId }) {
     const [fundSelect, setFundSelect] = useState([]);
 
     useEffect(() => {
-        axios.get(`${domain}funds`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        })
-            .then((data) => {
-                const options = data.data.items.map(obj => ({ value: obj.id, label: obj.name }));
+        const fetchFunds = async () => {
+            try {
+                const response = await axios.get(`${domain}funds`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                });
+                const options = response.data.items.map(obj => ({ value: obj.id, label: obj.name }));
                 setFundSelect(options);
-
-                // Установить defaultValue только если selectName равен "users"
-                if (selectName === "users" && options.length > 1) {
-                    setSelectedOption([options[2]]);
-                    onSelect([options[2]]);
-                }
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error("Error fetching funds:", error);
-            });
-    }, [onSelect, selectName]);
+            }
+        };
 
-    console.log(userId);
+        const fetchUserFunds = async () => {
+            try {
+                const response = await axios.get(`${domain}users/${userId}/funds`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                });
+                const userFunds = response.data.map(fund => ({ value: fund.id, label: fund.name }));
+                setSelectedOption(userFunds);
+                onSelect(userFunds);
+            } catch (error) {
+                console.error("Error fetching user funds:", error);
+            }
+        };
+
+        // Вызов fetchFunds для всех случаев
+        fetchFunds();
+
+        // Если selectName равен "users" и передан userId, выполняем запрос для получения фондов пользователя
+        if (selectName === "users" && userId) {
+            fetchUserFunds();
+        }
+    }, [onSelect, selectName, userId]);
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
