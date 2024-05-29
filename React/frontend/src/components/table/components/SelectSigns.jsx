@@ -20,8 +20,12 @@ function SelectSigns({ onSelect, isMulti = false, selectName = "", userId }) {
                 setFundSelect(options);
                 console.log("Фонды успешно получены:", options);
 
+                // Проверка условий
+                console.log("selectName:", selectName);
+                console.log("userId:", userId);
+
                 if (selectName === "users" && userId && userId.funds) {
-                    console.log("Устанавливаем фонды пользователя по умолчанию...");
+                    console.log("Фонды пользователя:", userId.funds);
                     const userFunds = userId.funds.map(fund => options.find(option => option.value === fund.id));
                     setSelectedOption(userFunds);
                     onSelect(userFunds);
