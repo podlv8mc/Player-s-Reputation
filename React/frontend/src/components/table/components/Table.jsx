@@ -316,6 +316,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const handleEditSubmit = async (e) => {
         e.preventDefault()
         console.log(editingUserData)
+        console.log(setSelectedFund)
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -509,7 +510,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
-                        <SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink} userId={selectedUser}/>
+                        {/*<SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink} currentUser={selectedUser}/>*/}
                     </>
                 ) : null}
                 <div className="table__btn-row">

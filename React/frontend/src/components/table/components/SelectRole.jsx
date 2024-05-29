@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Select from "react-select";
+import ModalLine from "@/components/table/components/ModalLine";
 
 function SelectRole({ onSelect }) {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -7,7 +8,6 @@ function SelectRole({ onSelect }) {
     const options = [
         { value: 'admin', label: 'Админ' },
         { value: 'user', label: 'Пользователь' },
-        //{ value: 'manager', label: 'Мэнеджер' },
     ]
 
     const handleSelectChange = (selectedOption) => {
@@ -16,10 +16,7 @@ function SelectRole({ onSelect }) {
     };
 
     return (
-        <div className="table__modal-row">
-            <label className="table__modal-cell-title">
-                Роль
-            </label>
+        <ModalLine tittle="Роль">
             <Select
                 classNamePrefix='select'
                 value={selectedOption}
@@ -27,7 +24,7 @@ function SelectRole({ onSelect }) {
                 options={options}
                 placeholder="Выбрать роль"
             />
-        </div>
+        </ModalLine>
     );
 }
 
