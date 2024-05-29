@@ -340,7 +340,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
-                window.location.reload();
+                //window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
