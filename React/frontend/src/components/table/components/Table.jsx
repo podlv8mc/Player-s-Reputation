@@ -319,21 +319,37 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     console.log(setSelectedFundEdit)
 
     const handleEditSubmit = async (e) => {
-        e.preventDefault()
-        console.log(editingUserData)
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
+        e.preventDefault();
+        console.log(editingUserData);
+
+        const config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        })
+        };
+
+        let dataToSend = editingUserData; // По умолчанию отправляем editingUserData
+
+        // Добавляем условие, чтобы объединить editingUserData с userDataWithFunds только для apiLink === "users"
+        if (apiLink === "users") {
+            const userDataWithFunds = {
+                funds: selectedFund
+            };
+            dataToSend = { ...editingUserData, ...userDataWithFunds }; // Объединяем объекты
+        }
+
+        // Используем dataToSend для отправки данных в axios.patch
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
                 window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
-            })
+            });
     };
+
+
 
     const handleDeleteUser = () => {
         axios.delete(`${domain}${apiLink}/${deleteContent}`, {
@@ -510,7 +526,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     value={editingUserData[key]}
                                     onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
                                     autoComplete="off"
-                                    disabled={key === "username"}
+                                    disabled={key === "username" && key === "password"}
                                 />
                             </div>
                         ))}
