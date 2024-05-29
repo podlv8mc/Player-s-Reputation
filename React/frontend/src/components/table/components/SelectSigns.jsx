@@ -32,14 +32,15 @@ function SelectSigns({onSelect, isMulti = false, selectName = "", userId}) {
 
         fetchFunds();
     }, [onSelect, selectName, userId]);
-    console.log(selectedOption)
+
     const handleSelectChange = (selectedOption) => {
+        const selectedIds = selectedOption.map(option => option.value);
         setSelectedOption(selectedOption);
-        onSelect(selectedOption);
-        console.log(selectedOption)
-        console.log("Выбранные фонды изменены:", selectedOption);
+        onSelect(selectedIds);
+        console.log("Выбранные фонды изменены:", selectedIds);
     };
-    console.log(selectedOption)
+
+
     return (
         <div className="table__modal-row">
             <label className="table__modal-cell-title">
