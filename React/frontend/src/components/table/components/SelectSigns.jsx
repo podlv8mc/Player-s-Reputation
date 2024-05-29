@@ -10,6 +10,7 @@ function SelectSigns({ onSelect, isMulti = false, selectName = "", userId }) {
     useEffect(() => {
         const fetchFunds = async () => {
             try {
+                console.log("Запрос всех фондов...");
                 const response = await axios.get(`${domain}funds`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
@@ -17,38 +18,29 @@ function SelectSigns({ onSelect, isMulti = false, selectName = "", userId }) {
                 });
                 const options = response.data.items.map(obj => ({ value: obj.id, label: obj.name }));
                 setFundSelect(options);
+                console.log("Фонды успешно получены:", options);
+
+                if (selectName === "users" && userId && userId.funds) {
+                    console.log("Устанавливаем фонды пользователя по умолчанию...");
+                    const userFunds = userId.funds.map(fund => options.find(option => option.value === fund.id));
+                    setSelectedOption(userFunds);
+                    onSelect(userFunds);
+                    console.log("Фонды пользователя установлены:", userFunds);
+                } else {
+                    console.log("Необходимо установить фонды по умолчанию, но условие не выполнено.");
+                }
             } catch (error) {
-                console.error("Error fetching funds:", error);
+                console.error("Ошибка при получении фондов:", error);
             }
         };
 
-        const fetchUserFunds = async () => {
-            try {
-                const response = await axios.get(`${domain}users/${userId}/funds`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
-                });
-                const userFunds = response.data.map(fund => ({ value: fund.id, label: fund.name }));
-                setSelectedOption(userFunds);
-                onSelect(userFunds);
-            } catch (error) {
-                console.error("Error fetching user funds:", error);
-            }
-        };
-
-        // Вызов fetchFunds для всех случаев
         fetchFunds();
-
-        // Если selectName равен "users" и передан userId, выполняем запрос для получения фондов пользователя
-        if (selectName === "users" && userId) {
-            fetchUserFunds();
-        }
     }, [onSelect, selectName, userId]);
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
         onSelect(selectedOption);
+        console.log("Выбранные фонды изменены:", selectedOption);
     };
 
     return (

@@ -313,9 +313,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
-    console.log(selectedFund)
-    console.log(fetchingFunds)
-
     const handleEditSubmit = async (e) => {
         e.preventDefault()
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
@@ -350,12 +347,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     const handleResetPassword = async () => {
         const newPassword = generateRandomPassword();
-        console.log("New password:", newPassword);
 
         const userUpdateUrl = `${domain}users/${selectedUser.id}`;
         const gg = `${domain}users/${selectedUser.role}`;
 
-        console.log(gg)
 
 
         try {
