@@ -17,9 +17,9 @@ class UsersDB(SQLAlchemyUserDatabase):
         user_statement = (
             select(User).where(User.id == user_id).options(selectinload(User.funds))
         )
-        user = await self.session.scalars(user_statement).all()
+        user = await self.session.scalars(user_statement)
 
-        return user
+        return user.all()[0]
 
     async def update(self, user: User, update_dict: Dict[str, Any]) -> User:
         fund_ids = update_dict.get("foudns_ids")
