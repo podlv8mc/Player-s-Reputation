@@ -333,7 +333,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         // Добавляем условие, чтобы объединить editingUserData с userDataWithFunds только для apiLink === "users"
         if (apiLink === "users") {
             const userDataWithFunds = {
-                funds: selectedFund
+                funds: selectedFundEdit
             };
             dataToSend = { ...editingUserData, ...userDataWithFunds }; // Объединяем объекты
         }
