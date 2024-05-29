@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
+const Modal = ({ id, active, setActive, children, className }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         let timer;
-        if (activeModal === id) {
+        if (active) {
             timer = setTimeout(() => {
                 setIsVisible(true);
             }, 100);
@@ -18,19 +18,30 @@ const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
             clearTimeout(timer);
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [activeModal, id]);
+    }, [active]);
+
+    useEffect(() => {
+        if (active) {
+            const stack = JSON.parse(localStorage.getItem("modalStack")) || [];
+            stack.push(id);
+            localStorage.setItem("modalStack", JSON.stringify(stack));
+        }
+    }, [active, id]);
 
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
-            closeModal();
+            setActive(false);
         }
     };
 
     const closeModal = () => {
-        setActiveModal((prevModalStack) => {
-            const newStack = prevModalStack.slice(0, -1);
-            return newStack.length > 0 ? newStack : null;
-        });
+        const stack = JSON.parse(localStorage.getItem("modalStack")) || [];
+        const index = stack.indexOf(id);
+        if (index !== -1) {
+            stack.splice(index, 1);
+            localStorage.setItem("modalStack", JSON.stringify(stack));
+        }
+        setActive(false);
     };
 
     return (
