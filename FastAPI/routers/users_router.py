@@ -49,7 +49,7 @@ def get_users_router(
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
 
-        user = user_manager.get(id=current_user.id)
+        user = await user_manager.get(id=current_user.id)
 
         return schemas.model_validate(user_schema, user)
 
