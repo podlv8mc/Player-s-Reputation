@@ -28,6 +28,8 @@ function ChangeSelectSigns({ onSelect, isMulti = false, userId, defaultValue }) 
             });
     }, [onSelect, userId]);
 
+    console.log(userId)
+
     const handleSelectChange = (selectedOption) => {
         const selectedIds = selectedOption.map(option => option.value);
         setSelectedOption(selectedOption);
