@@ -315,6 +315,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     const handleEditSubmit = async (e) => {
         e.preventDefault()
+        console.log(editingUserData)
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
