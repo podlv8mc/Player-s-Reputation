@@ -7,7 +7,6 @@ import ModalLine from "@/components/table/components/ModalLine";
 function ChangeSelectSigns({ onSelect, isMulti = false, currentUser }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [fundSelect, setFundSelect] = useState([]);
-    let selectedIds;
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
@@ -21,7 +20,6 @@ function ChangeSelectSigns({ onSelect, isMulti = false, currentUser }) {
 
                 const userFunds = currentUser.funds.map(fund => options.find(option => option.value === fund.id));
                 setSelectedOption(userFunds);
-                selectedIds = selectedOption.map(option => option.value);
                 onSelect(userFunds);
                 console.log("Фонды пользователя установлены:", userFunds);
             })
@@ -31,6 +29,7 @@ function ChangeSelectSigns({ onSelect, isMulti = false, currentUser }) {
     }, [onSelect, currentUser]);
 
     const handleSelectChange = (selectedOption) => {
+        const selectedIds = selectedOption.map(option => option.value);
         setSelectedOption(selectedOption);
         onSelect(selectedIds);
         console.log("Выбранные фонды изменены:", selectedIds);

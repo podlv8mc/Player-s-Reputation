@@ -33,8 +33,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
+    const [fetchingFundsEdit, setFetchingFundsEdit] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
-
 
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
@@ -329,7 +329,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         let dataToSend;
 
         if (apiLink === "users") {
-            dataToSend = { ...editingUserData, funds: selectedFundEdit };
+            if (Array.isArray(selectedFundEdit)) {
+                const selectedFundIdEdit = selectedFundEdit.map(fund => fund.value);
+                setFetchingFundsEdit(selectedFundIdEdit);
+            }
+            dataToSend = { ...editingUserData, funds: fetchingFundsEdit };
             console.log(dataToSend);
         }
 
@@ -518,7 +522,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     type="text"
                                     name={key}
                                     value={editingUserData[key]}
-                                    onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                    onChange={(e) => {
+                                        setEditingUserData({...editingUserData, [key]: e.target.value})
+                                    }}
                                     autoComplete="off"
                                     disabled={key === "username" && key === "password"}
                                 />
