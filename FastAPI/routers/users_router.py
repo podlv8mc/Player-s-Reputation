@@ -45,8 +45,12 @@ def get_users_router(
         },
     )
     async def me(
-        user: models.UP = Depends(get_current_active_user),
+        current_user: models.UP = Depends(get_current_active_user),
+        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
+
+        user = user_manager.get(id=current_user.id)
+
         return schemas.model_validate(user_schema, user)
 
     @router.patch(
