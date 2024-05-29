@@ -11,15 +11,18 @@ const Modal = ({ active, setActive, children, className }) => {
             setIsVisible(true);
             window.addEventListener("keydown", handleKeyDown);
         } else {
-            setIsVisible(false);
             // Удаляем текущее модальное окно из стека
             setModalStack(prevStack => prevStack.slice(0, -1));
+            // Проверяем, есть ли еще открытые модальные окна
+            const isAnyModalActive = modalStack.length > 1;
+            setIsVisible(isAnyModalActive);
+            window.removeEventListener("keydown", handleKeyDown);
         }
 
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [active]);
+    }, [active, modalStack]);
 
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
