@@ -329,11 +329,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         let dataToSend;
 
         if (apiLink === "users") {
-            if (Array.isArray(selectedFundEdit)) {
-                const selectedFundIdEdit = selectedFundEdit.map(fund => fund.value);
-                setFetchingFundsEdit(selectedFundIdEdit);
-            }
-            dataToSend = { ...editingUserData, funds: fetchingFundsEdit };
+            dataToSend = { ...editingUserData, funds: selectedFundEdit };
             console.log(dataToSend);
         }
 
