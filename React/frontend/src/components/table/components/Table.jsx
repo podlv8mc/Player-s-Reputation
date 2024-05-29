@@ -516,6 +516,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                 />
                             </div>
                         ))}
+                        <SelectSigns onSelect={setSelectedFund} isMulti={true} selectName={apiLink}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">

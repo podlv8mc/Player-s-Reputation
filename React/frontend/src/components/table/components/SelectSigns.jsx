@@ -3,7 +3,7 @@ import Select from "react-select";
 import axios from "axios";
 import domain from "@/domain";
 
-function SelectSigns({ onSelect, isMulti = false }) {
+function SelectSigns({ onSelect, isMulti = false, selectName = "" }) {
     const [selectedOption, setSelectedOption] = useState(null);
     const [fundSelect, setFundSelect] = useState([]);
 
@@ -17,15 +17,16 @@ function SelectSigns({ onSelect, isMulti = false }) {
                 const options = data.data.items.map(obj => ({ value: obj.id, label: obj.name }));
                 setFundSelect(options);
 
-                // Установить defaultValue после получения данных
-                if (options.length > 1) {
-                    setSelectedOption([options[1]]);
-                    onSelect([options[1]]);
+                // Установить defaultValue только если selectName равен "users"
+                if (selectName === "users" && options.length > 1) {
+                    setSelectedOption([options[2]]);
+                    onSelect([options[2]]);
                 }
-            }).catch((error) => {
-            console.error("Error fetching funds:", error);
-        });
-    }, [onSelect]);
+            })
+            .catch((error) => {
+                console.error("Error fetching funds:", error);
+            });
+    }, [onSelect, selectName]);
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
