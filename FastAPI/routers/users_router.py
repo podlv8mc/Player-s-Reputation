@@ -51,7 +51,7 @@ def get_users_router(
 
         user = await user_manager.get(id=current_user.id)
 
-        return schemas.model_validate(user_schema, user)
+        return user
 
     @router.patch(
         "/me",
