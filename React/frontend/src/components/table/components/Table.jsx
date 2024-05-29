@@ -33,7 +33,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteContent, setDeleteContent] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
-    const [fetchingFundsEdit, setFetchingFundsEdit] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
 
     const generateRandomPassword = (length = 4) => {
@@ -522,7 +521,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                         setEditingUserData({...editingUserData, [key]: e.target.value})
                                     }}
                                     autoComplete="off"
-                                    disabled={key === "username" && key === "password"}
+                                    disabled={key === "username" || key === "password"}
                                 />
                             </div>
                         ))}
