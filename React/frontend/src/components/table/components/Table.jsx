@@ -316,11 +316,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     };
 
     console.log(selectedFundEdit)
-    console.log(setSelectedFundEdit)
 
     const handleEditSubmit = async (e) => {
         e.preventDefault();
-        console.log(editingUserData);
 
         const config = {
             headers: {
@@ -328,16 +326,13 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         };
 
-        let dataToSend = editingUserData; // По умолчанию отправляем editingUserData
+        let dataToSend = editingUserData;
 
         if (apiLink === "users") {
-            const userDataWithFunds = {
-                funds: selectedFundEdit
-            };
-            dataToSend = { ...editingUserData, ...userDataWithFunds }; // Объединяем объекты
+            dataToSend = { ...editingUserData, funds: selectedFundEdit };
+            console.log(dataToSend);
         }
 
-        // Используем dataToSend для отправки данных в axios.patch
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
