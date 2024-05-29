@@ -566,7 +566,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const ViewModalContent = selectedUser && (
-        <Modal id="modal1" active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
+        <Modal active={selectedUser} setActive={closeViewModal} className="modal-scroll modal__mob">
             <button className="modal__btn-close" onClick={closeViewModal}/>
             <AdminWrapper>
                 <button className="modal__btn-new table__top-btn" onClick={() => openEditModal(selectedUser)}>
@@ -599,7 +599,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     );
 
     const DeleteModalContent = deleteContent && (
-        <Modal id="modal2" active={deleteModal} setActive={closeDeleteModal}>
+        <Modal active={deleteModal} setActive={closeDeleteModal}>
             <h3>
                 Вы уверены что хотите удалить {modalTitle}?
             </h3>
