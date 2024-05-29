@@ -22,12 +22,19 @@ const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
-            setActiveModal(null);
+            closeModal();
         }
     };
 
+    const closeModal = () => {
+        setActiveModal((prevModalStack) => {
+            const newStack = prevModalStack.slice(0, -1);
+            return newStack.length > 0 ? newStack : null;
+        });
+    };
+
     return (
-        <div className={`modal ${isVisible ? 'active' : ''} ${className}`} onClick={() => setActiveModal(null)}>
+        <div className={`modal ${isVisible ? 'active' : ''} ${className}`} onClick={closeModal}>
             <div className={`modal__content ${isVisible ? 'active' : ''}`} onClick={e => e.stopPropagation()}>
                 {children}
             </div>
@@ -35,27 +42,18 @@ const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
     );
 };
 
-const TestModal = () => {
-    const [activeModal, setActiveModal] = useState(null);
-    const [modalStack, setModalStack] = useState([]);
+const App = () => {
+    const [activeModal, setActiveModal] = useState([]);
 
     const openModal = (id) => {
-        if (modalStack.length > 0) {
-            setModalStack([...modalStack, id]);
-        } else {
-            setActiveModal(id);
-            setModalStack([id]);
-        }
+        setActiveModal((prevModalStack) => [...prevModalStack, id]);
     };
 
     const closeModal = () => {
-        const newStack = modalStack.slice(0, -1);
-        setModalStack(newStack);
-        if (newStack.length > 0) {
-            setActiveModal(newStack[newStack.length - 1]);
-        } else {
-            setActiveModal(null);
-        }
+        setActiveModal((prevModalStack) => {
+            const newStack = prevModalStack.slice(0, -1);
+            return newStack;
+        });
     };
 
     return (
@@ -63,19 +61,19 @@ const TestModal = () => {
             <button onClick={() => openModal('modal1')}>Открыть Модальное Окно 1</button>
             <button onClick={() => openModal('modal2')}>Открыть Модальное Окно 2</button>
 
-            <Modal id="modal1" activeModal={activeModal} setActiveModal={setActiveModal}>
+            <Modal id="modal1" activeModal={activeModal[activeModal.length - 1]} setActiveModal={setActiveModal}>
                 <h1>Модальное Окно 1</h1>
                 <button onClick={closeModal}>Закрыть</button>
                 <button onClick={() => openModal('modal2')}>Открыть Модальное Окно 2</button>
             </Modal>
 
-            <Modal id="modal2" activeModal={activeModal} setActiveModal={setActiveModal}>
+            <Modal id="modal2" activeModal={activeModal[activeModal.length - 1]} setActiveModal={setActiveModal}>
                 <h1>Модальное Окно 2</h1>
                 <button onClick={closeModal}>Закрыть</button>
                 <button onClick={() => openModal('modal3')}>Открыть Модальное Окно 3</button>
             </Modal>
 
-            <Modal id="modal3" activeModal={activeModal} setActiveModal={setActiveModal}>
+            <Modal id="modal3" activeModal={activeModal[activeModal.length - 1]} setActiveModal={setActiveModal}>
                 <h1>Модальное Окно 3</h1>
                 <button onClick={closeModal}>Закрыть</button>
             </Modal>
@@ -83,4 +81,4 @@ const TestModal = () => {
     );
 };
 
-export default TestModal;
+export default App;
