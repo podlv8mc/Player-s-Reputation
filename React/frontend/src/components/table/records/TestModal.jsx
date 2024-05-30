@@ -8,7 +8,7 @@ const Modal = ({ id, activeModal, setActiveModal, children, className }) => {
         if (activeModal === id) {
             timer = setTimeout(() => {
                 setIsVisible(true);
-            }, 100);
+            }, 200);
             window.addEventListener("keydown", handleKeyDown);
         } else {
             setIsVisible(false);
