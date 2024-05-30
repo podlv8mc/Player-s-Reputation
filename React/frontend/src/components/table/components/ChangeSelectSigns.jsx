@@ -30,7 +30,7 @@ function ChangeSelectSigns({ onSelect, isMulti = false, currentUser }) {
 
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
-        //onSelect(selectedOption.map(option => option.value));
+        onSelect(selectedOption.map(option => option.value));
     };
 
     return (
