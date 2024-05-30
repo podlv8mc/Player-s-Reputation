@@ -25,7 +25,7 @@ class UsersDB(SQLAlchemyUserDatabase):
         fund_ids = update_dict.get("funds")
 
         if fund_ids:
-            funds_ids = update_dict.pop("funds", [])
+            fund_ids = update_dict.pop("funds", [])
             funds_statement = select(models.Fund).where(models.Fund.id.in_(fund_ids))
             funds = await self.session.scalars(funds_statement)
 
