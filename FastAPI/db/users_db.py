@@ -28,7 +28,7 @@ class UsersDB(SQLAlchemyUserDatabase):
             funds_statement = select(models.Fund).where(models.Fund.id.in_(fund_ids))
             funds = await self.session.scalars(funds_statement)
 
-            for fund in funds:
+            for fund in funds.all():
                 user.funds.append(fund)
 
         for key, value in update_dict.items():
