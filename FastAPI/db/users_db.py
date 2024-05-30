@@ -22,7 +22,7 @@ class UsersDB(SQLAlchemyUserDatabase):
         return user.all()[0]
 
     async def update(self, user: User, update_dict: Dict[str, Any]) -> User:
-        fund_ids = update_dict.get("foudns_ids")
+        fund_ids = update_dict.get("funds")
 
         if fund_ids:
             funds_statement = select(models.Fund).where(models.Fund.id.in_(fund_ids))
