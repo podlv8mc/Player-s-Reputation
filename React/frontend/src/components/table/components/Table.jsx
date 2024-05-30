@@ -318,8 +318,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
-    console.log(selectedFundEdit)
-
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
@@ -339,7 +337,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
-                //window.location.reload();
+                window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
@@ -579,16 +577,23 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 Информация о {modalHeader}
             </div>
             <div className="table__modal-form-wrap">
-                {columns.map(column => (
-                    <div className="table__modal-row" key={column.accessor}>
-                        <div className="table__modal-cell-title">
-                            {column.Header}
+                {columns.map(column => {
+                    console.log(column.accessor);
+                    if (selectedUser && typeof column.accessor === 'function') {
+                        console.log(column.accessor(selectedUser));
+                    }
+                    return (
+                        <div className="table__modal-row" key={column.accessor}>
+                            <div className="table__modal-cell-title">
+                                {column.Header}
+                            </div>
+                            <div className="table__modal-cell">
+                                {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
+                            </div>
                         </div>
-                        <div className="table__modal-cell">
-                            {selectedUser && typeof column.accessor === 'function' ? column.accessor(selectedUser) : ''}
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
+
             </div>
             <AdminWrapper>
                 <div className="table__btn-row">
