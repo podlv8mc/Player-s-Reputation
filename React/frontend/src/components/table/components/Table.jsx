@@ -535,12 +535,13 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     <button className="btn-hover table__btn" onClick={closeEditModal}>
                         Отменить
                     </button>
-                    {apiLink === "users" ? (
+                    {/*   {apiLink === "users" ? (
                         <button className="btn-hover table__btn"
                                 onClick={() => openResetPasswordModal(editingUserData)}>
                             Сбросить пароль
                         </button>
                     ) : null}
+                    */}
                     <button className="btn-hover table__btn" type="submit">
                         Сохранить
                     </button>
@@ -578,17 +579,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             </div>
             <div className="table__modal-form-wrap">
                 {columns.map(column => {
-                    // Выводим column.accessor в консоль для отладки
-                    console.log(column.accessor);
-
-                    // Проверяем, является ли accessor функцией и возвращает ли она 'id' для selectedUser
                     const isHidden = selectedUser && typeof column.accessor === 'function' && column.accessor(selectedUser) === selectedUser.id;
 
                     return (
-                        <div
-                            className={`table__modal-row ${isHidden ? 'hidden' : ''}`}
-                            key={column.accessor}
-                        >
+                        <div className={`table__modal-row ${isHidden ? 'hidden' : ''}`} key={column.accessor}>
                             <div className="table__modal-cell-title">
                                 {column.Header}
                             </div>
