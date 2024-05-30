@@ -318,6 +318,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
+    console.log(selectedFundEdit)
+
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
