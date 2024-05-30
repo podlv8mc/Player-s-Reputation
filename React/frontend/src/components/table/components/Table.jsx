@@ -578,12 +578,17 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             </div>
             <div className="table__modal-form-wrap">
                 {columns.map(column => {
+                    // Выводим column.accessor в консоль
                     console.log(column.accessor);
-                    if (selectedUser && typeof column.accessor === 'function') {
-                        console.log(column.accessor(selectedUser));
-                    }
+
+                    // Определяем, скрывать ли блок
+                    const isHidden = column.accessor === "id";
+
                     return (
-                        <div className="table__modal-row" key={column.accessor}>
+                        <div
+                            className={`table__modal-row ${isHidden ? 'hidden' : ''}`}
+                            key={column.accessor}
+                        >
                             <div className="table__modal-cell-title">
                                 {column.Header}
                             </div>
@@ -593,7 +598,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         </div>
                     );
                 })}
-
             </div>
             <AdminWrapper>
                 <div className="table__btn-row">
