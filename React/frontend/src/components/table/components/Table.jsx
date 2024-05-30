@@ -10,6 +10,7 @@ import SelectRole from "@/components/table/components/SelectRole";
 import PaginationButtons from "@/components/table/components/PaginationButtons";
 import MobTable from "@/components/table/components/MobTable";
 import AdminWrapper from "@/components/table/components/AdminWrapper";
+import ChangeSelectSigns from "@/components/table/components/ChangeSelectSigns";
 
 function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, modalTitle, modalHeader}) {
     const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fundSelect, setfundSelect] = useState();
     const [selectedOption, setSelectedOption] = useState(null);
     const [selectedFund, setSelectedFund] = useState(null);
+    const [selectedFundEdit, setSelectedFundEdit] = useState(null);
     const [filterValue, setFilterValue] = useState(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [tot, setTot] = useState([]);
@@ -32,7 +34,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
-
 
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
@@ -204,7 +205,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     //===----- / Resize -----===//
 
-    //===----- Modal Window -----===//
+    //===----- Modal window logic -----===//
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -244,6 +245,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const closeResetPasswordModal = () => {
         setPasswordReset(false)
     }
+
+    //===----- / Modal window logic -----===//
+
+    //===----- Sending -----===//
 
     const handleChange = e => {
         const {name, value} = e.target;
@@ -313,23 +318,32 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             })
     };
 
-    console.log(selectedFund)
-    console.log(fetchingFunds)
+    console.log(selectedFundEdit)
 
     const handleEditSubmit = async (e) => {
-        e.preventDefault()
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, editingUserData, {
+        e.preventDefault();
+
+        const config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
-        })
+        };
+
+        let dataToSend;
+
+        if (apiLink === "users") {
+            dataToSend = {...editingUserData, funds: selectedFundEdit};
+            console.log(dataToSend);
+        }
+
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
-                window.location.reload();
+                //window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
-            })
+            });
     };
 
     const handleDeleteUser = () => {
@@ -350,16 +364,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
     const handleResetPassword = async () => {
         const newPassword = generateRandomPassword();
-        console.log("New password:", newPassword);
 
         const userUpdateUrl = `${domain}users/${selectedUser.id}`;
-        const gg = `${domain}users/${selectedUser.role}`;
-
-        console.log(gg)
-
 
         try {
-            await axios.patch(userUpdateUrl, { password: newPassword, role: selectedUser.role }, {
+            await axios.patch(userUpdateUrl, {password: newPassword, role: selectedUser.role}, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                 }
@@ -373,6 +382,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         }
     };
 
+    //===----- / Sending -----===//
+
+    //===----- Modal Window -----===//
 
     const ModalContent = (
         <Modal active={isModalOpen} setActive={setIsModalOpen} className="modal-scroll">
@@ -510,12 +522,15 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                     type="text"
                                     name={key}
                                     value={editingUserData[key]}
-                                    onChange={(e) => setEditingUserData({...editingUserData, [key]: e.target.value})}
+                                    onChange={(e) => {
+                                        setEditingUserData({...editingUserData, [key]: e.target.value})
+                                    }}
                                     autoComplete="off"
-                                    disabled={key === "username"}
+                                    disabled={key === "username" || key === "password"}
                                 />
                             </div>
                         ))}
+                        <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} currentUser={selectedUser}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">
@@ -523,7 +538,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         Отменить
                     </button>
                     {apiLink === "users" ? (
-                        <button className="btn-hover table__btn" onClick={() => openResetPasswordModal(editingUserData)}>
+                        <button className="btn-hover table__btn"
+                                onClick={() => openResetPasswordModal(editingUserData)}>
                             Сбросить пароль
                         </button>
                     ) : null}
@@ -638,11 +654,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-
+                        <AdminWrapper>
                             <button className="table__top-btn" onClick={openModal}>
                                 <img src={Images.add} alt="add"/>
                             </button>
-
+                        </AdminWrapper>
                     </div>
                 </div>
             </div>

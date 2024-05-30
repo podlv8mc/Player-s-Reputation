@@ -8,11 +8,11 @@ function SliderBtn ({ currentSlideIndex, handleButtonClick }) {
         { index: 3, text: "СНГ" }
     ];
 
-    const [previousSlideIndex, setPreviousSlideIndex] = useState(null); // Состояние для хранения предыдущего индекса слайда
+    const [previousSlideIndex, setPreviousSlideIndex] = useState(null);
 
     const handleButtonClickWithSave = (index) => {
-        setPreviousSlideIndex(currentSlideIndex); // Сохраняем текущий индекс перед изменением
-        handleButtonClick(index); // Вызываем функцию для изменения слайдов
+        setPreviousSlideIndex(currentSlideIndex);
+        handleButtonClick(index);
     };
 
     return (
