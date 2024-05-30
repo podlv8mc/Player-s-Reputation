@@ -26,7 +26,7 @@ class UsersDB(SQLAlchemyUserDatabase):
 
         if fund_ids:
             funds_statement = select(models.Fund).where(models.Fund.id.in_(fund_ids))
-            funds = self.session.scalars(funds_statement)
+            funds = await self.session.scalars(funds_statement)
 
             for fund in funds:
                 user.funds.append(fund)
