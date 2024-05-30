@@ -37,7 +37,7 @@ class UsersDB(SQLAlchemyUserDatabase):
         self.session.add(user)
 
         await self.session.commit()
-        await self.session.refresh(user)
+        # await self.session.refresh(user)
 
         return user
 
