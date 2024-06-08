@@ -8,6 +8,7 @@ asyncpg==0.29.0
 bcrypt==4.1.2
 certifi==2024.2.2
 charset-normalizer==3.3.2
+cffi==1.16.0
 click==8.1.7
 colorama==0.4.6
 cryptography==42.0.5
