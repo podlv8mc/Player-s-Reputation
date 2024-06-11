@@ -12,7 +12,9 @@ function RecordsPage() {
             },
             {
                 Header: 'Фонд',
-                accessor: row => row.fundName,
+                accessor: (row) => {
+                    return row.fund.name ? row.fund.name : row.fundName
+                },
             },
             {
                 Header: 'Создано',
