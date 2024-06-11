@@ -16,7 +16,7 @@ from sqlalchemy import (
 from fastapi_users.db import SQLAlchemyBaseUserTable
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from engine import Base
+from db.engine import Base
 
 
 class Roles(PythonEnum):
@@ -45,6 +45,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer(), primary_key=True, index=True)
     login: Mapped[str] = mapped_column(String(64), default="-")
+    name: Mapped[str] = mapped_column(String(64), default="-")
     username: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(256), default="-")
     discord: Mapped[str] = mapped_column(String(256), default="-")

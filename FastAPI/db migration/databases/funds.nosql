@@ -61,7 +61,6 @@
 {"owner":"604915dc1437fd1eefbf7215","name":"AmigosBacking","id":"13fp8003kt51d","create":"2023-08-01T16:33:08.952Z","managers":["13fpd001kt51d"]}
 {"owner":"604915dc1437fd1eefbf7215","name":"MOON","id":"13j9k002kt50d","create":"2023-08-04T21:33:12.222Z","managers":["13jnt001kt51d"]}
 {"id":"603801502528de31d1decf8f","name":"Pocarr","managers":["6049218f17c53d14a7cb8d80","kv0j001yy41d"],"users":["6049219017c53d14a7cb8d8a"],"readonlys":["158xr001kt51d"]}
-{"id":"603801502528de31d1decf74","name":"MVP","managers":["6049219017c53d14a7cb8d87","6049219017c53d14a7cb8d86","6049218f17c53d14a7cb8d7f","604915dc1437fd1eefbf7215","15do9001kt51d"],"users":[],"readonlys":[]}
 {"owner":"604915dc1437fd1eefbf7215","name":"Еволюція","id":"16nvj001kt51d","create":"2023-11-14T05:55:20.512Z","managers":["16nvj002kt50d","16nvj003kt51d","16nvk001kt51d"]}
 {"id":"6038014d2528de31d1decc76","name":"Funfarm","managers":["6049218c17c53d14a7cb8d77","lyrg001hr41d","15gq9001kt51d","16z7i001kt51d"],"users":[],"readonlys":[]}
 {"id":"6038014f2528de31d1dece81","name":"HS","managers":["6049218c17c53d14a7cb8d78","6049218e17c53d14a7cb8d7a","604915dc1437fd1eefbf7215","v97j001ur41d","v97j002ur40d","v97j003ur41d","172gt001kt51d"],"users":[],"readonlys":[]}
@@ -74,3 +73,6 @@
 {"owner":"604915dc1437fd1eefbf7215","name":"Enigma","id":"199vg002kt50d","create":"2024-02-06T20:15:48.043Z","managers":["199vh001kt51d","19iio001kt51d"]}
 {"owner":"19zc8001kt51d","name":"GTO OR GTFO","id":"1a3xk001kt51d","create":"2024-03-04T21:32:45.240Z","managers":["1a3xl001kt51d"]}
 {"owner":"604915dc1437fd1eefbf7215","name":"20ev","id":"saya002ib40d","create":"2022-08-06T00:22:39.016Z","managers":["sayb001ib41d","1a3x9001kt51d"]}
+{"id":"603801502528de31d1decf74","name":"MVP","managers":["6049219017c53d14a7cb8d87","6049219017c53d14a7cb8d86","6049218f17c53d14a7cb8d7f","604915dc1437fd1eefbf7215","15do9001kt51d","1ajii001tp51d","1b6pn002tp50d"],"users":[],"readonlys":[]}
+{"owner":"604915dc1437fd1eefbf7215","name":"GOAT","id":"1coyj002tp50d","create":"2024-05-27T14:55:05.658Z","managers":["1coyj003tp51d"]}
+{"owner":"604915dc1437fd1eefbf7215","name":"DisReality","id":"1cxr3001ld51d","create":"2024-06-04T12:51:50.065Z","managers":["1cxr4001ld51d"]}
