@@ -644,9 +644,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             <div className="table__top-wrap">
                 <div className="table__top-box">
                     <div className="table__top-select">
-                        {apiLink === "records" ? ({
+                        {/* apiLink === "records" ? ({
                             // <TableFilter data={data} onChange={handleFilterChange}/>
-                        }) : null}
+                        }) : null*/}
                     </div>
                     <div className="table__top">
                         <input
