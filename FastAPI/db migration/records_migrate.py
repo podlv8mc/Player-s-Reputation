@@ -12,7 +12,7 @@ def migrate_records():
         records_list = arb_json.readlines()
 
     with engine.sync_session() as db:
-        for record in records_list[:10]:
+        for record in records_list:
             try:
                 record_dict = json.loads(record)
 
