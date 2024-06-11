@@ -10,10 +10,10 @@ function RecordsPage() {
                 Header: 'id',
                 accessor: row => row.id,
             },
-            {
-                Header: 'Фонд',
-                accessor: row => row.fund.name,
-            },
+            // {
+            //     Header: 'Фонд',
+            //     accessor: row => row.fund.name,
+            // },
             {
                 Header: 'Создано',
                 accessor: row => {
