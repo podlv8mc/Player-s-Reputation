@@ -132,6 +132,7 @@ class RecordBase(CreateUpdateDictModel):
     country: Optional[str | None] = None
     town: Optional[str | None] = None
     address: Optional[str | None] = None
+    fundName: Optional[str | None] = None
 
     model_config = ConfigDict(from_attributes=False)
 
