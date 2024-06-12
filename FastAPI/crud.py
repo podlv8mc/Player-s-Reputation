@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy import insert, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -122,10 +122,11 @@ async def get_records_list(
 ) -> List[models.Record]:
     records_query = (
         select(models.Record, models.Fund.name.label("fundName"))
+        .join(models.Fund)
         .options(
+            joinedload(models.Record.fund),
             selectinload(models.Record.previous_versions),
             selectinload(models.Record.created_by),
-            selectinload(models.Record.fund),
         )
         .order_by(models.Record.created_at.desc())
     )
@@ -144,8 +145,11 @@ async def get_records_list(
             )
         )
 
-    records = await db.scalars(records_query)
-    return records
+    results = await db.execute(records_query)
+    records_with_fund_names = results.all()
+
+    return records_with_fund_names
+
 
 
 async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:

@@ -266,7 +266,14 @@ async def get_records_list(
     records_list = await crud.get_records_list(
         search_query=search_query, fund_id=fund_id, db=db
     )
-    return paginate(list(records_list))
+    records_formatted = []
+    
+    for record in records_list:
+        record[0].fundName = record[1]
+        records_formatted.append(record[0]) 
+
+    return paginate(list(records_formatted))
+
 
 
 @app.get(
