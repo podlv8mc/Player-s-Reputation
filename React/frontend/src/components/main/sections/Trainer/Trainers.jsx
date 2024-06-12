@@ -14,6 +14,9 @@ function Funds() {
             { id: uuidv4(), src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
         ],
         [
+            { id: uuidv4(), src: imageTrainers.trainerOne, title: "Александр AlexZA3", content: "Успешный регуляр АБИ 200+, сооснователь школы KOT. Выиграл $350K+ за два года, отыграв дорогие МТТ с РОИ более 25%. Часто появляется на оффлайн-сериях", alt: "fundsOne" },
+        ],
+        [
             { id: uuidv4(), src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "фцулкпрфдупи цуш зцшугпрз    шгцРАЩшаоцшгА   ЦЩГАП   ЦШгпащцшАПигшпшг щшфурпшгпуушцгфпра гШГЗпЗШГУЫПРШЗГЫКПЦУ АЦУГШПАЦУШГАОЦУЩШАРПЦУШГ ЩШ3ЙПАШ2ГЦРПШОПЦШЩ УЦУЩШАРЦУШГИАЦЩШУОАЦШГГАЦ ЩЦУПРДЦШУГПЦУИрыжлип", alt: "fundsOne" },
             { id: uuidv4(), src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { id: uuidv4(), src: imageTrainers.trainerOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
