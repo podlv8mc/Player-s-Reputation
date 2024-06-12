@@ -44,9 +44,9 @@ managers_in_funds = Table(
 class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer(), primary_key=True, index=True)
-    login: Mapped[str] = mapped_column(String(64), default="-")
-    name: Mapped[str] = mapped_column(String(64), default="-")
-    username: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
+    login: Mapped[str] = mapped_column(String(), default="-")
+    name: Mapped[str] = mapped_column(String(), default="-")
+    username: Mapped[str] = mapped_column(String(), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(256), default="-")
     discord: Mapped[str] = mapped_column(String(256), default="-")
     role: Mapped[str] = mapped_column(Enum(Roles))
@@ -85,8 +85,8 @@ class Fund(Base):
 # class RoomName(Base):
 #     __tablename__ = "roomnames"
 #     id = Column(Integer, primary_key=True)
-#     room_name = Column(String(64), default="-")
-#     nickname = Column(String(64), default="-")
+#     room_name = Column(String(), default="-")
+#     nickname = Column(String(), default="-")
 #     record_id = Column(Integer, ForeignKey("records.id"), nullable=True)
 #     record = relationship("Record", back_populates="nicknames")
 #     history_record_id = Column(Integer, ForeignKey("records_history.id"), nullable=True)
@@ -96,9 +96,9 @@ class Fund(Base):
 class Record(Base):
     __tablename__ = "records"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(64), default="-")
-    last_name = Column(String(64), default="-")
-    middlename = Column(String(64), default="-")
+    first_name = Column(String(), default="-")
+    last_name = Column(String(), default="-")
+    middlename = Column(String(), default="-")
     room_name = Column(Text(), default="-")
     gipsyteam = Column(Text(), default="-")
     pokerstrategy = Column(Text(), default="-")
@@ -136,9 +136,9 @@ class Record(Base):
 class RecordHistory(Base):
     __tablename__ = "records_history"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(64), default="-")
-    last_name = Column(String(64), default="-")
-    middlename = Column(String(64), default="-")
+    first_name = Column(String(), default="-")
+    last_name = Column(String(), default="-")
+    middlename = Column(String(), default="-")
     room_name = Column(Text(), default="-")
     gipsyteam = Column(Text(), default="-")
     pokerstrategy = Column(Text(), default="-")
