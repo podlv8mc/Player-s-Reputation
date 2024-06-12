@@ -124,7 +124,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, [nullifaer, pageIndex]);
+    }, [pageIndex]);
 
     console.log(pageIndex)
 
