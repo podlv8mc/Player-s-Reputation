@@ -121,7 +121,7 @@ async def get_records_list(
     db: AsyncSession, search_query: str, fund_id: int
 ) -> List[models.Record]:
     records_query = (
-        select(models.Record, (models.Record.fund.name).label("fundName"))
+        select(models.Record, (models.Fund.name).label("fundName"))
         .options(
             selectinload(models.Record.previous_versions),
             selectinload(models.Record.created_by),
