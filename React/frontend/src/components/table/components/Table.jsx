@@ -63,7 +63,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             data: filteredData,
             initialState: {pageIndex: nullifaer, filters: [],},
             manualPagination: true,
-            pageCount: Math.ceil(n / 10),
+            pageCount: n,
         },
         useFilters,
         usePagination
@@ -124,7 +124,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, [pageIndex]);
+    }, [nullifaer]);
 
     console.log(pageIndex)
 
