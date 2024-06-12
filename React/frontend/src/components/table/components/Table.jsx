@@ -77,26 +77,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         }).then((response) => {
             const totalPages = Math.ceil(Number(response.data.total) / 100);
+            console.log(pageIndex)
             setN(totalPages);
             if (totalPages > 1) {
-                const requests = [];
-                for (let im = 0; im < totalPages; im++) {
-                    requests.push(
-                        axios.get(`${domain}${apiLink}/?page=${im + 1}&size=100`, {
-                            headers: {
-                                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                            }
-                        })
-                    );
-                }
-                Promise.all(requests)
-                    .then((responses) => {
-                        const newData = responses.flatMap(response => response.data.items);
-                        setData(newData);
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching pages data:", error);
-                    });
+                axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=100`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }).then(r => {
+                        setData(r.data.items)
+                        console.log(r.data.items)
+                    }
+                )
             } else {
                 axios.get(`${domain}${apiLink}/?page=1&size=100`, {
                     headers: {
