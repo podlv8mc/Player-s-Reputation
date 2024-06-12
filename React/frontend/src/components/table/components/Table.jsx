@@ -76,11 +76,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            const totalPages = Math.ceil(Number(response.data.total) / 100);
+            const totalPages = Math.ceil(Number(response.data.total) / 10);
             console.log(pageIndex)
             setN(totalPages);
             if (totalPages > 1) {
-                axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=100`, {
+                axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("access_token")}`
                     }
@@ -121,7 +121,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, []);
+    }, [pageIndex]);
+
+    console.log(n);
 
     //===----- / Connection -----===//
 
@@ -699,8 +701,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     </table>
                     <PaginationButtons
                         pageIndex={pageIndex}
-                        pageCount={pageCount}
+                        pageCount={n}
                         gotoPage={gotoPage}
+
                     />
                 </>
             ) : (
