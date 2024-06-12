@@ -18,7 +18,7 @@ function HomePage() {
 
     return (
         <div className="App">
-            <ResizableHeader handleModalOpen={handleModalOpen} />
+            {/*<ResizableHeader handleModalOpen={handleModalOpen} />*/}
             <Main handleModalOpen={handleModalOpen}/>
             <Modal active={modalActive} setActive={handleModalClose}>
                 <button className="modal__btn-close" onClick={handleModalClose}></button>

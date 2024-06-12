@@ -33,10 +33,9 @@ const Title = ({handleModalOpen}) => {
     return (
         <div className="title__wrap">
             <h1>
-                Бекинговый фонд
+                Player’s Reputation
             </h1>
             <p className="title__text">
-                Организация, которая предоставляет обучение и финансирование игрокам в покер
             </p>
 
             {

@@ -15,6 +15,7 @@ class Main extends React.Component {
         return (
             <main id="main" className="main">
                 <Home handleModalOpen={handleModalOpen}/>
+                {/*
                 <About />
                 <Suspense fallback={<div>Loading...</div>}>
                     <Funds />
@@ -24,6 +25,7 @@ class Main extends React.Component {
                 </Suspense>
                 <Contacts />
                 <Footer />
+                */}
             </main>
         )
     }
