@@ -61,7 +61,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: nullifaer, filters: [],},
+            initialState: {pageIndex: 0, filters: [],},
             manualPagination: true,
             pageCount: Math.ceil(n / 10),
         },
