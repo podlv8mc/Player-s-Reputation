@@ -105,7 +105,7 @@
 {"id":"13jnt001kt51d","funds":{"13j9k002kt50d":"manager"}}
 {"id":"154g2002kt50d"}
 {"id":"kv0j001yy41d","funds":{"603801502528de31d1decf8f":"manager"},"children":["158xr001kt51d"]}
-{"id":"158xr001kt51d","funds":{"603801502528de31d1decf8f":"readonly"}}
+-"id":"158xr001kt51d","funds":{"603801502528de31d1decf8f":"readonly"}}
 {"id":"15do9001kt51d","funds":{"603801502528de31d1decf74":"manager"}}
 {"id":"6049219017c53d14a7cb8d87","funds":{"603801502528de31d1decf74":"manager"},"children":["15gum001kt51d"]}
 {"id":"15gum001kt51d"}
@@ -140,3 +140,4 @@
 {"id":"1cxr4001ld51d","funds":{"1cxr3001ld51d":"manager"}}
 {"id":"v97j002ur40d","funds":{"6038014f2528de31d1dece81":"manager"},"children":["172gt001kt51d","1d1h9001ld51d"]}
 {"id":"1d1h9001ld51d"}
+{"id":"158xr001kt51d","funds":{}}
