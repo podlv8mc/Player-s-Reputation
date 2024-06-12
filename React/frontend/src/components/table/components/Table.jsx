@@ -658,11 +658,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         <button className="table__top-btn table__top-btn-1" onClick={toggleFilterInput}>
                             <img src={Images.search} alt="search"/>
                         </button>
-                        <AdminWrapper>
-                            <button className="table__top-btn" onClick={openModal}>
-                                <img src={Images.add} alt="add"/>
-                            </button>
-                        </AdminWrapper>
+                        <button className="table__top-btn" onClick={openModal}>
+                            <img src={Images.add} alt="add"/>
+                        </button>
                     </div>
                 </div>
             </div>
