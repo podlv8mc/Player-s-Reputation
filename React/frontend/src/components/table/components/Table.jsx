@@ -123,7 +123,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         });
     }, [pageIndex]);
 
-    console.log(n);
+    console.log(pageIndex)
 
     //===----- / Connection -----===//
 
