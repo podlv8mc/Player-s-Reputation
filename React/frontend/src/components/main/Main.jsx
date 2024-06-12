@@ -15,14 +15,13 @@ class Main extends React.Component {
         return (
             <main id="main" className="main">
                 <Home handleModalOpen={handleModalOpen}/>
-                {/*
-                <About />
                 <Suspense fallback={<div>Loading...</div>}>
                     <Funds />
                 </Suspense>
-                <Suspense fallback={<div>Loading...</div>}>
+                {/*<Suspense fallback={<div>Loading...</div>}>
                     <Trainers />
                 </Suspense>
+                <About />
                 <Contacts />
                 <Footer />
                 */}
