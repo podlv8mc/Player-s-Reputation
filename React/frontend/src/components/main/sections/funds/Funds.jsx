@@ -11,21 +11,15 @@ function Funds() {
 
     const slidesData = [
         [
+            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Все", alt: "fundsOne" },
+        ],
+        [
             { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера Swerf;iqwhefpigquehgfoapeqi nhqmict4jhqwoutchqnwcthmxqw4uchcumctbhqnw4tgbcquytgb13yctugq34u4yrb2qi34grb3uqcy4rbciug4bouy3v4cbt3iu4wcgu3cbgi34tjco14mo3isntiu35cbiuebqenqq;enrjkgtbwnrtbweriutnjeogjtewiupthweiutw4piuybw4ignetgbiv 3wuqbhwf;nae;ujghbweuitghn epiuthqpeiu4thqipu4ethgqiugthq4iu tgvV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ],
         [
             { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными 34tri3uhtw hgt3iuth3i4ut3 3iuthiuth3t i3ut34t34ht 334ituh3 4tiph3t3ihteirwuhg eig eriutgheriutgherigriogw ieug weoigeoitgh eiugtweiorrg qeitg qeirtg qet geqrtgqeriugt qeigtqeipughq3ieu gqeiuoghqiutg q34iutg qg3профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ],
         [
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
-            { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
             { id: uuidv4(), src: ImagesFunds.fundOne, title: "Школа покера SV school", content: "Созданная известными профессионалами VeA и STiger, школа покера SV school предлагает качественное обучение МТТ", alt: "fundsOne" },
         ],
