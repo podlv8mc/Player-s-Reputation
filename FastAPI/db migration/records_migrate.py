@@ -24,9 +24,13 @@ def migrate_records():
 
             new_arb = models.Record()
 
-            case = record_dict.pop("case")[0]
-            record_dict["description"] = case.get("descr")
-            record_dict["amount"] = case.get("amount")
+            case = record_dict.pop("case")
+
+            if case:
+                case = case[0]
+                record_dict["description"] = case.get("descr")
+                record_dict["amount"] = case.get("amount")
+
             initials = record_dict.pop("FIO")
 
             if initials:
