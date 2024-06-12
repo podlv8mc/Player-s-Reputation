@@ -2,17 +2,21 @@ import React from 'react';
 import Images from '@/image/image';
 import ReactPaginate from 'react-paginate';
 
-const PaginationButtons = ({ pageIndex, pageCount, gotoPage }) => (
+const PaginationButtons = ({pageIndex, pageCount, gotoPage, setNullifaer}) => (
     <nav className="pagination__wrap">
         <ReactPaginate
             pageCount={pageCount}
-            onPageChange={({ selected }) => {
+            onPageChange={({selected}) => {
                 gotoPage(selected);
             }}
+            onClick={() => {
+                    setNullifaer(pageIndex)
+                }
+            }
             pageRangeDisplayed={2} // Количество отображаемых страниц
             marginPagesDisplayed={3} // Количество видимых страниц в начале и в конце
-            previousLabel={<img src={Images.arrow} alt="arrow" />}
-            nextLabel={<img src={Images.arrow} alt="arrow" />}
+            previousLabel={<img src={Images.arrow} alt="arrow"/>}
+            nextLabel={<img src={Images.arrow} alt="arrow"/>}
             breakLabel={'...'}
             containerClassName={'pagination__box'}
             activeClassName={'active'}
