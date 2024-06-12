@@ -35,7 +35,11 @@ def migrate_records():
                 new_arb.last_name = initials.get("lastname")
                 new_arb.middlename = initials.get("middlename")
 
-            fundname = record_dict.pop("fundName")
+            try:
+                fundname = record_dict.pop("fundName")
+            except KeyError:
+                fundname = None
+                
             fund = db.scalar(select(models.Fund).where(models.Fund.name == fundname))
 
             new_arb.old_id = record_dict.pop("id")
