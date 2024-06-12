@@ -34,6 +34,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
+    const [nullifaer, setNullifaer] = useState(0)
 
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
@@ -60,7 +61,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            initialState: {pageIndex: nullifaer, filters: [],},
+            manualPagination: true,
+            pageCount: Math.ceil(n / 10),
         },
         useFilters,
         usePagination
@@ -701,7 +704,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                     </table>
                     <PaginationButtons
                         pageIndex={pageIndex}
-                        pageCount={n}
+                        pageCount={pageCount}
                         gotoPage={gotoPage}
 
                     />
