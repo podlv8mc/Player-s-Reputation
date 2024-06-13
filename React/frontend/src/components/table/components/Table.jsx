@@ -35,6 +35,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
     const [nullifaer, setNullifaer] = useState(0)
+    let totalPages = 0;
 
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
@@ -79,9 +80,11 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            const totalPages = Math.ceil(Number(response.data.total) / 10);
-            console.log(pageIndex)
-            setN(totalPages);
+            if (totalPages === 0) {
+                totalPages = Math.ceil(Number(response.data.total) / 10);
+                console.log(pageIndex)
+                setN(totalPages);
+            }
             if (totalPages > 1) {
                 axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10`, {
                     headers: {
