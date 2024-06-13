@@ -266,14 +266,8 @@ async def get_records_list(
     records_list = await crud.get_records_list(
         search_query=search_query, fund_id=fund_id, db=db
     )
-    records_formatted = []
-    
-    for record in records_list:
-        record[0].fundName = record[1]
-        records_formatted.append(record[0]) 
-
+    records_formatted = [record[0] for record in records_list]
     return paginate(list(records_formatted))
-
 
 
 @app.get(
@@ -289,6 +283,12 @@ async def get_record_by_id(
         record = await crud.get_record_by_id(db=db, record_id=record_id)
     except ObjectNotfund:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    try:
+        fund_name = record.fund.name
+    except Exception:
+        fund_name = None
+    record.fundName = fund_name
+    
     return record
 
 

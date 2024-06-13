@@ -121,13 +121,13 @@ async def get_records_list(
     db: AsyncSession, search_query: str, fund_id: int
 ) -> List[models.Record]:
     records_query = (
-        select(models.Record, models.Fund.name.label("fundName"))
-        .join(models.Fund)
+        select(models.Record)
+        .outerjoin(models.Fund)
         .options(
             joinedload(models.Record.fund),
             selectinload(models.Record.previous_versions),
             selectinload(models.Record.created_by),
-        )
+        ).add_columns(models.Fund.name.label("fundName"))
         .order_by(models.Record.created_at.desc())
     )
 
@@ -150,20 +150,19 @@ async def get_records_list(
 
     return records_with_fund_names
 
-
-
 async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
     record_by_id_query = (
         select(models.Record)
         .where(models.Record.id == record_id)
+        .outerjoin(models.Fund)
         .options(
+            joinedload(models.Record.fund),
             selectinload(models.Record.previous_versions),
             selectinload(models.Record.created_by),
-            selectinload(models.Record.fund),
-        )
+        ).add_columns(models.Fund.name.label("fundName"))
+        .order_by(models.Record.created_at.desc())
     )
     record = await db.scalar(record_by_id_query)
-
     if record is None:
         raise ObjectNotfund
 
