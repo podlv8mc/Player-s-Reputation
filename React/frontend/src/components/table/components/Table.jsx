@@ -61,7 +61,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: nullifaer, filters: [],},
+            initialState: {pageIndex: 0},
             manualPagination: true,
             pageCount: n,
         },
@@ -127,6 +127,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     }, [pageIndex]);
 
     console.log(pageIndex)
+    console.log(nullifaer)
 
     //===----- / Connection -----===//
 
