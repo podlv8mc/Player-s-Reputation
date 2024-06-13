@@ -73,7 +73,6 @@ def migrate_records():
 
             if current_version:
                 current_version.previous_versions.append(new_arb)
-                new_arb.current_version.append(current_version.id)
 
                 db.add(new_arb)
                 db.commit()
