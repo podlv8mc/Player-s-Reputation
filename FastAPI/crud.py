@@ -34,16 +34,13 @@ async def get_fund_by_id(
     if not fund:
         raise ObjectNotfund
 
-    if current_user:
-        if current_user.role == models.Roles.MANAGER and current_user not in fund.managers:
-            raise Forbidden
+    if current_user.role == models.Roles.MANAGER and current_user not in fund.managers:
+        raise Forbidden
 
-        if current_user.role == models.Roles.ADMIN or (
-            current_user.role == models.Roles.MANAGER and current_user in fund.managers
-        ):
-            return fund
-    
-    return fund
+    if current_user.role == models.Roles.ADMIN or (
+        current_user.role == models.Roles.MANAGER and current_user in fund.managers
+    ):
+        return fund
 
 
 async def update_fund_by_id(
@@ -122,13 +119,12 @@ async def get_records_list(
 ) -> List[models.Record]:
     records_query = (
         select(models.Record)
-        .outerjoin(models.Fund)
         .options(
-            joinedload(models.Record.fund),
-            selectinload(models.Record.previous_versions),
+            selectinload(models.Record.fund),
+            selectinload(models.Record.previous_versions).selectinload(models.RecordHistory.fund),
             selectinload(models.Record.created_by),
-        ).add_columns(models.Fund.name.label("fundName"))
-        .order_by(models.Record.created_at.desc())
+        )
+        .order_by(models.Record.updated_at.desc())
     )
 
     if fund_id:
@@ -145,21 +141,20 @@ async def get_records_list(
             )
         )
 
-    results = await db.execute(records_query)
+    results = await db.scalars(records_query)
     records_with_fund_names = results.all()
-
+    await db.close()
     return records_with_fund_names
 
 async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
     record_by_id_query = (
         select(models.Record)
         .where(models.Record.id == record_id)
-        .outerjoin(models.Fund)
         .options(
-            joinedload(models.Record.fund),
+            selectinload(models.Record.fund),
             selectinload(models.Record.previous_versions),
             selectinload(models.Record.created_by),
-        ).add_columns(models.Fund.name.label("fundName"))
+        )
         .order_by(models.Record.created_at.desc())
     )
     record = await db.scalar(record_by_id_query)
@@ -210,7 +205,7 @@ async def update_record_by_id(
     db.add(previous_version)
 
     update_data = new_data.create_update_dict()
-    update_data["updated_at"] = datetime.now()
+    update_data["updated_at"] = datetime.now(models.tzinfo)
 
     for key, value in update_data.items():
         setattr(record, key, value)
