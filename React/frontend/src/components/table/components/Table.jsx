@@ -34,6 +34,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [deleteModal, setDeleteModal] = useState(false);
     const [fetchingFunds, setFetchingFunds] = useState([]);
     const [passwordReset, setPasswordReset] = useState(null);
+    const [nullifaer, setNullifaer] = useState(0)
+    let totalPages = 0;
 
     const generateRandomPassword = (length = 4) => {
         const charset = "jknfer";
@@ -60,7 +62,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0, filters: []},
+            initialState: {pageIndex: 0},
+            manualPagination: true,
+            pageCount: n,
         },
         useFilters,
         usePagination
@@ -76,27 +80,21 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((response) => {
-            const totalPages = Math.ceil(Number(response.data.total) / 100);
-            setN(totalPages);
+            if (totalPages === 0) {
+                totalPages = Math.ceil(Number(response.data.total) / 10);
+                console.log(pageIndex)
+                setN(totalPages);
+            }
             if (totalPages > 1) {
-                const requests = [];
-                for (let im = 0; im < totalPages; im++) {
-                    requests.push(
-                        axios.get(`${domain}${apiLink}/?page=${im + 1}&size=100`, {
-                            headers: {
-                                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                            }
-                        })
-                    );
-                }
-                Promise.all(requests)
-                    .then((responses) => {
-                        const newData = responses.flatMap(response => response.data.items);
-                        setData(newData);
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching pages data:", error);
-                    });
+                axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                }).then(r => {
+                        setData(r.data.items)
+                        console.log(r.data.items)
+                    }
+                )
             } else {
                 axios.get(`${domain}${apiLink}/?page=1&size=100`, {
                     headers: {
@@ -129,7 +127,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, []);
+    }, [pageIndex]);
+
+    console.log(pageIndex)
+    console.log(nullifaer)
 
     //===----- / Connection -----===//
 
@@ -709,6 +710,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                         pageIndex={pageIndex}
                         pageCount={pageCount}
                         gotoPage={gotoPage}
+                        setNullifaer={setNullifaer}
+
                     />
                 </>
             ) : (
