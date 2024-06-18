@@ -74,8 +74,6 @@
           }
 
           .slide__text {
-            @include Montserrat-400;
-            font-size: 15px;
             color: #dedede;
             height: 35px;
             display: -webkit-box;
@@ -84,6 +82,21 @@
             text-overflow: ellipsis;
             overflow: hidden;
             transition: all .3s ease;
+
+            .slide__text-advantages-title {
+              @include Montserrat-500;
+              font-size: 17px;
+              padding: 0px 0px 0px 10px;
+            }
+
+            .slide__text-advantages-wrap {
+              padding: 0px 0px 0px 14px;
+
+              .slide__text-advantages {
+                @include Montserrat-400;
+                list-style-type: disc;
+              }
+            }
 
             &::-webkit-scrollbar {
               width: 5px;
@@ -119,6 +132,7 @@
         .slide__text-wrap {
           .slide__text {
             display: flex;
+            flex-direction: column;
             height: 87px;
             min-height: 35px;
             overflow-y: scroll;

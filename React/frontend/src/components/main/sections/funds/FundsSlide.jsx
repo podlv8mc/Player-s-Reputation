@@ -96,16 +96,20 @@ function FundsSlide({ slides }) {
                             <img src={slide.src} alt={slide.alt} />
                         </figure>
                         <div className="slide__text-wrap">
-                            <div className="slide__text-title">{slide.title}</div>
+                            <div className="slide__text-title">
+                                {slide.title}
+                            </div>
                             <div ref={textRef} className="slide__text">
-                                <div className="qq">
+                                <div className="slide__text-advantages-title">
                                     {slide.content[0].title}
                                 </div>
-                                {slide.content[0].advantages.map((advantage, index) => (
-                                    <li key={index}>
-                                        {advantage}
-                                    </li>
-                                ))}
+                                <ul className="slide__text-advantages-wrap">
+                                    {slide.content[0].advantages.map((advantage, index) => (
+                                        <li key={index} className="slide__text-advantages">
+                                            {advantage}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                         <button
