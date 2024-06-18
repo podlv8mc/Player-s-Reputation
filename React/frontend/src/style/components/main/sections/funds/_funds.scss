@@ -66,6 +66,8 @@
           width: 100%;
 
           .slide__text-title {
+            display: flex;
+            align-items: center;
             height: 58px;
             @include Montserrat-600;
             font-size: 20px;
