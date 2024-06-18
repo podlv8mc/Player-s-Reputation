@@ -37,16 +37,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const [nullifaer, setNullifaer] = useState(0)
     let totalPages = 0;
 
-    const generateRandomPassword = (length = 4) => {
-        const charset = "jknfer";
-        let password = "";
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * charset.length);
-            password += charset[randomIndex];
-        }
-        return password;
-    };
-
     //===----- Table -----===//
 
     const {
@@ -62,7 +52,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         {
             columns,
             data: filteredData,
-            initialState: {pageIndex: 0},
+            initialState: {pageIndex: nullifaer},
             manualPagination: true,
             pageCount: n,
         },
@@ -127,7 +117,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, [pageIndex]);
+    }, [nullifaer]);
 
     console.log(pageIndex)
     console.log(nullifaer)
