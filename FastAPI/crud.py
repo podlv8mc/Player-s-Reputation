@@ -117,7 +117,7 @@ async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession) -> None
 
 async def get_records_list(
     db: AsyncSession, search_query: str, fund_id: int
-) -> Page[model.Record]:
+) -> Page[models.Record]:
     records_query = (
         select(models.Record)
         .options(
