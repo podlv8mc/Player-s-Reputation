@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Images from "@/image/image";
 
 function FundsSlide({ slides }) {
-    //console.clear();
     const [activeSlideIndex, setActiveSlideIndex] = useState(0);
     const [expandedSlideIndex, setExpandedSlideIndex] = useState(null);
     const sliderRef = useRef(null);
@@ -14,20 +13,20 @@ function FundsSlide({ slides }) {
         setActiveSlideIndex(index);
     };
 
-    const textRef = useRef(null);
-
+    const textRefs = useRef([]);
 
     const toggleClass = (index) => {
         setExpandedSlideIndex((prevIndex) => {
             if (prevIndex === index) {
-                textRef.current.scrollTop = 0;
+                if (textRefs.current[index]) {
+                    textRefs.current[index].scrollTop = 0;
+                }
                 return null;
             } else {
                 return index;
             }
         });
     };
-
 
     const next = () => {
         sliderRef.current.slickNext();
@@ -99,13 +98,13 @@ function FundsSlide({ slides }) {
                             <div className="slide__text-title">
                                 {slide.title}
                             </div>
-                            <div ref={textRef} className="slide__text">
+                            <div ref={(el) => textRefs.current[index] = el} className="slide__text">
                                 <div className="slide__text-advantages-title">
                                     {slide.content[0].title}
                                 </div>
                                 <ul className="slide__text-advantages-wrap">
-                                    {slide.content[0].advantages.map((advantage, index) => (
-                                        <li key={index} className="slide__text-advantages">
+                                    {slide.content[0].advantages.map((advantage, i) => (
+                                        <li key={i} className="slide__text-advantages">
                                             {advantage}
                                         </li>
                                     ))}

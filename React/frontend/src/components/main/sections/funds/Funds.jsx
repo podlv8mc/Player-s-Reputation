@@ -11,6 +11,7 @@ function Funds() {
 
     const slidesData = [
         {
+            category: [0, 1],
             id: uuidv4(),
             src: ImagesFunds.svPoker,
             title: "SV Poker",
@@ -28,9 +29,9 @@ function Funds() {
                 }
             ],
             alt: "SV Poker",
-            category: ["Все", "MTT"],
         },
         {
+            category: [0, 2],
             id: uuidv4(),
             src: ImagesFunds.luckerTeam,
             title: "LuckerTeam",
@@ -47,13 +48,59 @@ function Funds() {
                 }
             ],
             alt: "LuckerTeam",
-            category: ["MTT"],
+        },
+        {
+            category: [0, 3],
+            id: uuidv4(),
+            src: ImagesFunds.dreamTeam,
+            title: "Dream Team",
+            content: [
+                {
+                    title: "Краткое описание преимуществ:",
+                    advantages: [
+                        "2 человека в группе,",
+                        "Можно играть 200 турниров в месяц,",
+                        "Моментальные расчеты на сайте,",
+                        "Весь рейкбек — игроку,",
+                        "Откаты до 70% на фуллбекинге,",
+                        "Удобный личный кабинет. Ваша сетка, статистика, сбор фидбэка - все автоматизированно,",
+                        "Разбор базы от Beheartless по BeEV+ методике,",
+                        "Be-HUD и библиотека ресерчей,",
+                        "Курсы повышения квалификации для тренеров,",
+                        "Помощь с переездом.",
+                    ],
+                }
+            ],
+            alt: "Dream Team",
+        },
+        {
+            category: [0, 4],
+            id: uuidv4(),
+            src: ImagesFunds.pokerMove,
+            title: "Poker Move",
+            content: [
+                {
+                    title: "Хватит следить за успехами других  ─  пора создавать свои!",
+                    advantages: [
+                        "Команда из успешных играющих тренеров",
+                        "Принимаем игроков от ABI 3 до ABI 100",
+                        "Высокие откаты для новичков и топов",
+                        "Уникальная система \"Грант\": $300 лучшим ученикам PMJunior",
+                        "Откаты до 70% на фуллбекинге,",
+                        "Короткий контракт на 3000 турниров",
+                    ],
+                }
+            ],
+            alt: "Poker Move",
         },
     ];
 
     const buttonsData = [
         { index: 0, text: "Все" },
         { index: 1, text: "MTT" },
+        { index: 2, text: "Кэш-игры" },
+        { index: 3, text: "Двухуровневые игры" },
+        { index: 4, text: "СНГ" },
     ];
 
     const handleButtonClick = (index) => {
@@ -62,7 +109,7 @@ function Funds() {
     };
 
     const filteredSlides = useMemo(() => {
-        const currentCategory = buttonsData[currentSlideIndex]?.text;
+        const currentCategory = buttonsData[currentSlideIndex]?.index;
         return slidesData.filter(slide => slide.category.includes(currentCategory) || currentCategory === "Все");
     }, [currentSlideIndex, slidesData, buttonsData]);
 
