@@ -259,6 +259,7 @@ app.include_router(
     dependencies=[Depends(permissions.read_only_or_higher)],
 )
 async def get_records_list(
+    request: Request,
     search_query: str | None = None,
     fund_id: int | None = None,
     db: AsyncSession = Depends(get_async_session),
@@ -266,17 +267,15 @@ async def get_records_list(
     records_list = await crud.get_records_list(
         search_query=search_query, fund_id=fund_id, db=db
     )
-
     records_formatted = []
-
-    for record in records_list:
-        print(record)
+    for record in records_list.items:
         try:
             record.fundName = record.fund.name
         except Exception:
             pass
         records_formatted.append(record)
-    return paginate(list(records_formatted))
+    records_list.items = records_formatted
+    return records_list
 
 
 @app.get(

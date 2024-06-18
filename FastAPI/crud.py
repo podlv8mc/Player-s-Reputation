@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy import insert, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi_pagination import paginate
 
 import models
 import schemas
@@ -126,7 +127,7 @@ async def get_records_list(
         )
         .order_by(models.Record.updated_at.desc())
     )
-
+    
     if fund_id:
         records_query = records_query.where(models.Record.fund_id == fund_id)
 
@@ -141,10 +142,7 @@ async def get_records_list(
             )
         )
 
-    results = await db.scalars(records_query)
-    records_with_fund_names = results.all()
-    await db.close()
-    return records_with_fund_names
+    return await paginate(db, records_query)
 
 async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
     record_by_id_query = (
