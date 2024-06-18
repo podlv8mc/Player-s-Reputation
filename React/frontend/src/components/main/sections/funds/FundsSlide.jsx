@@ -97,7 +97,16 @@ function FundsSlide({ slides }) {
                         </figure>
                         <div className="slide__text-wrap">
                             <div className="slide__text-title">{slide.title}</div>
-                            <div ref={textRef} className="slide__text">{slide.content}</div>
+                            <div ref={textRef} className="slide__text">
+                                <div className="qq">
+                                    {slide.content[0].title}
+                                </div>
+                                {slide.content[0].advantages.map((advantage, index) => (
+                                    <li key={index}>
+                                        {advantage}
+                                    </li>
+                                ))}
+                            </div>
                         </div>
                         <button
                             className={`slide__btn ${expandedSlideIndex === index ? "expanded" : ""}`}
