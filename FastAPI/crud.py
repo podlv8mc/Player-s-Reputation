@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy import insert, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi_pagination import Page, paginate
+from fastapi_pagination.ext.sqlalchemy import paginate
 
 import models
 import schemas
@@ -117,7 +117,7 @@ async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession) -> None
 
 async def get_records_list(
     db: AsyncSession, search_query: str, fund_id: int
-) -> Page[models.Record]:
+) -> List[models.Record]:
     records_query = (
         select(models.Record)
         .options(
