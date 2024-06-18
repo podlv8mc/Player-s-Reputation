@@ -116,7 +116,7 @@ function Funds() {
     const fundsSlide = useMemo(() => <FundsSlide key={key} slides={filteredSlides} />, [key, filteredSlides]);
 
     return (
-        <section id="funds" className="funds__wrap">
+        <section id="funds" className="funds__wrap hidden">
             <Sections clarification="ТОП Бекинг Фондов" title="Бекинговые фонды" subtitle="Список всех бекинговых фондов СНГ." />
             <SliderBtn currentSlideIndex={currentSlideIndex} handleButtonClick={handleButtonClick} buttonsData={buttonsData} />
             {fundsSlide}
