@@ -319,13 +319,15 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         };
 
         let dataToSend;
+        let roleToSend;
 
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
-            console.log(dataToSend);
+            roleToSend = {...editingUserData, role: setSelectedOption};
+            console.log(roleToSend);
         }
 
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, roleToSend, config)
             .then((response) => {
                 //setIsEditModalOpen(false);
                 window.location.reload();
@@ -520,6 +522,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                             </div>
                         ))}
                         <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} currentUser={selectedUser}/>
+                        <SelectRole onSelect={setSelectedOption}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">
