@@ -30,6 +30,10 @@ function UsersPage() {
                 Header: 'Email',
                 accessor: row => row.email,
             },
+            {
+                Header: 'Роль',
+                accessor: row => row.role,
+            }
         ],
         []
     );
