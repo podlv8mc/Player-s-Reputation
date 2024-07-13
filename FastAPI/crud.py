@@ -211,6 +211,7 @@ async def update_record_by_id(
     record.previous_versions.append(previous_version)
 
     await db.commit()
+    await db.refresh(record)
 
     return record
 
