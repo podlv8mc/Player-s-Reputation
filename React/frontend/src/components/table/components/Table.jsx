@@ -312,11 +312,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        };
+
 
         let dataToSend;
         let roleToSend;
@@ -327,13 +323,19 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             console.log(roleToSend);
         }
 
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, roleToSend, config)
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend, ...roleToSend}, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
             .then((response) => {
+                console.log(`Bearer ${localStorage.getItem("access_token")}`)
                 //setIsEditModalOpen(false);
                 window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
+                console.log(`Bearer ${localStorage.getItem("access_token")}`)
             });
     };
 
