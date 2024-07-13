@@ -312,26 +312,30 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        };
+
 
         let dataToSend;
+        let roleToSend;
 
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
-            console.log(dataToSend);
+            roleToSend = {...editingUserData, role: setSelectedOption};
+            console.log(roleToSend);
         }
 
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, dataToSend, config)
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend, ...roleToSend}, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        })
             .then((response) => {
+                console.log(`Bearer ${localStorage.getItem("access_token")}`)
                 //setIsEditModalOpen(false);
                 window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
+                console.log(`Bearer ${localStorage.getItem("access_token")}`)
             });
     };
 
@@ -515,11 +519,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                         setEditingUserData({...editingUserData, [key]: e.target.value})
                                     }}
                                     autoComplete="off"
-                                    disabled={key === "username" || key === "password"}
+                                    disabled={key === "username"}
                                 />
                             </div>
                         ))}
                         <ChangeSelectSigns onSelect={setSelectedFundEdit} isMulti={true} currentUser={selectedUser}/>
+                        <SelectRole onSelect={setSelectedOption}/>
                     </>
                 ) : null}
                 <div className="table__btn-row">

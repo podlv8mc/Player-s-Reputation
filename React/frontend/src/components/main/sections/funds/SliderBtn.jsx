@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 
-function SliderBtn ({ currentSlideIndex, handleButtonClick }) {
-    const buttonsData = [
-        { index: 0, text: "Все" },
-        { index: 1, text: "MTT" },
-        { index: 2, text: "Кэш-игры" },
-        { index: 3, text: "Двухуровневые игры" },
-        { index: 4, text: "СНГ" }
-    ];
-
+function SliderBtn({ currentSlideIndex, handleButtonClick, buttonsData }) {
     const [previousSlideIndex, setPreviousSlideIndex] = useState(null);
 
     const handleButtonClickWithSave = (index) => {
