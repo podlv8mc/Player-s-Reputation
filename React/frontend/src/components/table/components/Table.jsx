@@ -517,7 +517,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                                         setEditingUserData({...editingUserData, [key]: e.target.value})
                                     }}
                                     autoComplete="off"
-                                    disabled={key === "username" || key === "password"}
+                                    disabled={key === "username"}
                                 />
                             </div>
                         ))}

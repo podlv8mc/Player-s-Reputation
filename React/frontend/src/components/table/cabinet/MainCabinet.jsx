@@ -48,6 +48,7 @@ function MainCabinet() {
             }
         }).then((data) => {
             console.log(data)
+            window.location.reload()
         })
             .catch((error) => {
                 console.log(error)
