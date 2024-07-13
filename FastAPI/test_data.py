@@ -29,7 +29,7 @@ attrss = [
         "skrill",
         "ecopayz",
         "old",
-        "fundName",
+        "fund",
         "nicknameOld",
         "comments",
         "country",

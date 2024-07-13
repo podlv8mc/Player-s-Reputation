@@ -198,9 +198,6 @@ async def update_record_by_id(
     record = await get_record_by_id(record_id=record_id, db=db)
 
     for attr in attrss:
-        if attr == "fundName":
-            attr = "fund"
-
         setattr(previous_version, attr, getattr(record, attr))
 
     db.add(previous_version)
