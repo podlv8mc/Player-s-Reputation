@@ -320,6 +320,10 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
 
+            console.log(editingUserData);
+            console.log(selectedFundEdit);
+            console.log(selectedOption);
+
             if (!selectedOption) {
                 roleToSend = {...editingUserData};
             }
@@ -338,10 +342,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         })
             .then((response) => {
-                console.log(`Bearer ${localStorage.getItem("access_token")}`)
+                // console.log(`Bearer ${localStorage.getItem("access_token")}`)
                 //setIsEditModalOpen(false);
-                // window.location.reload();
-                console.error(response);
+                window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
