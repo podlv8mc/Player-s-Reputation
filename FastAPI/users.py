@@ -140,9 +140,9 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
         else:
             updated_user_data = user_update.create_update_dict_superuser()
 
-        if user.role in [db_models.Roles.USER, db_models.Roles.READ_ONLY]:
-            if updated_user_data.get("role"):
-                updated_user_data.pop("role")
+        # if user.role in [db_models.Roles.USER, db_models.Roles.READ_ONLY]:
+        #     if updated_user_data.get("role"):
+        #         updated_user_data.pop("role")
 
         updated_user = await self._update(user, updated_user_data)
         await self.on_after_update(updated_user, updated_user_data, request)
