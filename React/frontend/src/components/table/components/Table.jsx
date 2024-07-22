@@ -323,7 +323,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             // }
 
             if (selectedOption) {
-                roleToSend = {...editingUserData, role: selectedOption.value};
+                roleToSend = {role: selectedOption.value};
             }
         }
 
