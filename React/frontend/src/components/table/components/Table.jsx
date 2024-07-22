@@ -321,7 +321,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             dataToSend = {...editingUserData, funds: selectedFundEdit};
 
             if (!selectedOption) {
-                roleToSend = {...editingUserData, role: ''};
+                roleToSend = {...editingUserData};
             }
             else {
                 roleToSend = {...editingUserData, role: selectedOption.value};
