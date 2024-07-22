@@ -319,7 +319,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
-            roleToSend = {...editingUserData, role: selectedOption};
+            roleToSend = {...editingUserData, role: selectedOption.value};
             console.log(roleToSend);
             console.log(selectedOption);
             console.log(editingUserData);
