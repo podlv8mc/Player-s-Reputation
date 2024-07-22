@@ -344,7 +344,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             .then((response) => {
                 // console.log(`Bearer ${localStorage.getItem("access_token")}`)
                 //setIsEditModalOpen(false);
-                window.location.reload();
+                // window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
