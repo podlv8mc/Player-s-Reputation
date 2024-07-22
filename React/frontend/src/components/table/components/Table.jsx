@@ -313,20 +313,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         e.preventDefault();
 
         let dataToSend;
-        let roleToSend;
 
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
 
-            // console.log(editingUserData);
-            // console.log(selectedFundEdit);
-            // console.log(selectedOption);
-
-            if (!selectedOption) {
-                roleToSend = "";
-            }
-            else {
-                roleToSend = {...editingUserData, role: selectedOption.value};
+            if (selectedOption) {
+                dataToSend.role = selectedOption.value;
             }
         }
 
