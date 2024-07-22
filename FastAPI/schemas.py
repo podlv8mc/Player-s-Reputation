@@ -80,7 +80,7 @@ class UserUpdate(users_schemas.BaseUserUpdate):
     name: Optional[str | None] = None
     role: Optional[Roles | None] = None
     discord: Optional[str | None] = None
-    # funds: Optional[List[int] | None] = None
+    funds: Optional[List[int] | None] = None
 
 
 class FundBase(CreateUpdateDictModel):
