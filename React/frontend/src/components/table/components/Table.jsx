@@ -312,8 +312,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     const handleEditSubmit = async (e) => {
         e.preventDefault();
 
-
-
         let dataToSend;
         let roleToSend;
 
@@ -325,7 +323,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             // console.log(selectedOption);
 
             if (!selectedOption) {
-                roleToSend = {...editingUserData};
+                roleToSend = "";
             }
             else {
                 roleToSend = {...editingUserData, role: selectedOption.value};
@@ -336,10 +334,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             dataToSend = {...editingUserData};
         }
 
-        console.log(dataToSend);
-        console.log(roleToSend);
-
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend, ...roleToSend}, {
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend}, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
