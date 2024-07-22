@@ -320,9 +320,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
 
-            console.log(editingUserData);
-            console.log(selectedFundEdit);
-            console.log(selectedOption);
+            // console.log(editingUserData);
+            // console.log(selectedFundEdit);
+            // console.log(selectedOption);
 
             if (!selectedOption) {
                 roleToSend = {...editingUserData};
@@ -335,6 +335,9 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         else {
             dataToSend = {...editingUserData};
         }
+
+        console.log(dataToSend);
+        console.log(roleToSend);
 
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend, ...roleToSend}, {
             headers: {
