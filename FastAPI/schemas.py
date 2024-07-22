@@ -78,7 +78,7 @@ class UserCreate(users_schemas.BaseUserCreate):
 class UserUpdate(users_schemas.BaseUserUpdate):
     email: Optional[str | None] = None
     name: Optional[str | None] = None
-    role: Roles
+    role: Optional[Roles | None] = None
     discord: Optional[str | None] = None
     # funds: Optional[List[int] | None] = None
 
