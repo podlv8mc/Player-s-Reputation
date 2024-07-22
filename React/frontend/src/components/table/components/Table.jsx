@@ -313,12 +313,17 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         e.preventDefault();
 
         let dataToSend;
+        let roleToSend;
 
         if (apiLink === "users") {
             dataToSend = {...editingUserData, funds: selectedFundEdit};
 
+            // if (selectedOption) {
+            //     dataToSend.role = selectedOption.value;
+            // }
+
             if (selectedOption) {
-                dataToSend.role = selectedOption.value;
+                roleToSend = {...editingUserData, role: selectedOption.value};
             }
         }
 
@@ -328,7 +333,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
         console.log(dataToSend)
 
-        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend}, {
+        axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend, ...roleToSend}, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
