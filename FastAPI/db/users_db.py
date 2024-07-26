@@ -40,7 +40,7 @@ class UsersDB(SQLAlchemyUserDatabase):
         self.session.add(user)
 
         await self.session.commit()
-        # await self.session.refresh(user)
+        await self.session.refresh(user)
 
         return user
 
@@ -66,10 +66,12 @@ class UsersDB(SQLAlchemyUserDatabase):
 
     async def get_all_users(self):
         all_users = await self.session.scalars(
-            select(self.user_table).options(
+            select(self.user_table)
+            .options(
                 selectinload(self.user_table.funds),
                 selectinload(self.user_table.managed_funds),
             )
+            .order_by(self.user_table.username.desc())
         )
         return all_users
 

@@ -133,7 +133,7 @@ async def get_records_list(
             ),
             selectinload(models.Record.created_by),
         )
-        .order_by(models.Record.updated_at.desc())
+        .order_by(models.Record.created_at.desc())
     )
 
     if fund_id:
