@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Table from "@/components/table/components/Table";
 
 function FundsPage() {
-    const apiLink = "funds";
+    const apiLink = "funds?size=100";
 
     const columns = React.useMemo(
         () => [
