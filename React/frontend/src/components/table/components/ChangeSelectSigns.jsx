@@ -9,7 +9,7 @@ function ChangeSelectSigns({ onSelect, isMulti = false, currentUser }) {
     const [fundSelect, setFundSelect] = useState([]);
 
     useEffect(() => {
-        axios.get(`${domain}funds`, {
+        axios.get(`${domain}funds?size=100`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
             }
