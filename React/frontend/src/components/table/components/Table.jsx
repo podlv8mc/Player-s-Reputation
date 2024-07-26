@@ -297,7 +297,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         requestPromise
             .then(response => {
                 setIsModalOpen(false);
-                //window.location.reload()
+                window.location.reload()
             })
             .catch(error => {
                 console.error("Request error:", error);
@@ -332,9 +332,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             }
         })
             .then((response) => {
-                // console.log(`Bearer ${localStorage.getItem("access_token")}`)
-                //setIsEditModalOpen(false);
-                // window.location.reload();
+                window.location.reload();
             })
             .catch((error) => {
                 console.error(error);
@@ -372,6 +370,8 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
 
             alert("Пароль был успешно сброшен и отправлен на почту.");
             closeResetPasswordModal();
+
+            window.location.reload();
 
         } catch (error) {
             alert("Произошла ошибка при сбросе пароля.");
