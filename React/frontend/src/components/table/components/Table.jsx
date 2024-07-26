@@ -297,7 +297,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         requestPromise
             .then(response => {
                 setIsModalOpen(false);
-                window.location.reload()
+                // window.location.reload();
             })
             .catch(error => {
                 console.error("Request error:", error);
