@@ -178,7 +178,7 @@ app.include_router(
 
 @app.post(
     "/register",
-    response_model=schemas.UserRead,
+    # response_model=schemas.UserRead,
     status_code=status.HTTP_201_CREATED,
     name="register:register",
     responses={
