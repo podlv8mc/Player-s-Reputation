@@ -102,9 +102,6 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
             if not user_dict.get(user_arg):
                 user_dict[user_arg] = "-"
 
-        if not user_dict.get("funds"):
-            user_dict["funds"] = ["-"]
-
         password = user_dict.pop("password")
         user_dict["hashed_password"] = self.password_helper.hash(password)
 
@@ -140,9 +137,6 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
             updated_user_data = user_update.create_update_dict()
         else:
             updated_user_data = user_update.create_update_dict_superuser()
-
-        if not updated_user_data.get("funds"):
-            updated_user_data["funds"] = ["-"]
 
         # if user.role in [db_models.Roles.USER, db_models.Roles.READ_ONLY]:
         #     if updated_user_data.get("role"):
