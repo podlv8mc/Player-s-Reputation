@@ -73,21 +73,27 @@ async def update_fund_by_id(
     return fund_to_update
 
 
-async def create_fund(db: AsyncSession, fund_data: schemas.FundCreate) -> models.Fund:
+async def create_fund(
+    db: AsyncSession, fund_data: schemas.FundCreate, current_user
+) -> models.Fund:
     creation_query = insert(models.Fund).values(fund_data.model_dump())
     new_fund_result = await db.execute(creation_query)
 
     await db.commit()
 
     new_fund = await get_fund_by_id(
-        db=db, fund_id=new_fund_result.inserted_primary_key[0]
+        db=db,
+        fund_id=new_fund_result.inserted_primary_key[0],
+        current_user=current_user,
     )
 
     return new_fund
 
 
-async def delete_fund_by_id(db: AsyncSession, fund_id: int) -> None:
-    fund_to_delete = await get_fund_by_id(db=db, fund_id=fund_id)
+async def delete_fund_by_id(db: AsyncSession, fund_id: int, current_user) -> None:
+    fund_to_delete = await get_fund_by_id(
+        db=db, fund_id=fund_id, current_user=current_user
+    )
 
     await db.delete(fund_to_delete)
     await db.commit()
@@ -95,8 +101,8 @@ async def delete_fund_by_id(db: AsyncSession, fund_id: int) -> None:
     return
 
 
-async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession) -> None:
-    fund = await get_fund_by_id(db=db, fund_id=fund_id)
+async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession, current_user) -> None:
+    fund = await get_fund_by_id(db=db, fund_id=fund_id, current_user=current_user)
     new_manager = await db.scalar(
         select(models.User).where(
             models.User.role.in_([models.Roles.ADMIN, models.Roles.MANAGER]),
@@ -122,12 +128,14 @@ async def get_records_list(
         select(models.Record)
         .options(
             selectinload(models.Record.fund),
-            selectinload(models.Record.previous_versions).selectinload(models.RecordHistory.fund),
+            selectinload(models.Record.previous_versions).selectinload(
+                models.RecordHistory.fund
+            ),
             selectinload(models.Record.created_by),
         )
         .order_by(models.Record.updated_at.desc())
     )
-    
+
     if fund_id:
         records_query = records_query.where(models.Record.fund_id == fund_id)
 
@@ -143,6 +151,7 @@ async def get_records_list(
         )
 
     return await paginate(db, records_query)
+
 
 async def get_record_by_id(db: AsyncSession, record_id: int) -> models.Record:
     record_by_id_query = (
