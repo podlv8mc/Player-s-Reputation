@@ -87,8 +87,7 @@ class UsersDB(SQLAlchemyUserDatabase):
                 user.funds.append(fund)
 
         else:
-            print(user.funds)
-            user.funds.append("-")
+            user.funds = ["-"]
 
         self.session.add(user)
 
