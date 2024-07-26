@@ -71,7 +71,7 @@ class UsersDB(SQLAlchemyUserDatabase):
                 selectinload(self.user_table.funds),
                 selectinload(self.user_table.managed_funds),
             )
-            .order_by(self.user_table.created_at.desc())
+            .order_by(self.user_table.created_at.asc())
         )
         return all_users
 
