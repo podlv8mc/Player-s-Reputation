@@ -326,8 +326,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             dataToSend = {...editingUserData};
         }
 
-        console.log(dataToSend)
-
         axios.patch(`${domain}${apiLink}/${editingUserData.id}`, {...dataToSend}, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`

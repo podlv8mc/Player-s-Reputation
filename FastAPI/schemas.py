@@ -57,11 +57,17 @@ class UserRead(users_schemas.BaseUser):
     created_at: datetime
     funds: Optional[List[UserFund] | None] = None
 
+    class Config:
+        orm_mode = True
+
 
 class UserReadfund(CreateUpdateDictModel):
     id: int
     username: str
     role: Roles
+
+    class Config:
+        orm_mode = True
 
 
 class UserCreate(users_schemas.BaseUserCreate):
@@ -101,6 +107,9 @@ class FundRead(FundBase):
     id: int
     owner: Optional[UserReadfund | None] = None
 
+    class Config:
+        orm_mode = True
+
 
 class FundReadRecord(FundBase): ...
 
@@ -133,8 +142,6 @@ class RecordBase(CreateUpdateDictModel):
     town: Optional[str | None] = None
     address: Optional[str | None] = None
     fundName: Optional[str | None] = None
-
-    model_config = ConfigDict(from_attributes=False)
 
 
 class RecordCreate(RecordBase):
@@ -170,8 +177,10 @@ class RecordHistoryRead(BaseModel):
     country: Optional[str | None] = None
     town: Optional[str | None] = None
     address: Optional[str | None] = None
-    model_config = ConfigDict(from_attributes=False)
     created_at: Optional[datetime | None] = None
+
+    class Config:
+        orm_mode = True
 
 
 class RecordRead(RecordBase):
@@ -181,6 +190,9 @@ class RecordRead(RecordBase):
     created_by: Optional[UserRead | None] = None
     fund: Optional[FundReadRecord | None] = None
     previous_versions: Optional[List[RecordHistoryRead] | None] = None
+
+    class Config:
+        orm_mode = True
 
 
 class RecordUpdate(RecordBase): ...
