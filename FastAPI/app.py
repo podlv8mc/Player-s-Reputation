@@ -227,6 +227,9 @@ async def register(
     current_user=Depends(permissions.read_only_or_higher),
 ):
     try:
+        if not user_create.funds:
+            user_create.funds = ["-"]
+
         created_user = await user_manager.create_with_funds(
             user_create, safe=True, request=request, current_user=current_user
         )

@@ -138,6 +138,9 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
         else:
             updated_user_data = user_update.create_update_dict_superuser()
 
+        if not user_update.funds:
+            user_update.funds = ["-"]
+
         # if user.role in [db_models.Roles.USER, db_models.Roles.READ_ONLY]:
         #     if updated_user_data.get("role"):
         #         updated_user_data.pop("role")

@@ -285,7 +285,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 is_active: true,
                 is_superuser: false,
                 is_verified: false,
-                funds: selectedFund ? fetchingFunds : ["-"],
+                funds: selectedFund ? fetchingFunds : null,
             };
             requestUrl = `${domain}register`;
             requestPromise = axios.post(requestUrl, userDataWithTimestamp, commonData);
@@ -297,7 +297,7 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         requestPromise
             .then(response => {
                 setIsModalOpen(false);
-                // window.location.reload();
+                window.location.reload();
             })
             .catch(error => {
                 console.error("Request error:", error);
