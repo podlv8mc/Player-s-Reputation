@@ -86,9 +86,6 @@ class UsersDB(SQLAlchemyUserDatabase):
             for fund in funds:
                 user.funds.append(fund)
 
-        else:
-            user.funds = ["-"]
-
         self.session.add(user)
 
         await self.session.commit()
