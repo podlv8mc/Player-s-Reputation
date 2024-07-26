@@ -98,7 +98,7 @@ class UserManager(BaseUserManager[db_models.User, IntegerIDMixin]):
         # ):
         #     raise custom_exceptions.NotEnoughPermissions()
 
-        for user_arg in ["discord", "funds", "email"]:
+        for user_arg in ["discord", "email"]:
             if not user_dict.get(user_arg):
                 user_dict[user_arg] = "-"
 

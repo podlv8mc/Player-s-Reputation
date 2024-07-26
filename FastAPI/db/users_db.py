@@ -24,7 +24,9 @@ class UsersDB(SQLAlchemyUserDatabase):
     async def update(self, user: User, update_dict: Dict[str, Any]) -> User:
         fund_ids = update_dict.get("funds")
 
-        if fund_ids:
+        print(fund_ids)
+
+        if len(fund_ids) != 0:
             fund_ids = update_dict.pop("funds", [])
             funds_statement = select(models.Fund).where(models.Fund.id.in_(fund_ids))
             funds = await self.session.scalars(funds_statement)
@@ -33,6 +35,9 @@ class UsersDB(SQLAlchemyUserDatabase):
 
             for fund in funds.all():
                 user.funds.append(fund)
+
+        else:
+            user.funds.append("-")
 
         for key, value in update_dict.items():
             setattr(user, key, value)
@@ -87,6 +92,9 @@ class UsersDB(SQLAlchemyUserDatabase):
 
             for fund in funds:
                 user.funds.append(fund)
+
+        else:
+            user.funds.append("-")
 
         self.session.add(user)
 
