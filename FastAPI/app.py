@@ -178,7 +178,6 @@ app.include_router(
 
 @app.post(
     "/register",
-    # response_model=schemas.UserRead,
     status_code=status.HTTP_201_CREATED,
     name="register:register",
     responses={
@@ -237,7 +236,7 @@ async def register(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions"
         )
-    return created_user
+    return {"status": 201, "message": "User has been created!"}
 
 
 app.include_router(
