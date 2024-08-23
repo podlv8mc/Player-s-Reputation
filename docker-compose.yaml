@@ -52,7 +52,7 @@ services:
     volumes:
       - "./nginx-proxy-manager:/data"
       - "./letsencrypt:/etc/letsencrypt"
-      - "./_hsts_map.conf:/app/templates/_hsts_map.conf"
+      # - "./_hsts_map.conf:/app/templates/_hsts_map.conf"
     depends_on:
       - api
       - client
