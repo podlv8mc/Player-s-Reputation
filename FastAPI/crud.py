@@ -147,7 +147,6 @@ async def get_records_list(
                 models.Record.last_name.ilike(f"%{search_query}%"),
                 models.Record.middlename.ilike(f"%{search_query}%"),
                 models.Record.description.ilike(f"%{search_query}%"),
-                models.Record.created_at.ilike(f"%{search_query}%"),
             )
         )
 
