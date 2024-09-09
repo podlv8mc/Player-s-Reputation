@@ -150,13 +150,18 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
     }, [selectedFund]);
 
     useEffect(() => {
-        setFilteredData(
-            data.filter(item =>
-                Object.values(item).some(value =>
-                    value && value.toString().toLowerCase().includes(filterInput.toLowerCase())
-                )
-            )
-        );
+        axios.get(`https://playersreputation.com/api/v1/records?search_query=${filterInput}`,  {
+            headers:{
+                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then((response) => {
+            setFilteredData(response.data.items);
+            console.log("Данные с поиска", response.data);
+
+        }).catch((error) => {
+            console.error(error);
+        });
+
     }, [data, filterInput]);
 
     useEffect(() => {
