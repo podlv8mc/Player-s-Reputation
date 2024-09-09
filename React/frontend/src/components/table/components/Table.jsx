@@ -75,27 +75,52 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 console.log(pageIndex)
                 setN(totalPages);
             }
-            if (totalPages > 1) {
-                axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
-                }).then(r => {
-                        setData(r.data.items)
-                        console.log(r.data.items)
-                    }
-                )
-            } else {
-                axios.get(`${domain}${apiLink}/?page=1&size=100`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-                    }
-                }).then((data1) => {
-                    setData(data1.data.items);
-                }).catch((error) => {
-                    console.log("Error fetching page 1 data:", error);
-                });
+            if (filterInput){
+                if (totalPages > 1) {
+                    axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10&search_query=${filterInput}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }).then(r => {
+                            setData(r.data.items)
+                            console.log(r.data.items)
+                        }
+                    )
+                } else {
+                    axios.get(`${domain}${apiLink}/?page=1&size=100&search_query=${filterInput}`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }).then((data1) => {
+                        setData(data1.data.items);
+                    }).catch((error) => {
+                        console.log("Error fetching page 1 data:", error);
+                    });
+                }
+            }else{
+                if (totalPages > 1) {
+                    axios.get(`${domain}${apiLink}/?page=${pageIndex + 1}&size=10`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }).then(r => {
+                            setData(r.data.items)
+                            console.log(r.data.items)
+                        }
+                    )
+                } else {
+                    axios.get(`${domain}${apiLink}/?page=1&size=100`, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }).then((data1) => {
+                        setData(data1.data.items);
+                    }).catch((error) => {
+                        console.log("Error fetching page 1 data:", error);
+                    });
+                }
             }
+
 
         }).catch(() => {
             axios.post(`${domain}auth/jwt/refresh`, null, {
@@ -117,7 +142,22 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
                 }, 2000);
             });
         });
-    }, [nullifaer]);
+    }, [nullifaer, filterInput]);
+
+    /* useEffect(() => {
+         axios.get(`https://playersreputation.com/api/v1/records?search_query=${filterInput}`,  {
+             headers:{
+                 'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+             }
+         }).then((response) => {
+             setFilteredData(response.data.items);
+             console.log("Данные с поиска", response.data);
+
+         }).catch((error) => {
+             console.error(error);
+         });
+
+     }, [data, filterInput]);*/
 
     console.log(pageIndex)
     console.log(nullifaer)
@@ -149,20 +189,6 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
         }
     }, [selectedFund]);
 
-    useEffect(() => {
-        axios.get(`https://playersreputation.com/api/v1/records?search_query=${filterInput}`,  {
-            headers:{
-                'Authorization': `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((response) => {
-            setFilteredData(response.data.items);
-            console.log("Данные с поиска", response.data);
-
-        }).catch((error) => {
-            console.error(error);
-        });
-
-    }, [data, filterInput]);
 
     useEffect(() => {
         axios.get(`${domain}funds`, {
