@@ -143,9 +143,12 @@ function Table({apiLink, columns, inputLabels, newUserData, setNewUserData, moda
             });
         });
     }, [nullifaer, filterInput]);
+
     useEffect(() => {
         setNullifaer(0)
+        gotoPage(0)
     }, [filterInput])
+
     /* useEffect(() => {
          axios.get(`https://playersreputation.com/api/v1/records?search_query=${filterInput}`,  {
              headers:{
