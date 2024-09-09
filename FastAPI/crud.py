@@ -101,7 +101,9 @@ async def delete_fund_by_id(db: AsyncSession, fund_id: int, current_user) -> Non
     return
 
 
-async def fund_add_manager(fund_id: int, user_id: int, db: AsyncSession, current_user) -> None:
+async def fund_add_manager(
+    fund_id: int, user_id: int, db: AsyncSession, current_user
+) -> None:
     fund = await get_fund_by_id(db=db, fund_id=fund_id, current_user=current_user)
     new_manager = await db.scalar(
         select(models.User).where(
@@ -146,7 +148,27 @@ async def get_records_list(
                 models.Record.first_name.ilike(f"%{search_query}%"),
                 models.Record.last_name.ilike(f"%{search_query}%"),
                 models.Record.middlename.ilike(f"%{search_query}%"),
-                models.Record.description.ilike(f"%{search_query}%"),
+                models.Record.nicknameOld.ilike(f"%{search_query}%"),
+                models.Record.room_name.ilike(f"%{search_query}%"),
+                models.Record.gipsyteam.ilike(f"%{search_query}%"),
+                models.Record.pokerstrategy.ilike(f"%{search_query}%"),
+                models.Record.amount.ilike(f"%{search_query}%"),
+                models.Record.google.ilike(f"%{search_query}%"),
+                models.Record.mail.ilike(f"%{search_query}%"),
+                models.Record.vk.ilike(f"%{search_query}%"),
+                models.Record.facebook.ilike(f"%{search_query}%"),
+                models.Record.blog.ilike(f"%{search_query}%"),
+                models.Record.instagram.ilike(f"%{search_query}%"),
+                models.Record.forum.ilike(f"%{search_query}%"),
+                models.Record.neteller.ilike(f"%{search_query}%"),
+                models.Record.skrill.ilike(f"%{search_query}%"),
+                models.Record.ecopayz.ilike(f"%{search_query}%"),
+                models.Record.comments.ilike(f"%{search_query}%"),
+                models.Record.country.ilike(f"%{search_query}%"),
+                models.Record.town.ilike(f"%{search_query}%"),
+                models.Record.address.ilike(f"%{search_query}%"),
+                models.Record.webmoney_id.ilike(f"%{search_query}%"),
+                models.Record.wallets.ilike(f"%{search_query}%"),
             )
         )
 
